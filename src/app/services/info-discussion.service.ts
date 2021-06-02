@@ -17,16 +17,24 @@ export interface Message {
   providedIn: 'root',
 })
 export class InfoDiscussionService {
-  public myArray: any;
+  public myUsers: any;
   public fii = false;
   constructor(public fireMessage: AngularFirestore) {
-    // this.recupUser()
-    //   .get()
-    //   .subscribe((users) => {
-    //     users.docs.forEach((doc) => {
-    //       this.myArray.push(doc.data());
-    //     });
-    //   });
+    this.recupUser()
+      //   .get()
+      //   .subscribe((users) => {
+      //     users.docs.forEach((doc) => {
+      //       this.myUsers.push(doc.data());
+      //     });
+      //   });
+
+      .snapshotChanges()
+      .subscribe((actions) => {
+        this.myUsers = [];
+        actions.forEach((action) => {
+          this.myUsers.push(action.payload.doc.data());
+        });
+      });
   }
   public user = [
     {
@@ -59,8 +67,8 @@ export class InfoDiscussionService {
     },
   ];
 
-  public findUserById(id: number) {
-    const user = this.user.find((userInfo) => {
+  public findUserById(id: string) {
+    const user = this.myUsers.find((userInfo) => {
       return userInfo.id == id;
     });
     return user;

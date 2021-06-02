@@ -70,13 +70,5 @@ export class ConversationComponent implements OnInit {
           this.allMessages.push(action.payload.doc.data());
         });
       });
-
-    // .get()
-    // .subscribe((msg) => {
-    //   this.allMessages = [];
-    //   msg.docs.forEach((doc) => {
-    //     console.log(doc.data());
-    //   });
-    // });
   }
 }

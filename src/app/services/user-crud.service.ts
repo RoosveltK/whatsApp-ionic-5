@@ -20,6 +20,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // date: new Date().toISOString(),
 //`${new Date().getHours()}H:${new Date().getMinutes()}`;
 export interface User {
+  id: string;
   email: string;
   nom: string;
   photo: string;
@@ -57,17 +58,18 @@ export class UserCRUDService {
       .then((res) => {
         imageRef.getDownloadURL().subscribe((url) => {
           this.serviceSideFire.saveUserInDB(user.uid).set({
+            id: user.uid,
             email: datas.email,
             nom: datas.nom,
             photo: url,
           });
+          setTimeout(() => {
+            this.router.navigate(['/signin']);
+          }, 2000);
           this.serviceSideFire.verificationEmail(user);
           this.serviceSideFire.successToast(
             `Compte cree avec succes, consulter votre boite mail`
           );
-          setTimeout(() => {
-            this.router.navigate(['/signin']);
-          }, 3000);
         });
       })
       .catch((err) => this.serviceSideFire.dangerToast(err.message));

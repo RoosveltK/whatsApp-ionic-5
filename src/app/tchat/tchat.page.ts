@@ -21,7 +21,15 @@ export class TchatPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user = this.infoSevice.user;
+    this.infoSevice
+      .recupUser()
+      .snapshotChanges()
+      .subscribe((actions) => {
+        this.user = [];
+        actions.forEach((action) => {
+          this.user.push(action.payload.doc.data());
+        });
+      });
   }
 
   public viewConversation(datas) {

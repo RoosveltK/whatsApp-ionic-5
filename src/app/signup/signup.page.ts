@@ -47,9 +47,9 @@ export class SignupPage {
     }
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
-      .then((res) =>
-        this.uploadService.uploadImage(this.image, userInfo, res.user)
-      )
+      .then((res) => {
+        this.uploadService.uploadImage(this.image, userInfo, res.user);
+      })
       .catch((err) => {
         console.log(err);
         this.firebaseService.dangerToast(err.message);
