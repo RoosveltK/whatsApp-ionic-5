@@ -1,0 +1,28 @@
+ion-title,
+ion-segment-button {
+  font-weight: 600;
+}
+
+ion-tab-bar {
+  --background: #128c7e;
+
+  ion-tab-bar-button {
+    --color: #87c5be;
+    --color-checked: #ffffff;
+  }
+}
+
+ion-fab-button {
+  --background: #00cc3f;
+}
+.read {
+  color: #43b5ef;
+}
+
+#camera {
+  --padding-end: 0;
+  --padding-start: 0;
+  --pading: 0;
+  --background: transparent;
+  min-width: 16px;
+}

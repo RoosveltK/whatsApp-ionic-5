@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+    </ion-buttons>
+
+    <ion-avatar slot="start">
+      <img src="{{ userContact.image }}" />
+    </ion-avatar>
+
+    <ion-title>
+      {{ userContact.nom }}<br />
+      <div class="status">En ligne</div>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button> <ion-icon name="videocam"></ion-icon> </ion-button>
+      <ion-button> <ion-icon name="call"></ion-icon> </ion-button>
+      <ion-button><ion-icon name="ellipsis-vertical"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="bg"></div>
+
+  <div>
+    <ion-item lines="none" *ngFor="let message of allMessages">
+      <ion-badge
+        color="warning"
+        *ngIf="message.userSendId == userInfo.uid"
+        slot="end"
+        >{{ message.messagetext }}
+        <ion-note color="medium"
+          >{{ message.heure }} <ion-icon name="done-all"></ion-icon></ion-note
+      ></ion-badge>
+      <ion-badge
+      color="light"
+      *ngIf="message.userSendId != userInfo.uid"
+      slot="start"
+      >{{ message.messagetext }}
+      <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
+    >
+    </ion-item>
+
+    <!-- <ion-item lines="none">
+      <ion-badge
+        color="light"
+        *ngIf="message.userSendId != userInfo.uid"
+        slot="start"
+        >{{ message.messagetext }}
+        <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
+      >
+    </ion-item> -->
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button shape="round" size="small">
+        <ion-icon slot="icon-only" name="happy"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-input
+      [(ngModel)]="textMessage"
+      placeholder="Taper message"
+    ></ion-input>
+
+    <ion-buttons slot="end">
+      <ion-button><ion-icon name="attach" size="small"></ion-icon></ion-button>
+      <ion-button (click)="sendMessage()">
+        <ion-icon name="send" color="success"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

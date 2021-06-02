@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true">
+  <ion-list *ngFor="let data of user">
+    <app-discussion
+      (click)="viewConversation(data)"
+      image="{{data.image}}"
+      nom="{{data.nom}}"
+      heure="{{data.heure}}"
+      message="{{data.message}}"
+    ></app-discussion>
+
+    <!-- <ion-item routerLink="/conversation">
+      <ion-avatar slot="start">
+        <img src="../../assets/profil.jpg" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Han Solo</h3>
+          <ion-note slot="end">7:06</ion-note>
+        </div>
+        <div class="flex_box">
+          <p>I've got enough on my plate...</p>
+          <ion-icon color="medium" name="volume-off"></ion-icon>
+        </div>
+      </ion-label>
+    </ion-item>
+
+    <ion-item routerLink="/conversation">
+      <ion-avatar slot="start">
+        <img src="../../assets/shapes.svg" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Luke Skywalker</h3>
+          <ion-note slot="end">Hier</ion-note>
+        </div>
+        <p>I feel the good in you, the conflict...</p>
+      </ion-label>
+    </ion-item> -->
+  </ion-list>
+</ion-content>

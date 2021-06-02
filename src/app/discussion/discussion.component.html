@@ -1,0 +1,19 @@
+<ion-item >
+  <ion-avatar slot="start">
+    <img src="{{ image }}" />
+  </ion-avatar>
+  <ion-label>
+    <div class="flex_box">
+      <h3>{{ nom }}</h3>
+      <ion-note slot="end">{{ heure }}</ion-note>
+    </div>
+    <p>
+      <ion-icon
+        class="text-icon"
+        color="primary"
+        name="checkmark-done-outline"
+      ></ion-icon>
+      {{ message }}
+    </p>
+  </ion-label>
+</ion-item>

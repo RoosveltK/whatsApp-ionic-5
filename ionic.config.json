@@ -1,0 +1,7 @@
+{
+  "name": "tabsLook",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

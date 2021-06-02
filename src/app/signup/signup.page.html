@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title id="header">Ajout d'etudiant</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="user" (ngSubmit)="addUser(user.value)">
+    <!-- <ion-item>
+      <ion-label>Photo de profil</ion-label>
+      <ion-input type="file" required></ion-input>
+    </ion-item> -->
+
+    <!-- <ion-avatar>
+      <img src="../../assets/profil.jpg" />
+    </ion-avatar> -->
+    <ion-card-content>
+      <ion-button color="primary" size="medium">
+        <input type="file" (change)="saveFile($event.target.files)" />
+      </ion-button>
+    </ion-card-content>
+    <ion-item class="ion-margin-top">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="email" type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nom</ion-label>
+      <ion-input formControlName="nom" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input
+        formControlName="password"
+        type="password"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-button
+      color="success"
+      expand="block"
+      type="submit"
+      [disabled]="!user.valid"
+      class="ion-margin-top"
+    >
+      Valider
+    </ion-button>
+  </form>
+</ion-content>
