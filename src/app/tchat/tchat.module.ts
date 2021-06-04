@@ -6,6 +6,7 @@ import { TchatPage } from './tchat.page';
 import { TchatPageRoutingModule } from './tchat-routing.module';
 import { DiscussionComponent } from '../discussion/discussion.component';
 
+
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, TchatPageRoutingModule],
   declarations: [TchatPage, DiscussionComponent],

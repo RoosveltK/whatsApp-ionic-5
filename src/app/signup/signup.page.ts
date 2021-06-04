@@ -2,6 +2,7 @@ import { FirebaseService } from './../services/firebase.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserCRUDService } from '../services/user-crud.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +31,8 @@ export class SignupPage {
   constructor(
     public formBuilder: FormBuilder,
     public firebaseService: FirebaseService,
-    public uploadService: UserCRUDService
+    public uploadService: UserCRUDService,
+    private router: Router
   ) {
     this.user = this.formBuilder.group({
       email: ['', Validators.required],
@@ -59,10 +61,7 @@ export class SignupPage {
   saveFile(fichier) {
     this.image = this.uploadService.savefile(fichier);
   }
+  backLogin() {
+    this.router.navigate(['/']);
+  }
 }
-
-//add bd
-// this.firebaseService.saveUserInDB(res.user.uid).set({
-//   nom: userInfo.nom,
-//   email: userInfo.email,
-// })

@@ -32,6 +32,19 @@ const routes: Routes = [
     loadChildren: () =>
       import('./signin/signin.module').then((m) => m.SigninPageModule),
   },
+  {
+    path: 'newdisc',
+    loadChildren: () =>
+      import('./newdisc/newdisc.module').then((m) => m.NewdiscPageModule),
+  },
+  {
+    path: 'creategroup',
+    loadChildren: () => import('./creategroup/creategroup.module').then( m => m.CreategroupPageModule)
+  },
+  {
+    path: 'parametre',
+    loadChildren: () => import('./parametre/parametre.module').then( m => m.ParametrePageModule)
+  },
 ];
 @NgModule({
   imports: [

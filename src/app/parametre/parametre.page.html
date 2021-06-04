@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+    </ion-buttons>
+    <div class="contacts">Paramètres</div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item class="pseudo" routerLink="/creategroup">
+      <ion-avatar slot="start">
+        <img src="../../assets/bg.png" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Pseudo</h3>
+        </div>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="scanQRCode()">
+          <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="../../assets/bg.png" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Thèmes</h3>
+        </div>
+        <p>Changez le thème de votre application</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="../../assets/bg.png" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Langues</h3>
+        </div>
+        <p>Changez la langue de l'application</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

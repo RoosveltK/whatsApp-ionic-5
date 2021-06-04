@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="success" *ngIf="!show">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+    </ion-buttons>
+    <div class="contacts">Contacts</div>
+    <ion-buttons slot="end">
+      <ion-button (click)="showSearchBar()">
+        <ion-icon name="search"></ion-icon> </ion-button
+      ><ion-button>
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="success" *ngIf="show">
+    <ion-buttons slot="start">
+      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+    </ion-buttons>
+    <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item routerLink="/creategroup">
+      <ion-avatar slot="start">
+        <img src="../../assets/bg.png" />
+      </ion-avatar>
+      <ion-label>
+        <div class="flex_box">
+          <h3>Nouv. groupe</h3>
+        </div>
+      </ion-label>
+    </ion-item>
+
+    <div *ngFor="let user of users">
+      <ion-item *ngIf=" actifUser.uid != user.id" routerLink="/conversation">
+        <ion-avatar slot="start">
+          <img src="{{user.photo}}" />
+        </ion-avatar>
+        <ion-label>
+          <div class="flex_box">
+            <h3>{{user.nom}}</h3>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

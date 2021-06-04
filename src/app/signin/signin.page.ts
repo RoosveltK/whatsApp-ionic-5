@@ -50,7 +50,10 @@ export class SigninPage implements OnInit {
             'oui',
             'non'
           );
-        } else this.router.navigate(['/tabs/tchat']);
+        } else {
+          localStorage.setItem('users', JSON.stringify(res.user));
+          this.router.navigate(['/tabs/tchat']);
+        }
       })
       .catch((err) => this.authentif.dangerToast(err.message));
   }

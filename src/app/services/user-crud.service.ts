@@ -23,7 +23,7 @@ export interface User {
   id: string;
   email: string;
   nom: string;
-  photo: string;
+  photo: any;
 }
 @Injectable({
   providedIn: 'root',
@@ -56,21 +56,21 @@ export class UserCRUDService {
     imageRef
       .put(file)
       .then((res) => {
-        imageRef.getDownloadURL().subscribe((url) => {
-          this.serviceSideFire.saveUserInDB(user.uid).set({
-            id: user.uid,
-            email: datas.email,
-            nom: datas.nom,
-            photo: url,
-          });
-          setTimeout(() => {
-            this.router.navigate(['/signin']);
-          }, 2000);
-          this.serviceSideFire.verificationEmail(user);
-          this.serviceSideFire.successToast(
-            `Compte cree avec succes, consulter votre boite mail`
-          );
+        // imageRef.getDownloadURL().subscribe((url) => {
+        this.serviceSideFire.saveUserInDB(user.uid).set({
+          id: user.uid,
+          email: datas.email,
+          nom: datas.nom,
+          photo: fileStoragePath,
         });
+        setTimeout(() => {
+          this.router.navigate(['/signin']);
+        }, 2000);
+        this.serviceSideFire.verificationEmail(user);
+        this.serviceSideFire.successToast(
+          `Compte cree avec succes, consulter votre boite mail`
+        );
+        // });
       })
       .catch((err) => this.serviceSideFire.dangerToast(err.message));
   }

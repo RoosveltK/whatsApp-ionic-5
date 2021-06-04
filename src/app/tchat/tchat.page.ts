@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TchatPage implements OnInit {
   public userContact: infoContact;
   public user;
-
+  public userData;
   constructor(
     public infoSevice: InfoDiscussionService,
     private activateRoute: ActivatedRoute,
@@ -30,10 +30,18 @@ export class TchatPage implements OnInit {
           this.user.push(action.payload.doc.data());
         });
       });
+
+    // imageRef.getDownloadURL().subscribe((url) => {});
   }
 
   public viewConversation(datas) {
     const link = ['conversation', datas.id];
     this.router.navigate(link);
   }
+
+  // public changeImage() {
+  //   this.user.forEach(element => {
+      
+  //   });
+  // }
 }
