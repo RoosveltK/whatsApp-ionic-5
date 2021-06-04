@@ -8,7 +8,5 @@ import { Router } from '@angular/router';
 })
 export class TabsPage {
   constructor(public router: Router) {}
-  openNewDisc() {
-    this.router.navigate(['/newdisc']);
-  }
+ 
 }

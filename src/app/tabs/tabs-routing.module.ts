@@ -13,9 +13,9 @@ const routes: Routes = [
           import('../tchat/tchat.module').then((m) => m.TchatPageModule),
       },
       {
-        path: 'tab2',
+        path: 'status',
         loadChildren: () =>
-          import('../tab2/tab2.module').then((m) => m.Tab2PageModule),
+          import('../status/status.module').then((m) => m.StatusPageModule),
       },
     ],
   },

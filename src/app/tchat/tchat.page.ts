@@ -1,7 +1,4 @@
-import {
-  InfoDiscussionService,
-  infoContact,
-} from './../services/info-discussion.service';
+import { InfoDiscussionService } from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['tchat.page.scss'],
 })
 export class TchatPage implements OnInit {
-  public userContact: infoContact;
   public user;
   public userData;
   constructor(
@@ -39,9 +35,13 @@ export class TchatPage implements OnInit {
     this.router.navigate(link);
   }
 
+  openNewDisc() {
+    this.router.navigate(['/newdisc']);
+  }
+
   // public changeImage() {
   //   this.user.forEach(element => {
-      
+
   //   });
   // }
 }

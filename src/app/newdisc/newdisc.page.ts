@@ -1,4 +1,7 @@
-import { InfoDiscussionService } from './../services/info-discussion.service';
+import {
+  InfoDiscussionService,
+  tchat,
+} from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -21,7 +24,7 @@ export class NewdiscPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.actifUser = JSON.parse(localStorage.getItem('users'));
+    this.actifUser = this.service.recupActifUser();
     this.service
       .recupUser()
       .get()
@@ -54,4 +57,28 @@ export class NewdiscPage implements OnInit {
   showSearchBar() {
     this.show = true;
   }
+  startDiscu = (userData: any) => {
+    const newTchat: tchat = {
+      id: `${this.actifUser.uid}${userData.uid}`,
+      nom: userData.nom,
+      photo: [userData.photo],
+      users: [this.actifUser.uid, userData.uid],
+      messages: [],
+    };
+
+    const ctrlTchat = this.service.findUserById(newTchat);
+    const link = ['conversation', ctrlTchat];
+    if (ctrlTchat == newTchat) {
+      this.service
+        .saveTchatInDB()
+        .add(newTchat)
+        .then(() => {
+          this.router.navigate(link);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    this.router.navigate(link);
+  };
 }

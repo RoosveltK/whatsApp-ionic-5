@@ -21,8 +21,6 @@ export class FirebaseService {
   //Sauvegarder les datas d'un user
   saveUserInDB = (id) => this.firebaseAPIFirestore.doc(`users/${id}`);
 
-
-
   //VerificationEmail
   verificationEmail = (userConnected) => userConnected.sendEmailVerification();
 

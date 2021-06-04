@@ -2,6 +2,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import {
   InfoDiscussionService,
   Message,
+  tchat,
 } from './../services/info-discussion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,7 @@ import { FirebaseService } from '../services/firebase.service';
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
-  public userContact;
+  public infoTchat: tchat;
   public userStatus = false;
   public userInfo;
   public allMessages: any = [];
@@ -32,16 +33,16 @@ export class ConversationComponent implements OnInit {
       if (user) {
         this.userInfo = user;
         this.userStatus = true;
-        this.getAllMessage();
+        // this.getAllMessage();
       } else console.log('OFFlINE');
     });
   }
 
   ngOnInit() {
     //Routes en fonction des conversations
-    this.activateRoute.params.subscribe((params) => {
-      this.userContact = this.infoService.findUserById(params.id);
-    });
+    this.activateRoute.params.subscribe(
+      (params) => (this.infoTchat = params.newTchat)
+    );
   }
   backHome = () => {
     const link = ['tabs/tchat'];
@@ -50,25 +51,25 @@ export class ConversationComponent implements OnInit {
 
   sendMessage = () => {
     const infoMessage: Message = {
-      userSendId: this.userInfo.uid,
-      userReceiveId: this.userInfo.uid,
       messagetext: this.textMessage,
       date: new Date().toISOString(),
       heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      assets: [],
     };
-    this.infoService.sendMessage(this.userStatus, infoMessage);
+    this.infoService.saveTchatInDB().doc('messages/').set(infoMessage);
     this.textMessage = '';
   };
 
-  getAllMessage() {
-    this.infoService
-      .saveMessagesInDB()
-      .snapshotChanges()
-      .subscribe((actions) => {
-        this.allMessages = [];
-        actions.forEach((action) => {
-          this.allMessages.push(action.payload.doc.data());
-        });
-      });
-  }
+  // getAllMessage() {
+  //   this.infoService
+  //     .saveTchatInDB()
+  //     .doc('messages/')
+  //     .snapshotChanges()
+  //     .subscribe((actions) => {
+  //       this.allMessages = [];
+  //       actions.forEach((action) => {
+  //         this.allMessages.push(action.payload.doc.data());
+  //       });
+  //     });
+  // }
 }

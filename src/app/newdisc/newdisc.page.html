@@ -35,7 +35,7 @@
     </ion-item>
 
     <div *ngFor="let user of users">
-      <ion-item *ngIf=" actifUser.uid != user.id" routerLink="/conversation">
+      <ion-item *ngIf=" actifUser.uid != user.id" (click)="startDiscu(user)">
         <ion-avatar slot="start">
           <img src="{{user.photo}}" />
         </ion-avatar>

@@ -9,9 +9,17 @@ import { Router } from '@angular/router';
 export class ParametrePage implements OnInit {
   constructor(public router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
   backHome = () => {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
+  };
+
+  changeTheme = (event) => {
+    if (event.detail.checked) {
+      document.body.setAttribute('color-theme', 'dark');
+    } else document.body.setAttribute('color-theme', 'light');
   };
 }
