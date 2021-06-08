@@ -1,7 +1,7 @@
+import { NotificationService } from './../services/notification.service';
 import { FirebaseService } from './../services/firebase.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserCRUDService } from '../services/user-crud.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,29 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage {
-  // public validationUserMessage = {
-  //   email: [
-  //     { type: 'required', message: "s'il vous plait entrez votre Email" },
-  //     { type: 'pattern', message: "l'email entré est incorrect, Réessayer" },
-  //   ],
-  //   password: [
-  //     {
-  //       type: 'required',
-  //       message: "s'il vous plait entrez votre mot de passe",
-  //     },
-  //     {
-  //       type: 'minLength',
-  //       message: 'le mot de passe doit avoir au moins 5 caractères',
-  //     },
-  //   ],
-  // };
   public user: FormGroup;
   public image;
+  imagePickerConf = {
+    borderRadius: '50%',
+    language: 'en',
+    width: '200px',
+    height: '200px',
+  };
   constructor(
     public formBuilder: FormBuilder,
     public firebaseService: FirebaseService,
-    public uploadService: UserCRUDService,
-    private router: Router
+    private router: Router,
+    private serviceNotification: NotificationService
   ) {
     this.user = this.formBuilder.group({
       email: ['', Validators.required],
@@ -40,28 +30,30 @@ export class SignupPage {
       password: ['', Validators.required],
     });
   }
-  addUser(userInfo) {
+
+  addUser = (userInfo) => {
     if (this.image == undefined || this.image == 0) {
-      this.firebaseService.dangerToast(
+      this.serviceNotification.dangerToast(
         `Veuillez selectionner une photo de profil conforme avant de continuer`
       );
       return;
     }
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
-      .then((res) => {
-        this.uploadService.uploadImage(this.image, userInfo, res.user);
-      })
+      .then((res) =>
+        this.firebaseService.uploadImageAndCreateAccount(
+          this.image,
+          userInfo,
+          res.user
+        )
+      )
       .catch((err) => {
-        console.log(err);
-        this.firebaseService.dangerToast(err.message);
+        this.serviceNotification.dangerToast(err.message);
       });
-  }
+  };
 
-  saveFile(fichier) {
-    this.image = this.uploadService.savefile(fichier);
-  }
-  backLogin() {
-    this.router.navigate(['/']);
-  }
+  saveFile = (fichier) =>
+    (this.image = this.firebaseService.getAndVerifyFile(fichier));
+
+  backLogin = () => this.router.navigate(['/']);
 }

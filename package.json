@@ -13,10 +13,13 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "~11.2.0",
+    "@angular/cdk": "^11.2.13",
     "@angular/common": "~11.2.0",
     "@angular/core": "~11.2.0",
     "@angular/fire": "^6.1.5",
     "@angular/forms": "~11.2.0",
+    "@angular/material": "^11.2.13",
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
@@ -25,6 +28,8 @@
     "@ionic-native/in-app-browser": "^5.33.1",
     "@ionic/angular": "^5.5.2",
     "firebase": "^8.6.3",
+    "ngp-image-picker": "^1.4.0",
+    "resize-observer": "^1.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

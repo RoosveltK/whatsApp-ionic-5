@@ -39,11 +39,24 @@ const routes: Routes = [
   },
   {
     path: 'creategroup',
-    loadChildren: () => import('./creategroup/creategroup.module').then( m => m.CreategroupPageModule)
+    loadChildren: () =>
+      import('./creategroup/creategroup.module').then(
+        (m) => m.CreategroupPageModule
+      ),
   },
   {
     path: 'parametre',
-    loadChildren: () => import('./parametre/parametre.module').then( m => m.ParametrePageModule)
+    loadChildren: () =>
+      import('./parametre/parametre.module').then((m) => m.ParametrePageModule),
+  },
+  {
+    path: 'qrcode',
+    loadChildren: () =>
+      import('./qrcode/qrcode.module').then((m) => m.QrcodePageModule),
+  },
+  {
+    path: 'creategroup-last-phase',
+    loadChildren: () => import('./creategroup-last-phase/creategroup-last-phase.module').then( m => m.CreategroupLastPhasePageModule)
   },
 ];
 @NgModule({

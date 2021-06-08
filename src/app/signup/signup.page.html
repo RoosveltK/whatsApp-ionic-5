@@ -1,26 +1,24 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar id="header">
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backLogin()"></ion-back-button>
     </ion-buttons>
-    <ion-title id="header">Ajout d'etudiant</ion-title>
+    <ion-title>Creation de Compte</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding align">
   <form [formGroup]="user" (ngSubmit)="addUser(user.value)">
-    <!-- <ion-item>
-      <ion-label>Photo de profil</ion-label>
-      <ion-input type="file" required></ion-input>
-    </ion-item> -->
-
-    <!-- <ion-avatar>
-      <img src="../../assets/profil.jpg" />
-    </ion-avatar> -->
     <ion-card-content>
-      <ion-button color="primary" size="medium">
-        <input type="file" (change)="saveFile($event.target.files)" />
-      </ion-button>
+      <ion-input
+        type="file"
+        (change)="saveFile($event.target.files)"
+      ></ion-input>
+
+      <!-- <ngp-image-picker
+        [_config]="imagePickerConf"
+        ($imageChanged)="saveFile($event)"
+      ></ngp-image-picker> -->
     </ion-card-content>
     <ion-item class="ion-margin-top">
       <ion-label position="floating">Email</ion-label>
@@ -42,7 +40,6 @@
     </ion-item>
 
     <ion-button
-      color="success"
       expand="block"
       type="submit"
       [disabled]="!user.valid"

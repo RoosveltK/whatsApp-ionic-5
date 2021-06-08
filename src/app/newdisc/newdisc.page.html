@@ -3,7 +3,10 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
-    <div class="contacts">Contacts</div>
+    <div class="contacts">
+      Contacts<br />
+      <span>{{users.length}} contacts</span>
+    </div>
     <ion-buttons slot="end">
       <ion-button (click)="showSearchBar()">
         <ion-icon name="search"></ion-icon> </ion-button
@@ -24,8 +27,8 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <ion-item routerLink="/creategroup">
-      <ion-avatar slot="start">
-        <img src="../../assets/bg.png" />
+      <ion-avatar slot="start" class="color_sucess">
+        <img src="../../assets/groupe.png" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">

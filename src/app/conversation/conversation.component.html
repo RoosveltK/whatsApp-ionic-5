@@ -5,12 +5,19 @@
     </ion-buttons>
 
     <ion-avatar slot="start">
-      <img src="{{ infoTchat.photo }}" />
+      <img src="{{ userOfTChat.photo }}" />
     </ion-avatar>
 
     <ion-title>
-      {{ infoTchat.nom }}<br />
-      <div class="status">En ligne</div>
+      <span>{{ userOfTChat.nom }}</span>
+
+      <div class="status">
+        <span *ngIf="userStatus">en ligne</span>
+        <span *ngIf="!userStatus">
+          <span *ngIf="secondStatus">vu aujourd'hui à {{ dateConnect }}</span>
+          <span *ngIf="!seconStatus">vu le {{ dateConnect }}</span>
+        </span>
+      </div>
     </ion-title>
 
     <ion-buttons slot="end">
@@ -28,15 +35,24 @@
     <ion-item lines="none" *ngFor="let message of allMessages">
       <ion-badge
         color="warning"
-        *ngIf="message.userSendId == userInfo.uid"
+        *ngIf="message.uidSend === userInfo.uid"
         slot="end"
         >{{ message.messagetext }}
+
         <ion-note color="medium"
-          >{{ message.heure }} <ion-icon name="done-all"></ion-icon></ion-note
-      ></ion-badge>
+          >{{ message.heure }}
+          <ion-icon
+            *ngIf="isMessageRead"
+            name="checkmark-done-outline"
+            color="primary"
+          ></ion-icon>
+          <ion-icon *ngIf="!isMessageRead" name="checkmark-outline"></ion-icon
+        ></ion-note>
+      </ion-badge>
+
       <ion-badge
         color="light"
-        *ngIf="message.userSendId != userInfo.uid"
+        *ngIf="message.uidSend != userInfo.uid"
         slot="start"
         >{{ message.messagetext }}
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge

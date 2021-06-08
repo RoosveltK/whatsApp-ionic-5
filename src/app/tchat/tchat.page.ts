@@ -16,19 +16,7 @@ export class TchatPage implements OnInit {
     public router: Router
   ) {}
 
-  ngOnInit() {
-    this.infoSevice
-      .recupUser()
-      .snapshotChanges()
-      .subscribe((actions) => {
-        this.user = [];
-        actions.forEach((action) => {
-          this.user.push(action.payload.doc.data());
-        });
-      });
-
-    // imageRef.getDownloadURL().subscribe((url) => {});
-  }
+  ngOnInit() {}
 
   public viewConversation(datas) {
     const link = ['conversation', datas.id];
@@ -38,10 +26,4 @@ export class TchatPage implements OnInit {
   openNewDisc() {
     this.router.navigate(['/newdisc']);
   }
-
-  // public changeImage() {
-  //   this.user.forEach(element => {
-
-  //   });
-  // }
 }

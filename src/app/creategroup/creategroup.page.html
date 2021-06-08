@@ -4,7 +4,13 @@
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
     <div class="contacts">
-      <p>Nouv. groupe<br /><span>Ajouter des participants</span></p>
+      <p>
+        Nouv. groupe<br />
+        <span *ngIf="usersOfGroup.length ==0 ">Ajouter des participants</span>
+        <span *ngIf="usersOfGroup.length !=0">
+          {{usersOfGroup.length}} sur {{users.length}} sélectionné
+        </span>
+      </p>
     </div>
     <ion-buttons slot="end">
       <ion-button (click)="showSearchBar()">
@@ -23,28 +29,26 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <div>
-      <ion-item (click)="backHome()">
+    <div *ngFor="let user of users">
+      <ion-item
+        *ngIf=" actifUser.uid != user.id"
+        (click)="addToMemberGroup(user)"
+      >
         <ion-avatar slot="start">
-          <img src="../../assets/bg.png" />
+          <img src="{{user.photo}}" />
           <!-- <ion-icon name="people-outline"></ion-icon> -->
         </ion-avatar>
         <ion-label>
           <div class="flex_box">
-            <h3>Nouv. groupe</h3>
+            <h3>{{user.nom}}</h3>
           </div>
         </ion-label>
-      </ion-item>
-      <ion-item (click)="backHome()">
-        <ion-avatar slot="start">
-          <img src="../../assets/bg.png" />
-          <!-- <ion-icon name="people-outline"></ion-icon> -->
-        </ion-avatar>
-        <ion-label>
-          <div class="flex_box">
-            <h3>Nouv. groupe</h3>
-          </div>
-        </ion-label>
+        <ion-icon
+          *ngIf="user.isThere "
+          class="colorCitron"
+          slot="end"
+          name="qr-code-outline"
+        ></ion-icon>
       </ion-item>
     </div>
 
@@ -63,7 +67,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="createTchat()">
+    <ion-fab-button (click)="createGroupLast()">
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

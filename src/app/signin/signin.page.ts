@@ -1,3 +1,4 @@
+import { NotificationService } from './../services/notification.service';
 import { AlertController } from '@ionic/angular';
 import { FirebaseService } from './../services/firebase.service';
 import { Component, OnInit } from '@angular/core';
@@ -35,17 +36,19 @@ export class SigninPage implements OnInit {
   public userInfo;
   constructor(
     public formBuilder: FormBuilder,
-    public authentif: FirebaseService,
-    public router: Router
+    public fireebaseAuth: FirebaseService,
+    public router: Router,
+    private serviceNotification: NotificationService
   ) {}
+
   loginUser(datas) {
-    this.authentif
+    this.fireebaseAuth
       .loginUser(datas.email, datas.password)
       .then((res) => {
         if (res.user.emailVerified == false) {
-          this.authentif.confirmationAlert(
+          this.serviceNotification.confirmationAlert(
             "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?",
-            this.authentif.verificationEmail(res.user),
+            this.fireebaseAuth.verificationEmail(res.user),
             console.log('ok tu maitrises'),
             'oui',
             'non'
@@ -55,7 +58,7 @@ export class SigninPage implements OnInit {
           this.router.navigate(['/tabs/tchat']);
         }
       })
-      .catch((err) => this.authentif.dangerToast(err.message));
+      .catch((err) => this.serviceNotification.dangerToast(err.message));
   }
 
   ngOnInit() {

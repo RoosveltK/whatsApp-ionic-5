@@ -14,9 +14,9 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class NewdiscPage implements OnInit {
   public show = false;
   public searchText;
-  public contacts = [];
   public users = [];
   public actifUser;
+  public actifUserofDB;
   constructor(
     public router: Router,
     public service: InfoDiscussionService,
@@ -26,24 +26,11 @@ export class NewdiscPage implements OnInit {
   ngOnInit() {
     this.actifUser = this.service.recupActifUser();
     this.service
-      .recupUser()
-      .get()
-      .subscribe((ss) => {
-        ss.docs.forEach((doc) => {
-          this.contacts.push(doc.data());
-        });
-        this.contacts.map((element) => {
-          const refImage = this.afStorage.ref(element.photo);
-          refImage.getDownloadURL().subscribe((res) => {
-            this.users.push({
-              nom: element.nom,
-              email: element.email,
-              id: element.id,
-              photo: res,
-            });
-          });
-        });
-      });
+      .recupUser(this.users)
+      .then(
+        () =>
+          (this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB')))
+      );
   }
 
   backHome = () => {
@@ -57,28 +44,27 @@ export class NewdiscPage implements OnInit {
   showSearchBar() {
     this.show = true;
   }
+
   startDiscu = (userData: any) => {
     const newTchat: tchat = {
-      id: `${this.actifUser.uid}${userData.uid}`,
-      nom: userData.nom,
-      photo: [userData.photo],
-      users: [this.actifUser.uid, userData.uid],
+      id: `${userData.id}${this.actifUser.uid}`,
+      nom: [userData.nom, this.actifUserofDB.nom],
+      photo: [userData.photo, this.actifUserofDB.photo],
+      users: [this.actifUser.uid, userData.id],
       messages: [],
     };
+    localStorage.setItem('userOfTchat', JSON.stringify(userData));
 
-    const ctrlTchat = this.service.findUserById(newTchat);
-    const link = ['conversation', ctrlTchat];
-    if (ctrlTchat == newTchat) {
+    const idTchat = this.service.findUserById(
+      newTchat.id,
+      `${this.actifUser.uid}${userData.id}`
+    );
+    if (idTchat == 0) {
       this.service
-        .saveTchatInDB()
-        .add(newTchat)
-        .then(() => {
-          this.router.navigate(link);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    this.router.navigate(link);
+        .saveTchatInDB(newTchat.id)
+        .set(newTchat)
+        .then(() => this.router.navigate(['conversation', newTchat.id]))
+        .catch((err) => console.log(err));
+    } else this.router.navigate(['conversation', idTchat]);
   };
 }

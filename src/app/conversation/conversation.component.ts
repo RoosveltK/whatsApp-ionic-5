@@ -15,13 +15,17 @@ import { FirebaseService } from '../services/firebase.service';
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
-  public infoTchat: tchat;
+  public idTchat;
   public userStatus = false;
+  public secondStatus;
   public userInfo;
+  public dateConnect;
+  public userofDB = JSON.parse(localStorage.getItem('userofDB'));
+  public userOfTChat = JSON.parse(localStorage.getItem('userOfTchat'));
   public allMessages: any = [];
   public textMessage: any;
-  public myArray: any = [];
-  public fii = false;
+  public isMessageRead = false;
+
   constructor(
     public activateRoute: ActivatedRoute,
     public infoService: InfoDiscussionService,
@@ -31,19 +35,35 @@ export class ConversationComponent implements OnInit {
   ) {
     this.serviceFireBase.verificationAuthUser((user) => {
       if (user) {
-        this.userInfo = user;
+        localStorage.setItem('userMetaData', JSON.stringify(user.metadata));
         this.userStatus = true;
-        // this.getAllMessage();
-      } else console.log('OFFlINE');
+      } else {
+        var getStorage = JSON.parse(localStorage.getItem('userMetaData'));
+        const date = new Date(getStorage.lastSignInTime);
+        if (date == new Date()) {
+          this.dateConnect = `${date.getHours()}:${date.getMinutes()}`;
+          this.secondStatus = true;
+        } else {
+          this.dateConnect = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+          this.secondStatus = false;
+        }
+      }
     });
+    this.isMessageRead = true;
   }
 
   ngOnInit() {
-    //Routes en fonction des conversations
-    this.activateRoute.params.subscribe(
-      (params) => (this.infoTchat = params.newTchat)
-    );
+    this.userInfo = this.infoService.recupActifUser();
+
+    //Reception des infos du tchat
+    this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
+    this.infoService
+      .getInDBSpecifique()
+      .doc(this.idTchat)
+      .snapshotChanges()
+      .subscribe((res) => (this.allMessages = res.payload.get('messages')));
   }
+
   backHome = () => {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
@@ -51,25 +71,18 @@ export class ConversationComponent implements OnInit {
 
   sendMessage = () => {
     const infoMessage: Message = {
+      uidSend: this.userInfo.uid,
       messagetext: this.textMessage,
-      date: new Date().toISOString(),
+      date: new Date(),
       heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
       assets: [],
     };
-    this.infoService.saveTchatInDB().doc('messages/').set(infoMessage);
+    this.allMessages.push(infoMessage);
+    this.infoService
+      .getInDBSpecifique()
+      .doc(this.idTchat)
+      .update({ messages: this.allMessages });
+
     this.textMessage = '';
   };
-
-  // getAllMessage() {
-  //   this.infoService
-  //     .saveTchatInDB()
-  //     .doc('messages/')
-  //     .snapshotChanges()
-  //     .subscribe((actions) => {
-  //       this.allMessages = [];
-  //       actions.forEach((action) => {
-  //         this.allMessages.push(action.payload.doc.data());
-  //       });
-  //     });
-  // }
 }

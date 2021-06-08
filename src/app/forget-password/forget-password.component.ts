@@ -1,3 +1,4 @@
+import { NotificationService } from './../services/notification.service';
 import { Router } from '@angular/router';
 import { FirebaseService } from './../services/firebase.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,19 +17,24 @@ export class ForgetPasswordComponent implements OnInit {
       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
     ])
   );
-  constructor(public firebaseAUTH: FirebaseService, public router: Router) {}
+  constructor(
+    public firebaseAuth: FirebaseService,
+    public router: Router,
+    private serviceNotification: NotificationService
+  ) {}
 
   ngOnInit() {}
 
   sendVerification() {
     const link = ['/signin'];
-    this.firebaseAUTH.resetPasswordUser(this.email.value).then((res) => {
+    this.firebaseAuth.resetPasswordUser(this.email.value).then((res) => {
       setTimeout(() => {
-        this.firebaseAUTH.warningToast(`Vérifier votre boite mail`);
+        this.serviceNotification.warningToast(`Vérifier votre boite mail`);
         this.router.navigate(link);
       }, 2000);
     });
   }
+
   backLogin() {
     this.router.navigate(['/signin']);
   }

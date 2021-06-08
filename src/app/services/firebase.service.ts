@@ -1,101 +1,99 @@
-import { Injectable } from '@angular/core';
+import { NotificationService } from './notification.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { AlertController, ToastController } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 
+export interface User {
+  id: string;
+  email: string;
+  nom: string;
+  photo: any;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
   userData: any;
   constructor(
-    public firebaseAPIAuth: AngularFireAuth,
-    public firebaseAPIFirestore: AngularFirestore,
-    public toast: ToastController,
-    public alert: AlertController
+    public aFireAuth: AngularFireAuth,
+    public aFireStore: AngularFirestore,
+    private afStorage: AngularFireStorage,
+    private router: Router,
+    private serviceNotification: NotificationService
   ) {}
 
   //Sauvegarder les datas d'un user
-  saveUserInDB = (id) => this.firebaseAPIFirestore.doc(`users/${id}`);
+  saveUserInDB = (id) => this.aFireStore.doc(`users/${id}`);
 
-  //VerificationEmail
+  //Envoyer l'email de verification
   verificationEmail = (userConnected) => userConnected.sendEmailVerification();
 
-  //DeleteUser
-  // deleteUser = (id) => this.firebaseAPIAuth.deleteUser(id);
+  // DeleteUser
+  // deleteUser = (id) => id.dele;
 
   //Connexion de l'utilisateur
   loginUser = (email, password) =>
-    this.firebaseAPIAuth.signInWithEmailAndPassword(email, password);
+    this.aFireAuth.signInWithEmailAndPassword(email, password);
 
-  //Creation de compte
+  //Creation de compte Pour athentification
   signup = (email, password) =>
-    this.firebaseAPIAuth.createUserWithEmailAndPassword(email, password);
+    this.aFireAuth.createUserWithEmailAndPassword(email, password);
 
   //verification authentification
   verificationAuthUser = (callBack) =>
-    this.firebaseAPIAuth.onAuthStateChanged(callBack);
+    this.aFireAuth.onAuthStateChanged(callBack);
 
   //Deconnexion
-  signOutUser = () => this.firebaseAPIAuth.signOut();
+  signOutUser = () => this.aFireAuth.signOut();
 
   //Resetpassword
-  resetPasswordUser = (email) =>
-    this.firebaseAPIAuth.sendPasswordResetEmail(email);
+  resetPasswordUser = (email) => this.aFireAuth.sendPasswordResetEmail(email);
 
-  //TOAST
-  dangerToast = async (message, postion = 'top') => {
-    const toast = await this.toast.create({
-      message: message,
-      duration: 5000,
-      position: 'top',
-      color: 'danger',
-    });
-    toast.present();
-  };
+  getAndVerifyFile(event: FileList) {
+    const file = event.item(0);
 
-  warningToast = async (message, postion = 'top') => {
-    const toast = await this.toast.create({
-      message: message,
-      duration: 5000,
-      position: 'top',
-      color: 'warning',
-    });
-    toast.present();
-  };
+    // Image validation controle
+    if (file.type.split('/')[0] !== 'image') {
+      this.serviceNotification.dangerToast(
+        `Type de fichier non pris en charge`
+      );
+      return 0;
+    }
+    return file;
+  }
 
-  successToast = async (message, postion = 'top') => {
-    const toast = await this.toast.create({
-      message: message,
-      duration: 5000,
-      position: 'top',
-      color: 'success',
-    });
-    toast.present();
-  };
+  uploadImageAndCreateAccount(file: File, datas: User, user) {
+    // Storage path
+    const fileStoragePath = `userProfilImage/${file.name}_UID:${user.uid}`;
 
-  //Alert
-  async confirmationAlert(message, fonction1, fonction2, text1, text2) {
-    const alert = await this.alert.create({
-      cssClass: 'my-custom-class',
-      message: message,
-      buttons: [
-        {
-          text: text1,
-
-          cssClass: 'secondary',
-          handler: fonction1,
-        },
-        {
-          text: text2,
-          handler: fonction2,
-        },
-      ],
-    });
-
-    await alert.present();
+    // Image reference
+    const imageRef = this.afStorage.ref(fileStoragePath);
+    imageRef
+      .put(file)
+      .then((res) => {
+        this.saveUserInDB(user.uid).set({
+          id: user.uid,
+          email: datas.email,
+          nom: datas.nom,
+          photo: fileStoragePath,
+        });
+        // this.loading.create({
+        //   duration: 3000,
+        // });
+        setTimeout(() => {
+          this.router.navigate(['/signin']);
+        }, 2000);
+        this.verificationEmail(user);
+        this.serviceNotification.successToast(
+          `Compte cree avec succes, consulter votre boite mail`
+        );
+      })
+      .catch((err) => this.serviceNotification.dangerToast(err.message));
   }
 }
