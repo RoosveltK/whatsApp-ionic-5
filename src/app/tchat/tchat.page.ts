@@ -37,6 +37,7 @@ export class TchatPage implements OnInit {
   }
 
   public viewConversation(datas) {
+    localStorage.setItem('userOfTchat', JSON.stringify(datas));
     const link = ['conversation', datas.id];
     this.router.navigate(link);
   }

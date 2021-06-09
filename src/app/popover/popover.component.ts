@@ -21,6 +21,7 @@ export class PopoverComponent implements OnInit {
   deconnexion = () => {
     this.serviceAuth.signOutUser().then(() => {
       this.router.navigate(['/signin']);
+      localStorage.clear();
       this.dismissPopover();
     });
   };

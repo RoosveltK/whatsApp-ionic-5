@@ -20,7 +20,7 @@ export class ConversationComponent implements OnInit {
   public secondStatus;
   public userInfo;
   public dateConnect;
-  public userofDB = JSON.parse(localStorage.getItem('userofDB'));
+  public userofDB = JSON.parse(localStorage.getItem('infoUserInDB'));
   public userOfTChat = JSON.parse(localStorage.getItem('userOfTchat'));
   public allMessages: any = [];
   public textMessage: any;

@@ -5,19 +5,15 @@
     </ion-buttons>
 
     <ion-avatar slot="start">
-      <img src="{{ userOfTChat.photo }}" />
+      <img src="{{ image }}" />
     </ion-avatar>
 
     <ion-title>
-      <span>{{ userOfTChat.nom }}</span>
+      <span>{{ groupOfTchat.nom[0] }}</span>
 
-      <!-- <div class="status">
-        <span *ngIf="userStatus">en ligne</span>
-        <span *ngIf="!userStatus">
-          <span *ngIf="secondStatus">vu aujourd'hui à {{ dateConnect }}</span>
-          <span *ngIf="!seconStatus">vu le {{ dateConnect }}</span>
-        </span>
-      </div> -->
+      <div class="status" *ngFor="let user of groupOfTchat.users">
+        <span>{{user}}</span>
+      </div>
     </ion-title>
 
     <ion-buttons slot="end">
@@ -41,12 +37,8 @@
 
         <ion-note color="medium"
           >{{ message.heure }}
-          <ion-icon
-            *ngIf="isMessageRead"
-            name="checkmark-done-outline"
-            color="primary"
-          ></ion-icon>
-          <ion-icon *ngIf="!isMessageRead" name="checkmark-outline"></ion-icon
+
+          <ion-icon name="checkmark-outline"></ion-icon
         ></ion-note>
       </ion-badge>
 
@@ -58,16 +50,6 @@
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
       >
     </ion-item>
-
-    <!-- <ion-item lines="none">
-      <ion-badge
-        color="light"
-        *ngIf="message.userSendId != userInfo.uid"
-        slot="start"
-        >{{ message.messagetext }}
-        <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
-      >
-    </ion-item> -->
   </div>
 </ion-content>
 

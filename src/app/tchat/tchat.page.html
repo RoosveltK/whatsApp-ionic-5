@@ -1,12 +1,22 @@
 <ion-content [fullscreen]="true">
-  <ion-list *ngFor="let data of allTchat">
-    <!-- <app-discussion
-      (click)="viewConversation(data)"
-      image="{{data.photo[0]}}"
-      nom="{{data.nom[0]}}"
-      message="{{data.message[0]}}"
-    ></app-discussion> -->
-  </ion-list>
+  <div *ngIf="allTchat.length ==0" class="center">
+    <ion-spinner color="success"></ion-spinner>
+  </div>
+
+  <div *ngIf="allTchat.length !=0">
+    <ion-list>
+      <span *ngFor="let data of allTchat">
+        <app-discussion
+          *ngIf="data.messages.length !=0 && data.nom.length != 1"
+          (click)="viewConversation(data)"
+          image="{{data.photo[0]}}"
+          nom="{{data.nom[0]}}"
+          heure="{{data.messages[data.messages.length-1].heure}}"
+          message="{{data.messages[data.messages.length-1].messagetext}}"
+        ></app-discussion>
+      </span>
+    </ion-list>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openNewDisc()">
@@ -14,3 +24,32 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<!-- <ion-list *ngFor="let data of allTchat">
+  <div *ngIf="data.messages.length !=0">
+    <div *ngIf="data.nom.length == 1">
+       <app-discussion
+      (click)="viewConversation(data)"
+      image="{{data.photo[0]}}"
+      nom="{{data.nom[0]}}"
+      message="{{data.message[0]}}"
+    ></app-discussion> -->
+<!-- </div>
+    <div *ngIf="data.nom.length != 1">
+      <app-discussion
+        (click)="viewConversation(data)"
+        image="{{data.photo[0]}}"
+        nom="{{data.nom[0]}}"
+        heure="{{data.messages[data.messages.length-1].heure}}"
+        message="{{data.messages[data.messages.length-1].messagetext}}"
+      ></app-discussion>
+    </div> -->
+<!-- <app-discussion
+    (click)="viewConversation(data)"
+    image="{{data.photo[0]}}"
+    nom="{{data.nom[0]}}"
+    message="{{data.message[0]}}"
+  ></app-discussion> -->
+<!-- </div>
+</ion-list> -->
+-->

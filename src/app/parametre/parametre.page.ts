@@ -15,7 +15,7 @@ export class ParametrePage implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('actuelTheme') != null)
       this.theme = JSON.parse(localStorage.getItem('actuelTheme'));
-    else this.theme = 'clair';
+    else this.theme = 'light';
   }
   backHome = () => {
     const link = ['tabs/tchat'];
@@ -23,7 +23,7 @@ export class ParametrePage implements OnInit {
   };
 
   changeTheme = () => {
-    if ('sombre'.localeCompare(this.theme) == 0) {
+    if ('dark'.localeCompare(this.theme) == 0) {
       document.body.setAttribute('color-theme', 'dark');
     } else document.body.setAttribute('color-theme', 'light');
     localStorage.setItem('actuelTheme', JSON.stringify(this.theme));

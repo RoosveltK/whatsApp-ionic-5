@@ -5,6 +5,7 @@ ion-avatar {
 h3 {
   font-weight: 700;
   font-size: 15px;
+  margin: 0;
 }
 .flex_box {
   display: flex;
@@ -19,4 +20,11 @@ ion-note {
 }
 p {
   color: grey;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 50px;
 }

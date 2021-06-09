@@ -29,7 +29,9 @@ export class NewdiscPage implements OnInit {
       .recupUser(this.users)
       .then(
         () =>
-          (this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB')))
+          (this.actifUserofDB = JSON.parse(
+            localStorage.getItem('infoUserInDB')
+          ))
       );
   }
 
@@ -50,7 +52,7 @@ export class NewdiscPage implements OnInit {
       id: `${userData.id}${this.actifUser.uid}`,
       nom: [userData.nom, this.actifUserofDB.nom],
       photo: [userData.photo, this.actifUserofDB.photo],
-      users: [this.actifUser.uid, userData.id],
+      users: [userData.id, this.actifUser.uid],
       messages: [],
     };
     localStorage.setItem('userOfTchat', JSON.stringify(userData));

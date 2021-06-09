@@ -34,7 +34,6 @@ export class InfoDiscussionService {
         res.map((element) => {
           this.myTchats.push(element.payload.doc.data());
         });
-        
       });
   }
 
@@ -49,8 +48,6 @@ export class InfoDiscussionService {
     });
     return id;
   }
-
-
 
   //Actif user
   recupActifUser = () => JSON.parse(localStorage.getItem('users'));
@@ -84,7 +81,7 @@ export class InfoDiscussionService {
                 id: element.id,
                 photo: res,
               };
-              localStorage.setItem('userofDB', JSON.stringify(datas));
+              localStorage.setItem('infoUserInDB', JSON.stringify(datas));
             } else {
               users.push({
                 nom: element.nom,

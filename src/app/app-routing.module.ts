@@ -1,3 +1,4 @@
+import { ConversationgroupeComponent } from './conversationgroupe/conversationgroupe.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'conversation/:id',
     component: ConversationComponent,
+  },
+  {
+    path: 'conversationgroupe/:id',
+    component: ConversationgroupeComponent,
   },
   {
     path: 'forgetPassword',
@@ -56,7 +61,10 @@ const routes: Routes = [
   },
   {
     path: 'creategroup-last-phase',
-    loadChildren: () => import('./creategroup-last-phase/creategroup-last-phase.module').then( m => m.CreategroupLastPhasePageModule)
+    loadChildren: () =>
+      import('./creategroup-last-phase/creategroup-last-phase.module').then(
+        (m) => m.CreategroupLastPhasePageModule
+      ),
   },
 ];
 @NgModule({

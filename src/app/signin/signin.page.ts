@@ -64,6 +64,13 @@ export class SigninPage implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('actuelTheme') != null) {
+      let theme = JSON.parse(localStorage.getItem('actuelTheme'));
+      console.log(theme);
+
+      document.body.setAttribute('color-theme', theme);
+    }
+
     this.userForms = this.formBuilder.group({
       email: new FormControl(
         '',

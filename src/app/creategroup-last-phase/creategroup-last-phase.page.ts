@@ -32,7 +32,7 @@ export class CreategroupLastPhasePage implements OnInit {
 
   ngOnInit() {
     this.member = JSON.parse(localStorage.getItem('userofGroup'));
-    this.infoUser = JSON.parse(localStorage.getItem('userofDB'));
+    this.infoUser = JSON.parse(localStorage.getItem('infoUserInDB'));
   }
   ngAfterViewInit() {
     this.userInputElement = this.userInputViewChild.nativeElement;
@@ -40,30 +40,26 @@ export class CreategroupLastPhasePage implements OnInit {
 
   createGroup = () => {
     const id = Math.random().toString(36).substr(2, 9);
-    this.memberName = [];
     this.memberId = [];
-    this.memberName.push(this.infoUser.nom);
     this.memberId.push({
       id: this.infoUser.id,
+      nom: this.infoUser.nom,
       role: 'admin',
     });
 
     const pathOfDefaultImage = `groupImage/defaultImage.png`;
 
     this.member.forEach((element) => {
-      this.memberName.push(element.nom);
-    });
-
-    this.member.forEach((element) => {
       this.memberId.push({
         id: element.id,
+        nom: element.nom,
         role: 'user',
       });
     });
 
     let tchatGroup: tchat = {
       id: id,
-      nom: this.memberName,
+      nom: [this.groupName],
       photo: [pathOfDefaultImage],
       users: this.memberId,
       messages: [],
@@ -77,7 +73,10 @@ export class CreategroupLastPhasePage implements OnInit {
       this.serviceTchat
         .saveTchatInDB(tchatGroup.id)
         .set(tchatGroup)
-        .then(() => this.router.navigate(['conversation', tchatGroup.id]))
+        .then(() => {
+          this.router.navigate(['conversationgroupe', tchatGroup.id]);
+          localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+        })
         .catch((err) => console.log(err));
     } else if (
       this.image !== undefined &&
@@ -88,7 +87,7 @@ export class CreategroupLastPhasePage implements OnInit {
 
       tchatGroup = {
         id: id,
-        nom: this.memberName,
+        nom: [this.groupName],
         photo: [pathFile],
         users: this.memberId,
         messages: [],
@@ -97,7 +96,10 @@ export class CreategroupLastPhasePage implements OnInit {
         this.serviceTchat
           .saveTchatInDB(tchatGroup.id)
           .set(tchatGroup)
-          .then(() => this.router.navigate(['conversation', tchatGroup.id]))
+          .then(() => {
+            this.router.navigate(['conversationgroupe', tchatGroup.id]);
+            localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+          })
           .catch((err) => console.log(err));
       });
     }
