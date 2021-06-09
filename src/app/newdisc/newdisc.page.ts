@@ -59,7 +59,7 @@ export class NewdiscPage implements OnInit {
       newTchat.id,
       `${this.actifUser.uid}${userData.id}`
     );
-    if (idTchat == 0) {
+    if (idTchat == null) {
       this.service
         .saveTchatInDB(newTchat.id)
         .set(newTchat)

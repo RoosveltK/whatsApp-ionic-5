@@ -11,3 +11,10 @@ ion-avatar {
     font-size: 15px;
   }
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 10px;
+}

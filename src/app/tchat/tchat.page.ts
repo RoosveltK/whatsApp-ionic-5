@@ -1,6 +1,10 @@
-import { InfoDiscussionService } from './../services/info-discussion.service';
+import {
+  InfoDiscussionService,
+  tchat,
+} from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-tchat',
@@ -10,13 +14,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TchatPage implements OnInit {
   public user;
   public userData;
+  public allTchat: tchat[] = [];
   constructor(
     public infoSevice: InfoDiscussionService,
     private activateRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private serviceDiscussion: InfoDiscussionService,
+    private fireMessage: AngularFirestore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fireMessage
+      .collection(`tchats/`)
+      .snapshotChanges()
+      .subscribe((res) => {
+        this.allTchat = [];
+        res.map((element: any) => {
+          this.allTchat.push(element.payload.doc.data());
+        });
+        console.log(this.allTchat);
+      });
+  }
 
   public viewConversation(datas) {
     const link = ['conversation', datas.id];

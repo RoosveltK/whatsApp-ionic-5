@@ -11,7 +11,16 @@
   }
 }
 
+// .colorCitron {
+//   background-color: #00cc3f;
+// }
 .colorCitron {
-  background-color: #00cc3f;
+  color: #00cc3f;
 }
-
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin: 10px;
+}

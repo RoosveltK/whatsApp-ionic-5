@@ -1,6 +1,6 @@
 import { NotificationService } from './../services/notification.service';
 import { FirebaseService } from './../services/firebase.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage {
+export class SignupPage implements OnInit {
+  @ViewChild('userInput') userInputViewChild: ElementRef;
+  public userInputElement: HTMLInputElement;
+
   public user: FormGroup;
   public image;
   imagePickerConf = {
@@ -29,6 +32,22 @@ export class SignupPage {
       nom: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+
+  ngOnInit() {
+    //
+  }
+
+  ngAfterViewInit() {
+    this.userInputElement = this.userInputViewChild.nativeElement;
+  }
+
+  async loadImageActionSheet1(event) {
+    this.userInputElement.click();
+  }
+
+  loadImageFromDevice1(event) {
+    this.image = this.firebaseService.getAndVerifyFile(event);
   }
 
   addUser = (userInfo) => {

@@ -1,7 +1,3 @@
-.memberOfGroup {
-  display: flex;
-  justify-content: space-between;
-}
 .infoGroup {
   display: flex;
   padding: 5px;
@@ -12,8 +8,18 @@ div ~ p {
   margin: 0;
   color: grey;
 }
+ion-grid {
+  text-align: center;
+  h4 {
+    margin: 0;
+    padding: 4px;
+  }
+}
 ion-input {
   border-bottom: 2px #128c7e solid;
+}
+.fab {
+  margin-bottom: 5px;
 }
 .contacts {
   margin-top: 5px;

@@ -8,3 +8,10 @@ ion-button {
 #header {
   --background: #00cc3f;
 }
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width: 50%;
+}

@@ -29,41 +29,39 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <div *ngFor="let user of users">
-      <ion-item
-        *ngIf=" actifUser.uid != user.id"
-        (click)="addToMemberGroup(user)"
-      >
-        <ion-avatar slot="start">
-          <img src="{{user.photo}}" />
-          <!-- <ion-icon name="people-outline"></ion-icon> -->
-        </ion-avatar>
-        <ion-label>
-          <div class="flex_box">
-            <h3>{{user.nom}}</h3>
-          </div>
-        </ion-label>
-        <ion-icon
-          *ngIf="user.isThere "
-          class="colorCitron"
-          slot="end"
-          name="qr-code-outline"
-        ></ion-icon>
-      </ion-item>
+    <div class="center">
+      <ion-spinner
+        color="success"
+        *ngIf="users.length == 0"
+        name="crescent"
+      ></ion-spinner>
     </div>
 
-    <!-- <div *ngFor="let user of users"> -->
-    <!-- <ion-item routerLink="/conversation">
-      <ion-avatar slot="start">
-        <img src="{{user.photo}}" />
-      </ion-avatar>
-      <ion-label>
-        <div class="flex_box">
-          <h3>{{user.nom}}</h3>
-        </div>
-      </ion-label>
-    </ion-item> -->
-    <!-- </div> -->
+    <div *ngIf="users.length != 0">
+      <div *ngFor="let user of users">
+        <ion-item
+          *ngIf=" actifUser.uid != user.id"
+          (click)="addToMemberGroup(user)"
+        >
+          <ion-avatar slot="start">
+            <img src="{{user.photo}}" />
+            <!-- <ion-icon name="people-outline"></ion-icon> -->
+          </ion-avatar>
+          <ion-label>
+            <div class="flex_box">
+              <h3>{{user.nom}}</h3>
+            </div>
+          </ion-label>
+          <ion-icon
+            *ngIf="user.isThere "
+            class="colorCitron"
+            shape="round"
+            slot="end"
+            name="checkmark-done-circle-outline"
+          ></ion-icon>
+        </ion-item>
+      </div>
+    </div>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

@@ -45,6 +45,8 @@ export class SigninPage implements OnInit {
     this.fireebaseAuth
       .loginUser(datas.email, datas.password)
       .then((res) => {
+        this.userForms.value.email = '';
+        this.userForms.value.password = '';
         if (res.user.emailVerified == false) {
           this.serviceNotification.confirmationAlert(
             "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?",

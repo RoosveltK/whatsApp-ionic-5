@@ -28,7 +28,7 @@
   <ion-list>
     <ion-item routerLink="/creategroup">
       <ion-avatar slot="start" class="color_sucess">
-        <img src="../../assets/groupe.png" />
+        <img src="../../assets/discussion.png" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">
@@ -37,17 +37,27 @@
       </ion-label>
     </ion-item>
 
-    <div *ngFor="let user of users">
-      <ion-item *ngIf=" actifUser.uid != user.id" (click)="startDiscu(user)">
-        <ion-avatar slot="start">
-          <img src="{{user.photo}}" />
-        </ion-avatar>
-        <ion-label>
-          <div class="flex_box">
-            <h3>{{user.nom}}</h3>
-          </div>
-        </ion-label>
-      </ion-item>
+    <div class="center">
+      <ion-spinner
+        color="success"
+        *ngIf="users.length == 0"
+        name="crescent"
+      ></ion-spinner>
+    </div>
+
+    <div *ngIf="users.length != 0">
+      <div *ngFor="let user of users">
+        <ion-item (click)="startDiscu(user)">
+          <ion-avatar slot="start">
+            <img src="{{user.photo}}" />
+          </ion-avatar>
+          <ion-label>
+            <div class="flex_box">
+              <h3>{{user.nom}}</h3>
+            </div>
+          </ion-label>
+        </ion-item>
+      </div>
     </div>
   </ion-list>
 </ion-content>

@@ -27,19 +27,28 @@
 
     <ion-item>
       <ion-avatar slot="start">
-        <img src="../../assets/bg.png" />
+        <img src="../../assets/designer.png" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">
           <h3>Thèmes</h3>
         </div>
-        <p>Changez le thème de votre application</p>
       </ion-label>
+      <ion-select
+        (ionChange)="changeTheme()"
+        ok-text="Changer"
+        cancel-text="Annuler"
+        [(ngModel)]="theme"
+        value="theme"
+      >
+        <ion-select-option value="clair">Clair</ion-select-option>
+        <ion-select-option value="sombre">Sombre</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-avatar slot="start">
-        <img src="../../assets/bg.png" />
+        <img src="../../assets/translation.png" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">

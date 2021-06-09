@@ -26,38 +26,61 @@
 <ion-content [fullscreen]="true">
   <div class="infoGroup">
     <ion-buttons slot="start">
-      <ion-button color="gray" shape="round" size="small">
+      <ion-button
+        (click)="loadImageActionSheet1(event)"
+        color="gray"
+        shape="round"
+        size="small"
+      >
         <ion-icon slot="icon-only" name="camera"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <input
+      #userInput
+      style="position: absolute; width: 0; height: 0; opacity: 0"
+      type="file"
+      (change)="loadImageFromDevice1($event.target.files)"
+      class="fileInput"
+      accept="image/png, image/jpeg"
+    />
     <ion-input
       [(ngModel)]="groupName"
       placeholder="Taper sujet du groupe"
     ></ion-input>
 
     <ion-buttons color="gray" slot="end">
-      <ion-button><ion-icon name="happy" size="small"></ion-icon></ion-button>
+      <ion-button (click)="openEmojiPicker()"
+        ><ion-icon name="happy" size="small"></ion-icon
+      ></ion-button>
     </ion-buttons>
   </div>
   <p>
     Veuillez donner un sujet au groupe et éventuellement, une icone de groupe
   </p>
-  <ion-fab horizontal="end">
-    <ion-fab-button (click)="createGroup()">
-      <ion-icon name="arrow-forward-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
-  <!-- {{Participants : member.length}} -->
-  <div class="memberOfGroup" *ngFor="let user of users">
-    <ion-avatar slot="start">
-      <img src="{{user.photo}}" />
-      <!-- <ion-icon name="people-outline"></ion-icon> -->
-    </ion-avatar>
-    <ion-label>
-      <div class="flex_box">
-        <h3>{{user.nom}}</h3>
-      </div>
-    </ion-label>
+  <div class="fab">
+    <ion-fab horizontal="end">
+      <ion-fab-button (click)="createGroup()">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
+
+  <div class="ion-padding">
+    Participants : {{ member.length}}<br />
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let user of member" size="auto">
+          <span>
+            <ion-avatar>
+              <img src="{{user.photo}}" />
+            </ion-avatar>
+            <h4>{{user.nom}}</h4>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- </div> -->
 </ion-content>

@@ -12,7 +12,6 @@ export class CreategroupPage implements OnInit {
   public usersOfGroup = [];
   public searchText;
 
-  public simpleUsers = [];
   public users = [];
   public actifUser;
   public actifUserofDB;
@@ -20,17 +19,12 @@ export class CreategroupPage implements OnInit {
 
   ngOnInit() {
     this.actifUser = this.service.recupActifUser();
-    this.service.recupUser(this.simpleUsers).then(() => {
-      this.simpleUsers.forEach((user) => {
-        this.users.push({
-          id: user.id,
-          nom: user.nom,
-          photo: user.photo,
-          isThere: false,
-        });
-      });
-      this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB'));
-    });
+    this.service
+      .recupUser(this.users)
+      .then(
+        () =>
+          (this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB')))
+      );
   }
 
   backHome = () => {
@@ -40,6 +34,7 @@ export class CreategroupPage implements OnInit {
   showSearchBar() {
     this.show = true;
   }
+
   addToMemberGroup(user) {
     let isTab = false;
     let indice;

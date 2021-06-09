@@ -33,23 +33,23 @@ export class ConversationComponent implements OnInit {
     public router: Router,
     public databasFire: AngularFirestore
   ) {
-    this.serviceFireBase.verificationAuthUser((user) => {
-      if (user) {
-        localStorage.setItem('userMetaData', JSON.stringify(user.metadata));
-        this.userStatus = true;
-      } else {
-        var getStorage = JSON.parse(localStorage.getItem('userMetaData'));
-        const date = new Date(getStorage.lastSignInTime);
-        if (date == new Date()) {
-          this.dateConnect = `${date.getHours()}:${date.getMinutes()}`;
-          this.secondStatus = true;
-        } else {
-          this.dateConnect = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-          this.secondStatus = false;
-        }
-      }
-    });
-    this.isMessageRead = true;
+    // this.serviceFireBase.verificationAuthUser((user) => {
+    //   if (user) {
+    //     localStorage.setItem('userMetaData', JSON.stringify(user.metadata));
+    //     this.userStatus = true;
+    //   } else {
+    //     var getStorage = JSON.parse(localStorage.getItem('userMetaData'));
+    //     const date = new Date(getStorage.lastSignInTime);
+    //     if (date == new Date()) {
+    //       this.dateConnect = `${date.getHours()}:${date.getMinutes()}`;
+    //       this.secondStatus = true;
+    //     } else {
+    //       this.dateConnect = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+    //       this.secondStatus = false;
+    //     }
+    //   }
+    // });
+    // this.isMessageRead = true;
   }
 
   ngOnInit() {

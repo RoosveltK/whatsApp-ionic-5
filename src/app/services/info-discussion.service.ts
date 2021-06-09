@@ -22,7 +22,6 @@ export interface tchat {
 })
 export class InfoDiscussionService {
   public myTchats: any = [];
-  public fii = false;
   constructor(
     public fireMessage: AngularFirestore,
     private afStorage: AngularFireStorage
@@ -35,16 +34,23 @@ export class InfoDiscussionService {
         res.map((element) => {
           this.myTchats.push(element.payload.doc.data());
         });
+        
       });
   }
 
   public findUserById(idTchat: string, idTchat2: string) {
-    return this.myTchats.map((element) => {
-      if (element.id.localeCompare(idTchat) == 0) return idTchat;
-      else if (element.id.localeCompare(idTchat2) == 0) return idTchat2;
+    let id = null;
+    this.myTchats.map((element) => {
+      if (element.id.localeCompare(idTchat) == 0) {
+        id = idTchat;
+      } else if (element.id.localeCompare(idTchat2) == 0) {
+        id = idTchat2;
+      }
     });
-    return 0;
+    return id;
   }
+
+
 
   //Actif user
   recupActifUser = () => JSON.parse(localStorage.getItem('users'));
@@ -85,6 +91,7 @@ export class InfoDiscussionService {
                 email: element.email,
                 id: element.id,
                 photo: res,
+                isThere: false,
               });
             }
           });

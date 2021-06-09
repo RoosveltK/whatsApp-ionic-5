@@ -10,15 +10,28 @@
 <ion-content class="ion-padding align">
   <form [formGroup]="user" (ngSubmit)="addUser(user.value)">
     <ion-card-content>
-      <ion-input
+      <!-- <ion-input
         type="file"
         (change)="saveFile($event.target.files)"
-      ></ion-input>
+      ></ion-input> -->
 
-      <!-- <ngp-image-picker
-        [_config]="imagePickerConf"
-        ($imageChanged)="saveFile($event)"
-      ></ngp-image-picker> -->
+      <div class="center">
+        <ion-avatar
+          (click)="loadImageActionSheet1(event)"
+          size="big"
+          slot="start"
+        >
+          <img src="../../assets/bg.png" />
+        </ion-avatar>
+      </div>
+      <input
+        #userInput
+        style="position: absolute; width: 0; height: 0; opacity: 0"
+        type="file"
+        (change)="loadImageFromDevice1($event.target.files)"
+        class="fileInput"
+        accept="image/png, image/jpeg"
+      />
     </ion-card-content>
     <ion-item class="ion-margin-top">
       <ion-label position="floating">Email</ion-label>

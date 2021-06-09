@@ -96,4 +96,10 @@ export class FirebaseService {
       })
       .catch((err) => this.serviceNotification.dangerToast(err.message));
   }
+
+  uploadImage(file: File, path) {
+    // Image reference
+    const imageRef = this.afStorage.ref(path);
+    return imageRef.put(file);
+  }
 }
