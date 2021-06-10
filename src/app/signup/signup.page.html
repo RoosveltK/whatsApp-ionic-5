@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar id="header">
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backLogin()"></ion-back-button>
@@ -8,20 +8,25 @@
 </ion-header>
 
 <ion-content class="ion-padding align">
+  <div class="bg"></div>
   <form [formGroup]="user" (ngSubmit)="addUser(user.value)">
     <ion-card-content>
-      <!-- <ion-input
-        type="file"
-        (change)="saveFile($event.target.files)"
-      ></ion-input> -->
-
-      <div class="center">
+      <div *ngIf="!isImageThere" class="center">
         <ion-avatar
           (click)="loadImageActionSheet1(event)"
           size="big"
           slot="start"
         >
-          <img src="../../assets/bg.png" />
+          <img class="image" src="../../assets/camera.png" />
+        </ion-avatar>
+      </div>
+      <div *ngIf="isImageThere" class="center">
+        <ion-avatar
+          (click)="loadImageActionSheet1(event)"
+          size="big"
+          slot="start"
+        >
+          <img class="image" src="{{image}}" />
         </ion-avatar>
       </div>
       <input
@@ -29,11 +34,10 @@
         style="position: absolute; width: 0; height: 0; opacity: 0"
         type="file"
         (change)="loadImageFromDevice1($event.target.files)"
-        class="fileInput"
         accept="image/png, image/jpeg"
       />
     </ion-card-content>
-    <ion-item class="ion-margin-top">
+    <ion-item>
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="email" required></ion-input>
     </ion-item>
@@ -60,5 +64,85 @@
     >
       Valider
     </ion-button>
+  </form>
+</ion-content> -->
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="backLogin()" color="primary">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Création de<br />compte</h1>
+  <ion-card-content>
+    <div *ngIf="!isImageThere" class="center">
+      <ion-avatar
+        (click)="loadImageActionSheet1(event)"
+        size="big"
+        slot="start"
+      >
+        <img class="image" src="../../assets/cameraSignup.png" />
+      </ion-avatar>
+      Appuyez sur la caméra pour sélectionner une image de profil
+    </div>
+    <div *ngIf="isImageThere" class="center">
+      <ion-avatar
+        (click)="loadImageActionSheet1(event)"
+        size="big"
+        slot="start"
+      >
+        <img class="image" [src]="image" />
+      </ion-avatar>
+    </div>
+    <input
+      #userInput
+      style="position: absolute; width: 0; height: 0; opacity: 0"
+      type="file"
+      (change)="loadImageFromDevice1($event)"
+      accept="image/png, image/jpeg"
+    />
+  </ion-card-content>
+
+  <form id="form" [formGroup]="user" (ngSubmit)="addUser(user.value)">
+    <ion-item class="ion-margin-bottom ion-text-center">
+      <ion-input
+        placeholder="votre email"
+        formControlName="email"
+        type="email"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom ion-text-center">
+      <ion-input
+        placeholder="votre nom"
+        formControlName="nom"
+        type="text"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom ion-text-center">
+      <ion-input
+        formControlName="password"
+        placeholder="xxxxxxx"
+        type="password"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-button
+      [disabled]="!user.valid"
+      expand="block"
+      type="submit"
+      shape="round"
+      color="success"
+      >connexion</ion-button
+    >
   </form>
 </ion-content>

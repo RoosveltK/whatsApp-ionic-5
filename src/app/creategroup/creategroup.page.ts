@@ -18,9 +18,9 @@ export class CreategroupPage implements OnInit {
   constructor(private router: Router, public service: InfoDiscussionService) {}
 
   ngOnInit() {
-    this.actifUser = this.service.recupActifUser();
+    this.actifUser = this.service.getActifUser();
     this.service
-      .recupUser(this.users)
+      .getAllUsers(this.users)
       .then(
         () =>
           (this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB')))

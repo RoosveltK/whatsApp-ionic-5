@@ -42,6 +42,7 @@ export class SigninPage implements OnInit {
   ) {}
 
   loginUser(datas) {
+    this.serviceNotification.loadingController(2000);
     this.fireebaseAuth
       .loginUser(datas.email, datas.password)
       .then((res) => {

@@ -37,7 +37,7 @@ export class ConversationgroupeComponent implements OnInit {
 
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
     this.infoService
-      .getInDBSpecifique()
+      .getAllTchats()
       .doc(this.idTchat)
       .snapshotChanges()
       .subscribe((res) => (this.allMessages = res.payload.get('messages')));
@@ -52,7 +52,7 @@ export class ConversationgroupeComponent implements OnInit {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
   };
-  
+
   getInfoOfTchat = async () =>
     (this.groupOfTchat = JSON.parse(localStorage.getItem('groupOfTchat')));
 
@@ -66,7 +66,7 @@ export class ConversationgroupeComponent implements OnInit {
     };
     this.allMessages.push(infoMessage);
     this.infoService
-      .getInDBSpecifique()
+      .getAllTchats()
       .doc(this.idTchat)
       .update({ messages: this.allMessages });
 

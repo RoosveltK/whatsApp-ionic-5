@@ -67,4 +67,14 @@ export class NotificationService {
 
     await alert.present();
   }
+
+  async loadingController(time: number) {
+    const loading = await this.loading.create({
+      spinner: 'crescent',
+      duration: time,
+      message: 'Veuillez patienter...',
+      translucent: true,
+    });
+    return await loading.present();
+  }
 }

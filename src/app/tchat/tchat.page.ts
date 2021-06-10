@@ -3,8 +3,7 @@ import {
   tchat,
 } from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tchat',
@@ -16,30 +15,28 @@ export class TchatPage implements OnInit {
   public userData;
   public allTchat: tchat[] = [];
   constructor(
-    public infoSevice: InfoDiscussionService,
-    private activateRoute: ActivatedRoute,
     public router: Router,
-    private serviceDiscussion: InfoDiscussionService,
-    private fireMessage: AngularFirestore
+    private serviceDiscussion: InfoDiscussionService
   ) {}
 
   ngOnInit() {
-    this.fireMessage
-      .collection(`tchats/`)
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.serviceDiscussion
+      .getAllTchats()
       .snapshotChanges()
       .subscribe((res) => {
         this.allTchat = [];
         res.map((element: any) => {
           this.allTchat.push(element.payload.doc.data());
         });
-        console.log(this.allTchat);
       });
   }
 
   public viewConversation(datas) {
-    localStorage.setItem('userOfTchat', JSON.stringify(datas));
-    const link = ['conversation', datas.id];
-    this.router.navigate(link);
+    // localStorage.setItem('userOfTchat', JSON.stringify(datas));
+    // const link = ['conversation', datas.id];
+    // this.router.navigate(link);
+    console.log(datas);
   }
 
   openNewDisc() {

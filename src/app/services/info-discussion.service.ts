@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map } from 'rxjs/operators';
@@ -20,14 +20,15 @@ export interface tchat {
 @Injectable({
   providedIn: 'root',
 })
-export class InfoDiscussionService {
+export class InfoDiscussionService implements OnInit {
   public myTchats: any = [];
   constructor(
     public fireMessage: AngularFirestore,
     private afStorage: AngularFireStorage
-  ) {
-    this.fireMessage
-      .collection(`tchats/`)
+  ) {}
+
+  ngOnInit() {
+    this.getAllTchats()
       .snapshotChanges()
       .subscribe((res) => {
         this.myTchats = [];
@@ -37,34 +38,32 @@ export class InfoDiscussionService {
       });
   }
 
-  public findUserById(idTchat: string, idTchat2: string) {
+  //
+  findTChatById = (idTchat: string, idTchat2: string) => {
     let id = null;
     this.myTchats.map((element) => {
-      if (element.id.localeCompare(idTchat) == 0) {
-        id = idTchat;
-      } else if (element.id.localeCompare(idTchat2) == 0) {
-        id = idTchat2;
-      }
+      if (element.id.localeCompare(idTchat) == 0) id = idTchat;
+      else if (element.id.localeCompare(idTchat2) == 0) id = idTchat2;
     });
     return id;
-  }
+  };
 
-  //Actif user
-  recupActifUser = () => JSON.parse(localStorage.getItem('users'));
-  //Sauvegarder les tchats
+  //Recuperer l'utilisateur qui utilise l'application sur cet appareil
+  getActifUser = () => JSON.parse(localStorage.getItem('users'));
+
+  //Sauvegarder les tchats en BD grace a l'id
   saveTchatInDB = (id) => this.fireMessage.doc(`tchats/${id}`);
 
-  //Get les tchats
-  getInDBSpecifique = () => this.fireMessage.collection(`tchats`);
+  //Lien pour recuperer tout les tchats presents en BD
+  getAllTchats = () => this.fireMessage.collection(`tchats/`);
 
-  // Get les tchats
-  // getInDbAll = () => this.fireMessage.collection(`tchats/`);
+  //Lien pour recuperer tout users presents en BD
+  getUsers = () => this.fireMessage.collection(`users/`);
 
-  //Recuperer messages
-  recupUser = async (users) => {
+  //Recuperer les utilisateurs avec les photos : chemin absolu
+  getAllUsers = async (users) => {
     var tableau = [];
-    this.fireMessage
-      .collection(`users/`)
+    this.getUsers()
       .get()
       .subscribe((ss) => {
         ss.docs.forEach((doc) => {
@@ -74,7 +73,7 @@ export class InfoDiscussionService {
         tableau.map((element) => {
           const refImage = this.afStorage.ref(element.photo);
           refImage.getDownloadURL().subscribe((res) => {
-            if (element.id.localeCompare(this.recupActifUser().uid) == 0) {
+            if (element.id.localeCompare(this.getActifUser().uid) == 0) {
               const datas = {
                 nom: element.nom,
                 email: element.email,

@@ -53,12 +53,12 @@ export class ConversationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userInfo = this.infoService.recupActifUser();
+    this.userInfo = this.infoService.getActifUser();
 
     //Reception des infos du tchat
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
     this.infoService
-      .getInDBSpecifique()
+      .getAllTchats()
       .doc(this.idTchat)
       .snapshotChanges()
       .subscribe((res) => (this.allMessages = res.payload.get('messages')));
@@ -79,7 +79,7 @@ export class ConversationComponent implements OnInit {
     };
     this.allMessages.push(infoMessage);
     this.infoService
-      .getInDBSpecifique()
+      .getAllTchats()
       .doc(this.idTchat)
       .update({ messages: this.allMessages });
 

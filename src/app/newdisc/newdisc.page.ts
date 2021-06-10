@@ -24,9 +24,9 @@ export class NewdiscPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.actifUser = this.service.recupActifUser();
+    this.actifUser = this.service.getActifUser();
     this.service
-      .recupUser(this.users)
+      .getAllUsers(this.users)
       .then(
         () =>
           (this.actifUserofDB = JSON.parse(
@@ -57,7 +57,7 @@ export class NewdiscPage implements OnInit {
     };
     localStorage.setItem('userOfTchat', JSON.stringify(userData));
 
-    const idTchat = this.service.findUserById(
+    const idTchat = this.service.findTChatById(
       newTchat.id,
       `${this.actifUser.uid}${userData.id}`
     );

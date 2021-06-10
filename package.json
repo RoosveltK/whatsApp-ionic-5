@@ -27,6 +27,8 @@
     "@capacitor/core": "2.4.7",
     "@ionic-native/in-app-browser": "^5.33.1",
     "@ionic/angular": "^5.5.2",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "firebase": "^8.6.3",
     "ionic4-emoji-picker": "^0.0.2",
     "ngp-image-picker": "^1.4.0",

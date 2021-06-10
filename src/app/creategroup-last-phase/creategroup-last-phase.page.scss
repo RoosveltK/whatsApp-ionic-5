@@ -8,6 +8,7 @@ div ~ p {
   margin: 0;
   color: grey;
 }
+
 ion-grid {
   text-align: center;
   h4 {
@@ -15,12 +16,15 @@ ion-grid {
     padding: 4px;
   }
 }
+
 ion-input {
   border-bottom: 2px #128c7e solid;
 }
+
 .fab {
   margin-bottom: 5px;
 }
+
 .contacts {
   margin-top: 5px;
   p {
@@ -33,6 +37,12 @@ ion-input {
     margin-bottom: 0;
   }
 }
+
 ion-button {
   --background: gray;
+}
+
+ion-avatar {
+  width: 50px;
+  height: 50px;
 }

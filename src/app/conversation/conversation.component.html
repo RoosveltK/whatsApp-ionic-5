@@ -35,6 +35,7 @@
     <ion-item lines="none" *ngFor="let message of allMessages">
       <ion-badge
         color="warning"
+        class="ion-text-wrap"
         *ngIf="message.uidSend === userInfo.uid"
         slot="end"
         >{{ message.messagetext }}
@@ -54,6 +55,7 @@
         color="light"
         *ngIf="message.uidSend != userInfo.uid"
         slot="start"
+        class="ion-text-wrap"
         >{{ message.messagetext }}
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
       >

@@ -7,6 +7,7 @@ import {
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-creategroup-last-phase',
@@ -23,11 +24,14 @@ export class CreategroupLastPhasePage implements OnInit {
   public memberId = [];
   public image = undefined;
   public infoUser;
+  public dataImage = undefined;
+  isImageThere: boolean = false;
   constructor(
     private serviceTchat: InfoDiscussionService,
     public serviceAuth: FirebaseService,
     private router: Router,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private serviceNotification: NotificationService
   ) {}
 
   ngOnInit() {
@@ -57,19 +61,21 @@ export class CreategroupLastPhasePage implements OnInit {
       });
     });
 
-    let tchatGroup: tchat = {
+    let tchatGroup = {
       id: id,
       nom: [this.groupName],
       photo: [pathOfDefaultImage],
       users: this.memberId,
       messages: [],
+      seeForAll: false,
     };
 
     if (this.groupName.localeCompare('') == 0)
       console.log(
         `  Veuillez donner un sujet au groupe et éventuellement, une icone de groupe`
       );
-    else if (this.image == undefined && this.groupName != '') {
+    else if (this.dataImage == undefined && this.groupName != '') {
+      this.serviceNotification.loadingController(5000);
       this.serviceTchat
         .saveTchatInDB(tchatGroup.id)
         .set(tchatGroup)
@@ -79,20 +85,21 @@ export class CreategroupLastPhasePage implements OnInit {
         })
         .catch((err) => console.log(err));
     } else if (
-      this.image !== undefined &&
-      this.image != 0 &&
+      this.dataImage !== undefined &&
+      this.dataImage != 0 &&
       this.groupName != ''
     ) {
-      const pathFile = `groupImage/uid${id}_${this.image.name}`;
-
+      this.serviceNotification.loadingController(5000);
+      const pathFile = `groupImage/uid${id}_${this.dataImage.name}`;
       tchatGroup = {
         id: id,
         nom: [this.groupName],
         photo: [pathFile],
         users: this.memberId,
         messages: [],
+        seeForAll: false,
       };
-      this.serviceAuth.uploadImage(this.image, pathFile).then(() => {
+      this.serviceAuth.uploadImage(this.dataImage, pathFile).then(() => {
         this.serviceTchat
           .saveTchatInDB(tchatGroup.id)
           .set(tchatGroup)
@@ -109,9 +116,19 @@ export class CreategroupLastPhasePage implements OnInit {
     this.userInputElement.click();
   }
 
-  loadImageFromDevice1(event) {
-    this.image = this.serviceAuth.getAndVerifyFile(event);
+  loadImageFromDevice1(e) {
+    this.dataImage = this.serviceAuth.getAndVerifyFile(e.target.files);
+
+    const reader = new FileReader();
+    this.isImageThere = true;
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => (this.image = reader.result as string);
+    }
   }
+
   async openEmojiPicker() {
     const modal = await this.modalCtrl.create({
       component: Ionic4EmojiPickerComponent,

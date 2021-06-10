@@ -25,7 +25,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="infoGroup">
-    <ion-buttons slot="start">
+    <ion-buttons *ngIf="!isImageThere" slot="start">
       <ion-button
         (click)="loadImageActionSheet1(event)"
         color="gray"
@@ -36,11 +36,17 @@
       </ion-button>
     </ion-buttons>
 
+    <div *ngIf="isImageThere" class="flex_box">
+      <ion-avatar slot="start" (click)="loadImageActionSheet1(event)">
+        <img [src]="image" />
+      </ion-avatar>
+    </div>
+
     <input
       #userInput
       style="position: absolute; width: 0; height: 0; opacity: 0"
       type="file"
-      (change)="loadImageFromDevice1($event.target.files)"
+      (change)="loadImageFromDevice1($event)"
       class="fileInput"
       accept="image/png, image/jpeg"
     />

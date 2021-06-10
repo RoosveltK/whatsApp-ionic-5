@@ -68,7 +68,7 @@ export class FirebaseService {
     return file;
   }
 
-  uploadImageAndCreateAccount(file: File, datas: User, user) {
+  async uploadImageAndCreateAccount(file: File, datas: User, user) {
     // Storage path
     const fileStoragePath = `userProfilImage/${file.name}_UID:${user.uid}`;
 
@@ -83,12 +83,7 @@ export class FirebaseService {
           nom: datas.nom,
           photo: fileStoragePath,
         });
-        // this.loading.create({
-        //   duration: 3000,
-        // });
-        setTimeout(() => {
-          this.router.navigate(['/signin']);
-        }, 2000);
+
         this.verificationEmail(user);
         this.serviceNotification.successToast(
           `Compte cree avec succes, consulter votre boite mail`

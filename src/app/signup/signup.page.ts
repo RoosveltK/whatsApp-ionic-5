@@ -12,15 +12,13 @@ import { Router } from '@angular/router';
 export class SignupPage implements OnInit {
   @ViewChild('userInput') userInputViewChild: ElementRef;
   public userInputElement: HTMLInputElement;
+  public isImageThere = false;
 
   public user: FormGroup;
   public image;
-  imagePickerConf = {
-    borderRadius: '50%',
-    language: 'en',
-    width: '200px',
-    height: '200px',
-  };
+
+  public dataImage;
+
   constructor(
     public formBuilder: FormBuilder,
     public firebaseService: FirebaseService,
@@ -46,33 +44,36 @@ export class SignupPage implements OnInit {
     this.userInputElement.click();
   }
 
-  loadImageFromDevice1(event) {
-    this.image = this.firebaseService.getAndVerifyFile(event);
+  loadImageFromDevice1(e) {
+    const reader = new FileReader();
+    this.dataImage = this.firebaseService.getAndVerifyFile(e.target.files);
+    this.isImageThere = true;
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => (this.image = reader.result as string);
+    }
   }
 
   addUser = (userInfo) => {
-    if (this.image == undefined || this.image == 0) {
+    if (this.dataImage == undefined || this.dataImage == 0) {
       this.serviceNotification.dangerToast(
         `Veuillez selectionner une photo de profil conforme avant de continuer`
       );
       return;
     }
+    this.serviceNotification.loadingController(3000);
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
-      .then((res) =>
-        this.firebaseService.uploadImageAndCreateAccount(
-          this.image,
-          userInfo,
-          res.user
-        )
-      )
+      .then((res) => {
+        this.firebaseService
+          .uploadImageAndCreateAccount(this.dataImage, userInfo, res.user)
+          .then(() => this.router.navigate(['/signin']));
+      })
       .catch((err) => {
         this.serviceNotification.dangerToast(err.message);
       });
   };
-
-  saveFile = (fichier) =>
-    (this.image = this.firebaseService.getAndVerifyFile(fichier));
-
   backLogin = () => this.router.navigate(['/']);
 }

@@ -1,63 +1,63 @@
-<ion-content class="ion-padding">
-  <form [formGroup]="userForms" (ngSubmit)="loginUser(userForms.value)">
-    <ion-item class="ion-margin-top">
-      <ion-label position="floating">Email</ion-label>
+<ion-header class="ion-no-border">
+  <ion-toolbar> </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="header">
+    <h1>Connexion</h1>
+    <img src="../../assets/logo.png" />
+  </div>
+
+  <form
+    id="form"
+    [formGroup]="userForms"
+    (ngSubmit)="loginUser(userForms.value)"
+  >
+    <ion-item class="ion-margin-bottom ion-text-center">
       <ion-input
-        formControlName="email"
         type="email"
+        formControlName="email"
         placeholder="xxxx@gmail.com"
-        required
-      >
-        <!-- <ion-icon name="mail-outline"></ion-icon> -->
-      </ion-input>
+      ></ion-input>
     </ion-item>
-    <div>
+    <div class="error_message">
       <ng-container *ngFor="let validation of validationUserMessage.email">
         <div
-          class="error_message"
           *ngIf="userForms.get('email').hasError(validation.type) && ( userForms.get('email').dirty  )"
         >
           {{validation.message}}
         </div>
       </ng-container>
     </div>
-    <!-- A revoir || usersForms.get('email').touched -->
-    <ion-item>
-      <ion-label position="floating">Mot de passe</ion-label>
-      <ion-input
-        formControlName="password"
-        type="password"
-        placeholder="xxxxx"
-        required
-      >
-        <!-- <ion-icon name="lock-closed"></ion-icon> -->
-      </ion-input>
-    </ion-item>
 
-    <div>
+    <ion-item class="ion-margin-bottom ion-text-center">
+      <ion-input
+        type="password"
+        formControlName="password"
+        placeholder="xxxxxxxxx"
+      ></ion-input>
+    </ion-item>
+    <div class="error_message">
       <ng-container *ngFor="let validation of validationUserMessage.password">
         <div
-          class="error_message"
           *ngIf="userForms.get('password').hasError(validation.type) && ( userForms.get('password').dirty )"
         >
           {{validation.message}}
         </div>
       </ng-container>
     </div>
-
     <div class="text_alternatif">
       <a [routerLink]="['/signup']">Vous n'avez pas encore de compte? </a>
       <a [routerLink]="['/forgetPassword']"> Mot de passe oublié</a>
     </div>
 
     <ion-button
-      color="success"
+      [disabled]="!userForms.valid"
       expand="block"
       type="submit"
-      [disabled]="!userForms.valid"
-      class="ion-margin-top"
+      shape="round"
+      color="success"
+      >connexion</ion-button
     >
-      CONNEXION
-    </ion-button>
   </form>
 </ion-content>
