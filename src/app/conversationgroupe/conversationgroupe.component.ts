@@ -3,7 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { PopoverGroupeComponent } from '../popover-groupe/popover-groupe.component';
+import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
+
 import { FirebaseService } from '../services/firebase.service';
 import {
   InfoDiscussionService,
@@ -17,14 +18,11 @@ import {
 })
 export class ConversationgroupeComponent implements OnInit {
   public idTchat;
-  public userInfo;
-  public dateConnect;
   public infoUserInDB;
-  public groupOfTchat = JSON.parse(localStorage.getItem('groupOfTchat'));
+  public groupOfTchat;
   public allMessages: any = [];
   public textMessage: any;
   public isMessageRead = false;
-  public image;
   constructor(
     public activateRoute: ActivatedRoute,
     public infoService: InfoDiscussionService,
@@ -36,7 +34,8 @@ export class ConversationgroupeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.infoUserInDB = JSON.parse(localStorage.getItem('infoUserInDB'));
+    this.infoUserInDB = this.infoService.getActifUser();
+    this.getInfoOfTchat();
 
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
     this.infoService
@@ -51,8 +50,8 @@ export class ConversationgroupeComponent implements OnInit {
     this.router.navigate(link);
   };
 
-  getInfoOfTchat = async () =>
-    (this.groupOfTchat = JSON.parse(localStorage.getItem('groupOfTchat')));
+  getInfoOfTchat = () =>
+    (this.groupOfTchat = JSON.parse(localStorage.getItem('GROUP_OF_TCHAT')));
 
   sendMessage = () => {
     const infoMessage: Message = {

@@ -1,8 +1,8 @@
 import { LanguageService } from './../services/language.service';
-import { PopoverLangComponent } from './../popover-lang/popover-lang.component';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { PopoverLangComponent } from '../components/popover/popover-lang/popover-lang.component';
 
 @Component({
   selector: 'app-parametre',
@@ -22,8 +22,8 @@ export class ParametrePage implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('actuelTheme') != null)
-      this.theme = JSON.parse(localStorage.getItem('actuelTheme'));
+    if (localStorage.getItem('ACTUEL_THEME') != null)
+      this.theme = JSON.parse(localStorage.getItem('ACTUEL_THEME'));
     else this.theme = 'light';
   }
   backHome = () => {
@@ -43,7 +43,6 @@ export class ParametrePage implements OnInit {
       component: PopoverLangComponent,
       cssClass: 'my-custom-class',
       translucent: true,
-      // event: ev,
     });
     await popover.present();
 

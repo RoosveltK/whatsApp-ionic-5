@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { InfoDiscussionService } from '../services/info-discussion.service';
 
 @Component({
   selector: 'app-signin',
@@ -40,7 +41,8 @@ export class SigninPage implements OnInit {
     public fireebaseAuth: FirebaseService,
     public router: Router,
     private serviceNotification: NotificationService,
-    private serviceLanguage: LanguageService
+    private serviceLanguage: LanguageService,
+    private serviceDiscussion: InfoDiscussionService
   ) {
     this.serviceLanguage.setInitialAppLanguage();
   }
@@ -50,8 +52,6 @@ export class SigninPage implements OnInit {
     this.fireebaseAuth
       .loginUser(datas.email, datas.password)
       .then((res) => {
-        this.userForms.value.email = '';
-        this.userForms.value.password = '';
         if (res.user.emailVerified == false) {
           this.serviceNotification.confirmationAlert(
             `SIGNIN.emailNonVerifie`,
@@ -61,7 +61,8 @@ export class SigninPage implements OnInit {
             `SIGNIN.no`
           );
         } else {
-          localStorage.setItem('users', JSON.stringify(res.user));
+          this.serviceDiscussion.setActifUser(res.user.uid);
+          // localStorage.setItem('users', JSON.stringify(res.user));
           this.router.navigate(['/tabs/tchat']);
         }
       })
@@ -69,13 +70,6 @@ export class SigninPage implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('actuelTheme') != null) {
-      let theme = JSON.parse(localStorage.getItem('actuelTheme'));
-      console.log(theme);
-
-      document.body.setAttribute('color-theme', theme);
-    }
-
     this.userForms = this.formBuilder.group({
       email: new FormControl(
         '',

@@ -30,6 +30,7 @@ export class FirebaseService {
 
   //Sauvegarder les datas d'un user
   saveUserInDB = (id) => this.aFireStore.doc(`users/${id}`);
+  
 
   //Envoyer l'email de verification
   verificationEmail = (userConnected) => userConnected.sendEmailVerification();
@@ -69,7 +70,7 @@ export class FirebaseService {
   }
 
   createRefForImage = (path) => this.afStorage.ref(path);
-  
+
   async uploadImageAndCreateAccount(file: File, datas: User, user) {
     // Storage path
     const fileStoragePath = `userProfilImage/${file.name}_UID:${user.uid}`;
@@ -84,6 +85,8 @@ export class FirebaseService {
           email: datas.email,
           nom: datas.nom,
           photo: fileStoragePath,
+          statut: false,
+          lastConnect: 0,
         });
 
         this.verificationEmail(user);
@@ -98,5 +101,17 @@ export class FirebaseService {
     // Image reference
     const imageRef = this.afStorage.ref(path);
     return imageRef.put(file);
+  }
+
+
+  statutUser=(user)=>{
+    this.saveUserInDB(user.id).set({
+      id: user.id,
+      email: user.email,
+      nom: user.nom,
+      photo: user.photo,
+      statut: true,
+      lastConnect: 0,
+    });
   }
 }

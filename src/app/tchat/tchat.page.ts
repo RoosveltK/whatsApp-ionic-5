@@ -1,8 +1,5 @@
 import { LanguageService } from './../services/language.service';
-import {
-  InfoDiscussionService,
-  tchat,
-} from './../services/info-discussion.service';
+import { InfoDiscussionService } from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -26,7 +23,7 @@ export class TchatPage implements OnInit {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('infoUserInDB'));
+    this.user = this.serviceDiscussion.getActifUser();
     this.serviceDiscussion
       .getAllTchats()
       .snapshotChanges()
@@ -42,14 +39,14 @@ export class TchatPage implements OnInit {
 
   public viewConversation(tchatId, id) {
     localStorage.setItem(
-      'userOfTchat',
+      'USER_OF_TCHAT',
       JSON.stringify(this.serviceDiscussion.searchUserById(id, this.allUsers))
     );
     this.router.navigate(['conversation', tchatId]);
   }
 
   public viewConversationGroup(groupTchatId) {
-    localStorage.setItem('groupOfTchat', JSON.stringify(groupTchatId));
+    localStorage.setItem('GROUP_OF_TCHAT', JSON.stringify(groupTchatId));
     this.router.navigate(['conversationgroupe', groupTchatId.id]);
   }
 

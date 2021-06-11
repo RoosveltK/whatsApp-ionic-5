@@ -39,11 +39,13 @@
   },
   "CREATEGROUP": {
     "addMember": "Ajouter des participants",
-    "statutGroupe": "Nouv. groupe"
+    "statutGroupe": "Nouv. groupe",
+    "search": "Rechercher..."
   },
   "CREATEGROUPLASTPHASE": {
     "addSubject": "Ajouter un sujet ",
-    "addPicture": "Veuillez donner un sujet au groupe et éventuellement, une icone de groupe"
+    "addPicture": "Veuillez donner un sujet au groupe et éventuellement, une icone de groupe",
+    "inputSubject": "Taper sujet du groupe"
   },
   "POPOVERS": {
     "Home": {

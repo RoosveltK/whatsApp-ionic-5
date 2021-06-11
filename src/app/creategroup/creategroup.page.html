@@ -25,7 +25,10 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
-    <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
+    <ion-input
+      [(ngModel)]="searchText"
+      placeholder="{{'CREATEGROUP.search'| translate}"
+    ></ion-input>
   </ion-toolbar>
 </ion-header>
 

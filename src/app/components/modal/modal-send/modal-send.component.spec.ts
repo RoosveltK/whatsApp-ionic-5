@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PopoverThemeComponent } from './popover-theme.component';
+import { ModalSendComponent } from './modal-send.component';
 
-describe('PopoverThemeComponent', () => {
-  let component: PopoverThemeComponent;
-  let fixture: ComponentFixture<PopoverThemeComponent>;
+describe('ModalSendComponent', () => {
+  let component: ModalSendComponent;
+  let fixture: ComponentFixture<ModalSendComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopoverThemeComponent ],
+      declarations: [ ModalSendComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PopoverThemeComponent);
+    fixture = TestBed.createComponent(ModalSendComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

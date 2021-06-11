@@ -47,12 +47,11 @@
       style="position: absolute; width: 0; height: 0; opacity: 0"
       type="file"
       (change)="loadImageFromDevice1($event)"
-      class="fileInput"
       accept="image/png, image/jpeg"
     />
     <ion-input
       [(ngModel)]="groupName"
-      placeholder="Taper sujet du groupe"
+      placeholder="{{'CREATEGROUPLASTPHASE.inputSubject'| translate}}"
     ></ion-input>
 
     <ion-buttons color="gray" slot="end">
@@ -86,5 +85,4 @@
       </ion-row>
     </ion-grid>
   </div>
-  <!-- </div> -->
 </ion-content>

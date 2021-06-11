@@ -7,7 +7,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { TabsPage } from './tabs.page';
-import { PopoverComponent } from '../popover/popover.component';
+import { PopoverComponent } from '../components/popover/popover/popover.component';
 
 @NgModule({
   imports: [

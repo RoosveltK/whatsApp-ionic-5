@@ -76,7 +76,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button shape="round" size="small">
+      <ion-button (click)="openEmojiPicker()" shape="round" size="small">
         <ion-icon slot="icon-only" name="happy"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -86,7 +86,7 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button><ion-icon name="attach" size="small"></ion-icon></ion-button>
+      <ion-button (click)="presentPopover()"><ion-icon name="attach" size="small"></ion-icon></ion-button>
       <ion-button (click)="sendMessage()">
         <ion-icon name="send" color="success"></ion-icon
       ></ion-button>

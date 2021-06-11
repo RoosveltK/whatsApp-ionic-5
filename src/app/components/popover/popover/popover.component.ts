@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
-import { FirebaseService } from './../services/firebase.service';
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-popover',

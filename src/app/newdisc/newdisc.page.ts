@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import { NotificationService } from './../services/notification.service';
 import {
   InfoDiscussionService,
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
+const USER_OF_TCHAT = 'USER_OF_TCHAT';
 @Component({
   selector: 'app-newdisc',
   templateUrl: './newdisc.page.html',
@@ -21,19 +23,15 @@ export class NewdiscPage implements OnInit {
   constructor(
     public router: Router,
     public service: InfoDiscussionService,
-    private afStorage: AngularFireStorage,
-    private serviceNotification: NotificationService
-  ) {}
+    private serviceNotification: NotificationService,
+    private serviceLanguage: LanguageService
+  ) {
+    this.serviceLanguage.setInitialAppLanguage();
+  }
 
   ngOnInit() {
-    this.service
-      .getAllUsers(this.users)
-      .then(
-        () =>
-          (this.actifUserofDB = JSON.parse(
-            localStorage.getItem('infoUserInDB')
-          ))
-      );
+    this.actifUserofDB = this.service.getActifUser();
+    this.service.getAllUsers(this.users);
   }
 
   backHome = () => {
@@ -44,6 +42,7 @@ export class NewdiscPage implements OnInit {
   createGroup = () => {
     this.router.navigate(['/creategroup']);
   };
+
   showSearchBar() {
     this.show = true;
   }
@@ -56,8 +55,7 @@ export class NewdiscPage implements OnInit {
       users: [userData.id, this.actifUserofDB.id],
       messages: [],
     };
-    localStorage.setItem('userOfTchat', JSON.stringify(userData));
-
+    localStorage.setItem(USER_OF_TCHAT, JSON.stringify(userData));
     const idTchat = this.service.findTChatById(
       newTchat.id,
       `${this.actifUserofDB.id}${userData.id}`

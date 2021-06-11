@@ -21,8 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { PopoverLangComponent } from './popover-lang/popover-lang.component';
+
 import { ConversationgroupeComponent } from './conversationgroupe/conversationgroupe.component';
+import { PopoverLangComponent } from './components/popover/popover-lang/popover-lang.component';
 
 export function createTranslateHttpLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/lang/', '.json');

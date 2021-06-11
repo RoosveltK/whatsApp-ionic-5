@@ -1,0 +1,56 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="auto">
+        <span>
+          <ion-avatar button (click)="pickDocuments()">
+            <img id="first" src="assets/documents.png" />
+          </ion-avatar>
+          <h4>Documents</h4>
+        </span>
+      </ion-col>
+
+      <ion-col size="auto">
+        <span>
+          <ion-avatar button (click)="pickGallery()">
+            <img src="assets/gallery.png" />
+          </ion-avatar>
+          <h4>Galerie</h4>
+        </span>
+      </ion-col>
+
+      <ion-col size="auto">
+        <span>
+          <ion-avatar button (click)="pickAudio()">
+            <img src="assets/headphone.png" />
+          </ion-avatar>
+          <h4>Audio</h4>
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- input -->
+
+  <input
+    #documentInput
+    style="position: absolute; width: 0; height: 0; opacity: 0"
+    type="file"
+    (change)="loadDocument($event)"
+    accept=".doc, .docx, .zip, .rar, .pdf"
+  />
+  <input
+    #galleryInput
+    style="position: absolute; width: 0; height: 0; opacity: 0"
+    type="file"
+    (change)="loadGallery($event)"
+    accept=".png, .jpeg , .jpg , .mp4, .3gp "
+  />
+  <input
+    #audioInput
+    style="position: absolute; width: 0; height: 0; opacity: 0"
+    type="file"
+    (change)="loadAudio($event)"
+    accept=".mp3, .m4a"
+  />
+</ion-content>

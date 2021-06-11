@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
+import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 
 @Component({
   selector: 'app-conversation',
@@ -20,10 +23,9 @@ export class ConversationComponent implements OnInit {
   public secondStatus;
   public userInfo;
   public dateConnect;
-  public userofDB = JSON.parse(localStorage.getItem('infoUserInDB'));
-  public userOfTChat = JSON.parse(localStorage.getItem('userOfTchat'));
+  public userOfTChat;
   public allMessages: any = [];
-  public textMessage: any;
+  public textMessage: any = '';
   public isMessageRead = false;
 
   constructor(
@@ -31,7 +33,9 @@ export class ConversationComponent implements OnInit {
     public infoService: InfoDiscussionService,
     public serviceFireBase: FirebaseService,
     public router: Router,
-    public databasFire: AngularFirestore
+    public databasFire: AngularFirestore,
+    private modalCtrl: ModalController,
+    public popoverController: PopoverController
   ) {
     // this.serviceFireBase.verificationAuthUser((user) => {
     //   if (user) {
@@ -86,4 +90,32 @@ export class ConversationComponent implements OnInit {
 
     this.textMessage = '';
   };
+
+  async openEmojiPicker() {
+    const modal = await this.modalCtrl.create({
+      component: Ionic4EmojiPickerComponent,
+      showBackdrop: true,
+      componentProps: {
+        isInModal: true,
+      },
+    });
+
+    modal.present();
+    modal.onDidDismiss().then((event) => {
+      if (event != undefined && event.data != undefined) {
+        this.textMessage += event.data.data;
+      }
+    });
+  }
+
+  async presentPopover() {
+    const popover = await this.popoverController.create({
+      component: PopoverConversationComponent,
+      cssClass: 'my-custom-class',
+      translucent: true,
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+  }
 }

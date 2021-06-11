@@ -19,6 +19,11 @@ export class LanguageService {
       this.setLanguage(lng);
       this.selected = lng;
     }
+
+    if (localStorage.getItem('ACTUEL_THEME') != null) {
+      let theme = JSON.parse(localStorage.getItem('ACTUEL_THEME'));
+      document.body.setAttribute('color-theme', theme);
+    }
   }
 
   getLanguages() {

@@ -9,7 +9,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 import { NotificationService } from '../services/notification.service';
-
+const GROUP_OF_TCHAT = 'GROUP_OF_TCHAT;';
 @Component({
   selector: 'app-creategroup-last-phase',
   templateUrl: './creategroup-last-phase.page.html',
@@ -31,7 +31,7 @@ export class CreategroupLastPhasePage implements OnInit {
     private router: Router,
     private modalCtrl: ModalController,
     private serviceNotification: NotificationService,
-    private serviceLanguage:LanguageService
+    private serviceLanguage: LanguageService
   ) {}
 
   ngOnInit() {
@@ -89,7 +89,7 @@ export class CreategroupLastPhasePage implements OnInit {
           .saveTchatInDB(tchatGroup.id)
           .set(tchatGroup)
           .then(() => {
-            localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+            localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
             this.router.navigate(['conversationgroupe', tchatGroup.id]);
           })
           .catch((err) => console.log(err));
@@ -121,7 +121,7 @@ export class CreategroupLastPhasePage implements OnInit {
             .set(tchatGroup)
             .then(() => {
               this.router.navigate(['conversationgroupe', tchatGroup.id]);
-              localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+              localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
             })
             .catch((err) => console.log(err));
         });

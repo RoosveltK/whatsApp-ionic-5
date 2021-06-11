@@ -2,7 +2,7 @@ import { LanguageService } from './../services/language.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { PopoverComponent } from '../popover/popover.component';
+import { PopoverComponent } from '../components/popover/popover/popover.component';
 
 @Component({
   selector: 'app-tabs',

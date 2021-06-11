@@ -55,13 +55,13 @@ export class NotificationService {
       message: this.serviceLanguage.translateInstant(message),
       buttons: [
         {
-          text: text1,
+          text: this.serviceLanguage.translateInstant(text1),
 
           cssClass: 'secondary',
           handler: fonction1,
         },
         {
-          text: text2,
+          text: this.serviceLanguage.translateInstant(text2),
           handler: fonction2,
         },
       ],

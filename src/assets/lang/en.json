@@ -45,11 +45,13 @@
   },
   "CREATEGROUP": {
     "addMember": "Add member",
-    "statutGroupe": "New group"
+    "statutGroupe": "New group",
+    "search": "Search..."
   },
   "CREATEGROUPLASTPHASE": {
     "addSubject": "Add topic ",
-    "addPicture": "Please give the group subject and optionally, a group icon"
+    "addPicture": "Please give the group subject and optionally, a group icon",
+    "inputSubject": "Tap subject group"
   },
   "SERVICE": {
     "Notification": {

@@ -1,0 +1,29 @@
+<!-- <ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+</ion-header> -->
+<ion-content>
+  <img [src]="image" />
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="openEmojiPicker()" shape="round" size="small">
+        <ion-icon slot="icon-only" name="happy"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-input
+      [(ngModel)]="textMessage"
+      placeholder="Ajouter une legende"
+    ></ion-input>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="sendMessage()">
+        <ion-icon name="send" color="success"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

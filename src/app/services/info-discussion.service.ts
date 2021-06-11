@@ -17,14 +17,19 @@ export interface tchat {
   users: Array<string>;
   messages: Array<Message>;
 }
+///Varaible localStorage
+const INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
+
 @Injectable({
   providedIn: 'root',
 })
 export class InfoDiscussionService implements OnInit {
   public myTchats: any = [];
   public allUsers: any = [];
+  public usersInfoOfDB;
+
   constructor(
-    public fireMessage: AngularFirestore,
+    public afirestore: AngularFirestore,
     private afStorage: AngularFireStorage
   ) {}
 
@@ -42,14 +47,38 @@ export class InfoDiscussionService implements OnInit {
     return id;
   };
 
+  //Garder le user actif
+  setActifUser = (id) => {
+    this.afirestore
+      .collection(`users`)
+      .doc(id)
+      .snapshotChanges()
+      .subscribe((res) => {
+        console.log(res.payload.data());
+        let myInfo = {
+          id: res.payload.get('id'),
+          nom: res.payload.get('nom'),
+          email: res.payload.get('email'),
+          photo: res.payload.get('photo'),
+        };
+        const ref = this.afStorage.ref(myInfo.photo);
+        ref.getDownloadURL().subscribe((res) => {
+          myInfo.photo = res;
+          console.log(`avec lien`);
+          console.log(myInfo);
+          // localStorage.setItem(INF0_USER_CAME_FROM_DB, JSON.stringify(myInfo));
+        });
+      });
+  };
+
   //Recuperer l'utilisateur qui utilise l'application sur cet appareil
-  getActifUser = () => JSON.parse(localStorage.getItem('users'));
+  getActifUser = () => JSON.parse(localStorage.getItem(INF0_USER_CAME_FROM_DB));
 
   //Sauvegarder les tchats en BD grace a l'id
-  saveTchatInDB = (id) => this.fireMessage.doc(`tchats/${id}`);
+  saveTchatInDB = (id) => this.afirestore.doc(`tchats/${id}`);
 
   //Lien pour recuperer tout les tchats presents en BD
-  getAllTchats = () => this.fireMessage.collection(`tchats/`);
+  getAllTchats = () => this.afirestore.collection(`tchats/`);
 
   getInfoOfTchat = () => {
     this.getAllTchats()
@@ -63,7 +92,7 @@ export class InfoDiscussionService implements OnInit {
   };
 
   //Lien pour recuperer tout users presents en BD
-  getUsers = () => this.fireMessage.collection(`users/`);
+  getUsers = () => this.afirestore.collection(`users/`);
 
   searchUserById = (id, tab) => {
     let datas;
@@ -86,15 +115,9 @@ export class InfoDiscussionService implements OnInit {
         tableau.map((element) => {
           const refImage = this.afStorage.ref(element.photo);
           refImage.getDownloadURL().subscribe((res) => {
-            if (element.id.localeCompare(this.getActifUser().uid) == 0) {
-              const datas = {
-                nom: element.nom,
-                email: element.email,
-                id: element.id,
-                photo: res,
-              };
-              localStorage.setItem('infoUserInDB', JSON.stringify(datas));
-            } else {
+            if (element.id.localeCompare(this.getActifUser().id) == 0)
+              console.log(`!!!! On passe !!!!`);
+            else {
               users.push({
                 nom: element.nom,
                 email: element.email,
