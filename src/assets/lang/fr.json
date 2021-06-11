@@ -8,7 +8,22 @@
     "emailIncorrect": "L'email entré est incorrect, Réessayer",
     "passwordVide": "S'il vous plait entrez votre mot de passe",
     "passwordIncorrect": "Le mot de passe doit avoir au moins 5 caractères",
-    "emailNonVerifie": "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?"
+    "emailNonVerifie": "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?",
+    "yes": "oui",
+    "no": "non"
+  },
+  "FORGETPASSWORD": {
+    "send": "envoyer",
+    "reinitialise": "Réinitialiser le<br />mot de passe"
+  },
+  "SIGNUP": {
+    "create": "Création de<br />compte",
+    "tapCamera": "Appuyez sur l'image de caméra pour sélectionner une image de profil",
+    "emailInput": "votre email",
+    "nameInput": "votre nom",
+    "passwordInput": "entrez un mot de passe",
+    "submit": "Soumettre",
+    "picInput": "Veuillez selectionner une photo de profil avant de continuer"
   },
   "PARAMETRES": {
     "parametres": "Paramètres",
@@ -18,5 +33,27 @@
     "themeOption2": "Sombre",
     "langues": "Langues",
     "changeLangue": "Changez la langue de votre application"
+  },
+  "TABS": {
+    "tchat": "DISC."
+  },
+  "CREATEGROUP": {
+    "addMember": "Ajouter des participants",
+    "statutGroupe": "Nouv. groupe"
+  },
+  "CREATEGROUPLASTPHASE": {
+    "addSubject": "Ajouter un sujet ",
+    "addPicture": "Veuillez donner un sujet au groupe et éventuellement, une icone de groupe"
+  },
+  "POPOVERS": {
+    "Home": {
+      "logOut": "Déconnexion",
+      "close": "Close"
+    }
+  },
+  "SERVICE": {
+    "Notification": {
+      "wait": "Veuillez patienter..."
+    }
   }
 }

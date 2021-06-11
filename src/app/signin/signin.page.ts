@@ -19,17 +19,17 @@ import { Router } from '@angular/router';
 export class SigninPage implements OnInit {
   public validationUserMessage = {
     email: [
-      { type: 'required', message: "s'il vous plait entrez votre Email" },
-      { type: 'pattern', message: "l'email entré est incorrect, Réessayer" },
+      { type: 'required', message: `SIGNIN.emailVide` },
+      { type: 'pattern', message: `SIGNIN.emailIncorrect` },
     ],
     password: [
       {
         type: 'required',
-        message: "s'il vous plait entrez votre mot de passe",
+        message: `SIGNIN.passwordVide`,
       },
       {
         type: 'minLength',
-        message: 'le mot de passe doit avoir au moins 5 caractères',
+        message: `SIGNIN.passwordIncorrect`,
       },
     ],
   };
@@ -54,11 +54,11 @@ export class SigninPage implements OnInit {
         this.userForms.value.password = '';
         if (res.user.emailVerified == false) {
           this.serviceNotification.confirmationAlert(
-            "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?",
+            `SIGNIN.emailNonVerifie`,
             this.fireebaseAuth.verificationEmail(res.user),
             console.log('ok tu maitrises'),
-            'oui',
-            'non'
+            `SIGNIN.yes`,
+            `SIGNIN.no`
           );
         } else {
           localStorage.setItem('users', JSON.stringify(res.user));

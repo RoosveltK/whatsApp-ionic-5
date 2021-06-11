@@ -8,6 +8,7 @@ import { CreategroupLastPhasePageRoutingModule } from './creategroup-last-phase-
 
 import { CreategroupLastPhasePage } from './creategroup-last-phase.page';
 import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
     IonicModule,
     CreategroupLastPhasePageRoutingModule,
     Ionic4EmojiPickerModule,
+    TranslateModule,
   ],
   declarations: [CreategroupLastPhasePage],
 })

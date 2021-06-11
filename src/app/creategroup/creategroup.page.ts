@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { InfoDiscussionService } from '../services/info-discussion.service';
@@ -15,7 +16,13 @@ export class CreategroupPage implements OnInit {
   public users = [];
   public actifUser;
   public actifUserofDB;
-  constructor(private router: Router, public service: InfoDiscussionService) {}
+  constructor(
+    private router: Router,
+    public service: InfoDiscussionService,
+    public serviceLanguage: LanguageService
+  ) {
+    this.serviceLanguage.setInitialAppLanguage();
+  }
 
   ngOnInit() {
     this.actifUser = this.service.getActifUser();

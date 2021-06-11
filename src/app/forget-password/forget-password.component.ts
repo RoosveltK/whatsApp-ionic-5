@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import { NotificationService } from './../services/notification.service';
 import { Router } from '@angular/router';
 import { FirebaseService } from './../services/firebase.service';
@@ -20,10 +21,13 @@ export class ForgetPasswordComponent implements OnInit {
   constructor(
     public firebaseAuth: FirebaseService,
     public router: Router,
-    private serviceNotification: NotificationService
+    private serviceNotification: NotificationService,
+    private serviceLanguage: LanguageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.serviceLanguage.setInitialAppLanguage();
+  }
 
   sendVerification() {
     const link = ['/signin'];

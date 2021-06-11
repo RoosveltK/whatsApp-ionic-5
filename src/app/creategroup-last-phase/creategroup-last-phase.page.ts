@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import { FirebaseService } from './../services/firebase.service';
 import { Router } from '@angular/router';
 import {
@@ -29,12 +30,14 @@ export class CreategroupLastPhasePage implements OnInit {
     public serviceAuth: FirebaseService,
     private router: Router,
     private modalCtrl: ModalController,
-    private serviceNotification: NotificationService
+    private serviceNotification: NotificationService,
+    private serviceLanguage:LanguageService
   ) {}
 
   ngOnInit() {
     this.member = JSON.parse(localStorage.getItem('userofGroup'));
     this.infoUser = JSON.parse(localStorage.getItem('infoUserInDB'));
+    this.serviceLanguage.setInitialAppLanguage();
   }
   ngAfterViewInit() {
     this.userInputElement = this.userInputViewChild.nativeElement;

@@ -5,8 +5,10 @@
     </ion-buttons>
     <div class="contacts">
       <p>
-        Nouv. groupe<br />
-        <span *ngIf="usersOfGroup.length ==0 ">Ajouter des participants</span>
+        {{'CREATEGROUP.statutGroupe'| translate}}<br />
+        <span *ngIf="usersOfGroup.length ==0 "
+          >{{'CREATEGROUP.addMember' | translate}}</span
+        >
         <span *ngIf="usersOfGroup.length !=0">
           {{usersOfGroup.length}} sur {{users.length}} sélectionné
         </span>

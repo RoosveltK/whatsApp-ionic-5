@@ -33,4 +33,6 @@ export class LanguageService {
     this.selected = lang;
     localStorage.setItem(LNG_KEY, JSON.stringify(lang));
   }
+
+  translateInstant = (word) => this.translate.instant(word);
 }

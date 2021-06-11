@@ -8,7 +8,22 @@
     "emailIncorrect": "The email entered is incorrect, Try again",
     "passwordVide": "Please enter your password",
     "passwordIncorrect": "Password must be at least 5 characters long",
-    "emailNonVerifie": "Your email address is not verified resend the verification email?"
+    "emailNonVerifie": "Your email address is not verified resend the verification email?",
+    "yes": "yes",
+    "no": "no"
+  },
+  "FORGETPASSWORD": {
+    "send": "send",
+    "reinitialise": "Reset password"
+  },
+  "SIGNUP": {
+    "create": "Create account",
+    "tapCamera": "Press the image of the warmer to select a profile image",
+    "emailInput": "your email",
+    "nameInput": "your name",
+    "passwordInput": "enter a password",
+    "submit": "Submit",
+    "picInput": "Please select a profile picture before continuing"
   },
   "PARAMETRES": {
     "parametres": "Settings",
@@ -18,5 +33,27 @@
     "themeOption2": "Dark",
     "langues": "Languages",
     "changeLangue": "Change language of of your application"
+  },
+  "POPOVERS": {
+    "Home": {
+      "logOut": "Logout",
+      "close": "Close"
+    }
+  },
+  "TABS": {
+    "tchat": "TCHAT"
+  },
+  "CREATEGROUP": {
+    "addMember": "Add member",
+    "statutGroupe": "New group"
+  },
+  "CREATEGROUPLASTPHASE": {
+    "addSubject": "Add topic ",
+    "addPicture": "Please give the group subject and optionally, a group icon"
+  },
+  "SERVICE": {
+    "Notification": {
+      "wait": "Please wait..."
+    }
   }
 }

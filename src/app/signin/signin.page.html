@@ -25,7 +25,7 @@
         <div
           *ngIf="userForms.get('email').hasError(validation.type) && ( userForms.get('email').dirty  )"
         >
-          {{validation.message}}
+          {{validation.message | translate}}
         </div>
       </ng-container>
     </div>
@@ -34,7 +34,7 @@
       <ion-input
         type="password"
         formControlName="password"
-        placeholder="mot de passe"
+        placeholder="{{'SIGNIN.password' | translate}}"
       ></ion-input>
     </ion-item>
     <div class="error_message">
@@ -42,7 +42,7 @@
         <div
           *ngIf="userForms.get('password').hasError(validation.type) && ( userForms.get('password').dirty )"
         >
-          {{validation.message}}
+          {{'validation.message' | translate}}
         </div>
       </ng-container>
     </div>

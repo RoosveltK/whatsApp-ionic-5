@@ -58,9 +58,7 @@ export class SignupPage implements OnInit {
 
   addUser = (userInfo) => {
     if (this.dataImage == undefined || this.dataImage == 0) {
-      this.serviceNotification.dangerToast(
-        `Veuillez selectionner une photo de profil conforme avant de continuer`
-      );
+      this.serviceNotification.dangerToast(`SIGNUP.picInput`);
       return;
     }
     this.serviceNotification.loadingController(3000);

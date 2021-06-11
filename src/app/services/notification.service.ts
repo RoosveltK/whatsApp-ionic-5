@@ -1,3 +1,4 @@
+import { LanguageService } from './language.service';
 import { Injectable } from '@angular/core';
 import {
   AlertController,
@@ -12,13 +13,14 @@ export class NotificationService {
   constructor(
     public toast: ToastController,
     public alert: AlertController,
-    private loading: LoadingController
+    private loading: LoadingController,
+    private serviceLanguage: LanguageService
   ) {}
 
   //TOAST
-  dangerToast = async (message, postion = 'top') => {
+  dangerToast = async (message) => {
     const toast = await this.toast.create({
-      message: message,
+      message: this.serviceLanguage.translateInstant(message),
       duration: 5000,
       position: 'top',
       color: 'danger',
@@ -26,9 +28,9 @@ export class NotificationService {
     toast.present();
   };
 
-  warningToast = async (message, postion = 'top') => {
+  warningToast = async (message) => {
     const toast = await this.toast.create({
-      message: message,
+      message: this.serviceLanguage.translateInstant(message),
       duration: 5000,
       position: 'top',
       color: 'warning',
@@ -36,9 +38,9 @@ export class NotificationService {
     toast.present();
   };
 
-  successToast = async (message, postion = 'top') => {
+  successToast = async (message) => {
     const toast = await this.toast.create({
-      message: message,
+      message: this.serviceLanguage.translateInstant(message),
       duration: 5000,
       position: 'top',
       color: 'success',
@@ -50,7 +52,7 @@ export class NotificationService {
   async confirmationAlert(message, fonction1, fonction2, text1, text2) {
     const alert = await this.alert.create({
       cssClass: 'my-custom-class',
-      message: message,
+      message: this.serviceLanguage.translateInstant(message),
       buttons: [
         {
           text: text1,
@@ -69,10 +71,12 @@ export class NotificationService {
   }
 
   async loadingController(time: number) {
+    let msg = `SERVICE.Notification.wait`;
+
     const loading = await this.loading.create({
       spinner: 'crescent',
       duration: time,
-      message: 'Veuillez patienter...',
+      message: this.serviceLanguage.translateInstant(msg),
       translucent: true,
     });
     return await loading.present();

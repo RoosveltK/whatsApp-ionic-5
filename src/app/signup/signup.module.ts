@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SignupPageRoutingModule } from './signup-routing.module';
 
 import { SignupPage } from './signup.page';
-// import { NgpImagePickerModule } from 'ngp-image-picker';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +16,7 @@ import { SignupPage } from './signup.page';
     IonicModule,
     SignupPageRoutingModule,
     ReactiveFormsModule,
-    // NgpImagePickerModule,
+    TranslateModule,
   ],
   declarations: [SignupPage],
 })

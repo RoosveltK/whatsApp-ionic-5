@@ -1,8 +1,12 @@
 <ion-list>
   <ion-list-header>Options</ion-list-header>
-  <ion-item button (click)="openParametre()">Paramètres</ion-item>
-  <ion-item button (click)="deconnexion()">Déconnexion</ion-item>
-  <ion-item lines="none" detail="false" button (click)="dismissPopover()"
-    >Fermer</ion-item
-  >
+  <ion-item button (click)="openParametre()">{{
+    "PARAMETRES.parametres" | translate
+  }}</ion-item>
+  <ion-item button (click)="deconnexion()">{{
+    "POPOVERS.Home.logOut" | translate
+  }}</ion-item>
+  <ion-item lines="none" detail="false" button (click)="dismissPopover()">{{
+    "POPOVERS.Home.close" | translate
+  }}</ion-item>
 </ion-list>
