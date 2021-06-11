@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
-    <div class="contacts">Paramètres</div>
+    <div class="contacts">{{'PARAMETRES.parametres' | translate}}</div>
   </ion-toolbar>
 </ion-header>
 
@@ -31,7 +31,7 @@
       </ion-avatar>
       <ion-label>
         <div class="flex_box">
-          <h3>Thèmes</h3>
+          <h3>{{'PARAMETRES.theme' | translate}}</h3>
         </div>
       </ion-label>
       <ion-select
@@ -41,20 +41,24 @@
         [(ngModel)]="theme"
         value="theme"
       >
-        <ion-select-option value="light">Clair</ion-select-option>
-        <ion-select-option value="dark">Sombre</ion-select-option>
+        <ion-select-option value="light"
+          >{{'PARAMETRES.themeOption1' | translate}}</ion-select-option
+        >
+        <ion-select-option value="dark"
+          >{{'PARAMETRES.themeOption2' | translate}}</ion-select-option
+        >
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item (click)="presentPopover()">
       <ion-avatar slot="start">
         <img src="../../assets/languages.png" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">
-          <h3>Langues</h3>
+          <h3>{{'PARAMETRES.langues' | translate}}</h3>
         </div>
-        <p>Changez la langue de l'application</p>
+        <p>{{'PARAMETRES.changeLangue' | translate}}</p>
       </ion-label>
     </ion-item>
   </ion-list>

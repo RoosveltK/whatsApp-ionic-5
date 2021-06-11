@@ -4,7 +4,7 @@
 
 <ion-content>
   <div id="header">
-    <h1>Connexion</h1>
+    <h1>{{ 'SIGNIN.connexion' | translate}}</h1>
     <img src="../../assets/logo.png" />
   </div>
 
@@ -17,7 +17,7 @@
       <ion-input
         type="email"
         formControlName="email"
-        placeholder="xxxx@gmail.com"
+        placeholder="email"
       ></ion-input>
     </ion-item>
     <div class="error_message">
@@ -34,7 +34,7 @@
       <ion-input
         type="password"
         formControlName="password"
-        placeholder="xxxxxxxxx"
+        placeholder="mot de passe"
       ></ion-input>
     </ion-item>
     <div class="error_message">
@@ -47,8 +47,10 @@
       </ng-container>
     </div>
     <div class="text_alternatif">
-      <a [routerLink]="['/signup']">Vous n'avez pas encore de compte? </a>
-      <a [routerLink]="['/forgetPassword']"> Mot de passe oublié</a>
+      <a [routerLink]="['/signup']"> {{'SIGNIN.pasDeCompte' | translate}} ? </a>
+      <a [routerLink]="['/forgetPassword']">
+        {{'SIGNIN.motDePasse' | translate}} ?</a
+      >
     </div>
 
     <ion-button
@@ -57,7 +59,7 @@
       type="submit"
       shape="round"
       color="success"
-      >connexion</ion-button
+      >{{'SIGNIN.connexion' | translate}}</ion-button
     >
   </form>
 </ion-content>

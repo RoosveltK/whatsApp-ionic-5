@@ -1,0 +1,22 @@
+{
+  "SIGNIN": {
+    "connexion": "Login",
+    "password": "password",
+    "pasDeCompte": "Do not have an account yet",
+    "motDePasse": "Forget password",
+    "emailVide": "PLease enter your email",
+    "emailIncorrect": "The email entered is incorrect, Try again",
+    "passwordVide": "Please enter your password",
+    "passwordIncorrect": "Password must be at least 5 characters long",
+    "emailNonVerifie": "Your email address is not verified resend the verification email?"
+  },
+  "PARAMETRES": {
+    "parametres": "Settings",
+    "theme": "Themes",
+    "changeTheme": "Change theme of your application",
+    "themeOption1": "Light",
+    "themeOption2": "Dark",
+    "langues": "Languages",
+    "changeLangue": "Change language of of your application"
+  }
+}

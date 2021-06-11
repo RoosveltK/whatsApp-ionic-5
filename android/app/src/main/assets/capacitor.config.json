@@ -1,10 +1,10 @@
 {
-  "appId": "com.roosvelt.roosvelt",
-  "appName": "whatsapp",
+  "appId": "com.kenne.app",
+  "appName": "TchatMood",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
-    "linuxAndroidStudioPath": "/home/roosvelt/android-studio/bin/studio.sh",
+  "linuxAndroidStudioPath": "/home/roosvelt/android-studio/bin/studio.sh",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

@@ -1,4 +1,4 @@
-package com.roosvelt.roosvelt;
+package com.kenne.app;
 
 import android.os.Bundle;
 

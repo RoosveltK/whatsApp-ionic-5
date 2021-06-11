@@ -1,19 +1,47 @@
 <ion-content [fullscreen]="true">
-  <div *ngIf="allTchat.length ==0" class="center">
+  <div *ngIf="herTchat.length ==0" class="center">
     <ion-spinner color="success"></ion-spinner>
   </div>
 
-  <div *ngIf="allTchat.length !=0">
+  <div *ngIf="herTchat.length !=0">
     <ion-list>
-      <span *ngFor="let data of allTchat">
-        <app-discussion
-          *ngIf="data.messages.length !=0 && data.nom.length != 1"
-          (click)="viewConversation(data)"
-          image="{{data.photo[0]}}"
-          nom="{{data.nom[0]}}"
-          heure="{{data.messages[data.messages.length-1].heure}}"
-          message="{{data.messages[data.messages.length-1].messagetext}}"
-        ></app-discussion>
+      <span *ngFor="let data of herTchat">
+        <span *ngIf="data.nom.length == 2">
+          <span *ngIf="data.nom[0]!= user.nom">
+            <app-discussion
+              *ngIf="data.messages.length !=0"
+              (click)="viewConversation(data.id, data.users[0])"
+              image="{{data.photo[0]}}"
+              nom="{{data.nom[0]}}"
+              heure="{{data.messages[data.messages.length-1].heure}}"
+              message="{{data.messages[data.messages.length-1].messagetext}}"
+              messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
+              messageStatut="{{data.messages[data.messages.length-1].read}}"
+              [userId]="user.id"
+            ></app-discussion>
+          </span>
+          <span *ngIf="data.nom[0]== user.nom">
+            <app-discussion
+              *ngIf="data.messages.length !=0"
+              (click)="viewConversation(data.id, data.users[1])"
+              image="{{data.photo[1]}}"
+              nom="{{data.nom[1]}}"
+              heure="{{data.messages[data.messages.length-1].heure}}"
+              message="{{data.messages[data.messages.length-1].messagetext}}"
+              messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
+              messageStatut="{{data.messages[data.messages.length-1].read}}"
+              [userId]="user.id"
+            ></app-discussion>
+          </span>
+        </span>
+        <span *ngIf="data.nom.length == 1">
+          <app-discussion
+            (click)="viewConversationGroup(data)"
+            image="{{data.photo[0]}}"
+            nom="{{data.nom[0]}}"
+            [userId]="user.id"
+          ></app-discussion>
+        </span>
       </span>
     </ion-list>
   </div>
@@ -52,4 +80,3 @@
   ></app-discussion> -->
 <!-- </div>
 </ion-list> -->
--->

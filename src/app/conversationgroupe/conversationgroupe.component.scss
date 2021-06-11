@@ -1,7 +1,10 @@
-.status {
+#status {
   font-weight: 400;
   font-size: 13px;
+  display: flex;
+  flex-direction: column;
 }
+
 ion-header ion-avatar {
   padding: 3px;
 }

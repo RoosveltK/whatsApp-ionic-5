@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PopoverController } from '@ionic/angular';
+import { PopoverGroupeComponent } from '../popover-groupe/popover-groupe.component';
 import { FirebaseService } from '../services/firebase.service';
 import {
   InfoDiscussionService,
@@ -17,7 +19,7 @@ export class ConversationgroupeComponent implements OnInit {
   public idTchat;
   public userInfo;
   public dateConnect;
-  public infoUserInDB = JSON.parse(localStorage.getItem('infoUserInDB'));
+  public infoUserInDB;
   public groupOfTchat = JSON.parse(localStorage.getItem('groupOfTchat'));
   public allMessages: any = [];
   public textMessage: any;
@@ -29,7 +31,8 @@ export class ConversationgroupeComponent implements OnInit {
     public serviceFireBase: FirebaseService,
     public router: Router,
     public databasFire: AngularFirestore,
-    public afStorage: AngularFireStorage
+    public afStorage: AngularFireStorage,
+    public popoverController: PopoverController
   ) {}
 
   ngOnInit() {
@@ -41,11 +44,6 @@ export class ConversationgroupeComponent implements OnInit {
       .doc(this.idTchat)
       .snapshotChanges()
       .subscribe((res) => (this.allMessages = res.payload.get('messages')));
-
-    const refImage = this.afStorage.ref(this.groupOfTchat.photo[0]);
-    refImage.getDownloadURL().subscribe((res) => {
-      this.image = res;
-    });
   }
 
   backHome = () => {
@@ -58,13 +56,16 @@ export class ConversationgroupeComponent implements OnInit {
 
   sendMessage = () => {
     const infoMessage: Message = {
-      uidSend: this.userInfo.uid,
+      uidSend: this.infoUserInDB.id,
       messagetext: this.textMessage,
       date: new Date(),
       heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
-      assets: [],
+      assets: '',
+      read: false,
     };
     this.allMessages.push(infoMessage);
+    console.log(this.allMessages);
+
     this.infoService
       .getAllTchats()
       .doc(this.idTchat)
@@ -72,4 +73,15 @@ export class ConversationgroupeComponent implements OnInit {
 
     this.textMessage = '';
   };
+
+  async presentPopover() {
+    const popover = await this.popoverController.create({
+      component: PopoverGroupeComponent,
+      cssClass: 'my-custom-class',
+      translucent: true,
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+  }
 }

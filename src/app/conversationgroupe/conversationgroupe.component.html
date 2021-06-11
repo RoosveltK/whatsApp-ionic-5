@@ -5,21 +5,28 @@
     </ion-buttons>
 
     <ion-avatar slot="start">
-      <img src="{{ image }}" />
+      <img src="{{ groupOfTchat.photo[0] }}" />
     </ion-avatar>
 
     <ion-title>
       <span>{{ groupOfTchat.nom[0] }}</span>
 
-      <div class="status" *ngFor="let user of groupOfTchat.users">
-        <span>{{user}}</span>
+      <div id="status">
+        <span>Voir les infos du groupe</span>
       </div>
+
+      <!-- <div id="status" *ngFor="let user of groupOfTchat.grade">
+        <span>{{ user.nom }},</span>
+        <span>Voir les infos du groupe</span>
+      </div> -->
     </ion-title>
 
     <ion-buttons slot="end">
       <ion-button> <ion-icon name="videocam"></ion-icon> </ion-button>
       <ion-button> <ion-icon name="call"></ion-icon> </ion-button>
-      <ion-button><ion-icon name="ellipsis-vertical"></ion-icon></ion-button>
+      <ion-button (click)="presentPopover()"
+        ><ion-icon name="ellipsis-vertical"></ion-icon
+      ></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -31,7 +38,7 @@
     <ion-item lines="none" *ngFor="let message of allMessages">
       <ion-badge
         color="warning"
-        *ngIf="message.uidSend === userInfo.uid"
+        *ngIf="message.uidSend === infoUserInDB.id"
         slot="end"
         >{{ message.messagetext }}
 
@@ -44,7 +51,7 @@
 
       <ion-badge
         color="light"
-        *ngIf="message.uidSend != userInfo.uid"
+        *ngIf="message.uidSend != infoUserInDB.id"
         slot="start"
         >{{ message.messagetext }}
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge

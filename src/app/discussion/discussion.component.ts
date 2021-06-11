@@ -10,6 +10,11 @@ export class DiscussionComponent implements OnInit {
   @Input() heure: string;
   @Input() message: string;
   @Input() image: string;
+  @Input() userId: string;
+  @Input() messageUiSend: string;
+  @Input() messageStatut: boolean;
+
+  public showPositionMessage = true;
 
   constructor() {}
 

@@ -18,6 +18,15 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { PopoverLangComponent } from './popover-lang/popover-lang.component';
+import { ConversationgroupeComponent } from './conversationgroupe/conversationgroupe.component';
+
+export function createTranslateHttpLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/lang/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -25,6 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ForgetPasswordComponent,
     FormatFileSizePipe,
     ConversationComponent,
+    PopoverLangComponent,
+    ConversationgroupeComponent,
   ],
   entryComponents: [],
   imports: [
@@ -39,6 +50,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireStorageModule,
     AngularFireMessagingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient],
+        useFactory: createTranslateHttpLoader,
+      },
+    }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

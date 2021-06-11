@@ -1,3 +1,4 @@
+import { NotificationService } from './../services/notification.service';
 import {
   InfoDiscussionService,
   tchat,
@@ -15,16 +16,16 @@ export class NewdiscPage implements OnInit {
   public show = false;
   public searchText;
   public users = [];
-  public actifUser;
+
   public actifUserofDB;
   constructor(
     public router: Router,
     public service: InfoDiscussionService,
-    private afStorage: AngularFireStorage
+    private afStorage: AngularFireStorage,
+    private serviceNotification: NotificationService
   ) {}
 
   ngOnInit() {
-    this.actifUser = this.service.getActifUser();
     this.service
       .getAllUsers(this.users)
       .then(
@@ -49,19 +50,20 @@ export class NewdiscPage implements OnInit {
 
   startDiscu = (userData: any) => {
     const newTchat: tchat = {
-      id: `${userData.id}${this.actifUser.uid}`,
+      id: `${userData.id}${this.actifUserofDB.id}`,
       nom: [userData.nom, this.actifUserofDB.nom],
       photo: [userData.photo, this.actifUserofDB.photo],
-      users: [userData.id, this.actifUser.uid],
+      users: [userData.id, this.actifUserofDB.id],
       messages: [],
     };
     localStorage.setItem('userOfTchat', JSON.stringify(userData));
 
     const idTchat = this.service.findTChatById(
       newTchat.id,
-      `${this.actifUser.uid}${userData.id}`
+      `${this.actifUserofDB.id}${userData.id}`
     );
     if (idTchat == null) {
+      this.serviceNotification.loadingController(2000);
       this.service
         .saveTchatInDB(newTchat.id)
         .set(newTchat)

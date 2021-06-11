@@ -1,0 +1,22 @@
+{
+  "SIGNIN": {
+    "connexion": "Connexion",
+    "password": "mot de passe",
+    "pasDeCompte": "Vous n'avez pas encore de compte",
+    "motDePasse": "Mot de passe oublié",
+    "emailVide": "S'il vous plait entrez votre Email",
+    "emailIncorrect": "L'email entré est incorrect, Réessayer",
+    "passwordVide": "S'il vous plait entrez votre mot de passe",
+    "passwordIncorrect": "Le mot de passe doit avoir au moins 5 caractères",
+    "emailNonVerifie": "Votre adresse mail n'est pas vérifiée renvoyez l'email de verification ?"
+  },
+  "PARAMETRES": {
+    "parametres": "Paramètres",
+    "theme": "Thèmes",
+    "changeTheme": "Changez le theme de votre application",
+    "themeOption1": "Clair",
+    "themeOption2": "Sombre",
+    "langues": "Langues",
+    "changeLangue": "Changez la langue de votre application"
+  }
+}

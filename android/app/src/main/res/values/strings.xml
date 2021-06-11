@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">whatsapp</string>
-    <string name="title_activity_main">whatsapp</string>
-    <string name="package_name">com.roosvelt.roosvelt</string>
-    <string name="custom_url_scheme">com.roosvelt.roosvelt</string>
+    <string name="app_name">TchatMood</string>
+    <string name="title_activity_main">TchatMood</string>
+    <string name="package_name">com.kenne.app</string>
+    <string name="custom_url_scheme">com.kenne.app</string>
 </resources>

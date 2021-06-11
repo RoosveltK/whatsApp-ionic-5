@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import {
   InfoDiscussionService,
   tchat,
@@ -13,14 +14,19 @@ import { Router } from '@angular/router';
 export class TchatPage implements OnInit {
   public user;
   public userData;
-  public allTchat: tchat[] = [];
+  public allTchat = [];
+  public herTchat = [];
+  public allUsers = [];
   constructor(
     public router: Router,
-    private serviceDiscussion: InfoDiscussionService
-  ) {}
+    private serviceDiscussion: InfoDiscussionService,
+    private serviceLanguage: LanguageService
+  ) {
+    this.serviceLanguage.setInitialAppLanguage();
+  }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('user'));
+    this.user = JSON.parse(localStorage.getItem('infoUserInDB'));
     this.serviceDiscussion
       .getAllTchats()
       .snapshotChanges()
@@ -29,17 +35,35 @@ export class TchatPage implements OnInit {
         res.map((element: any) => {
           this.allTchat.push(element.payload.doc.data());
         });
+        this.herTchat = this.verifyConcerneTchat(this.allTchat);
       });
+    this.serviceDiscussion.getAllUsers(this.allUsers);
   }
 
-  public viewConversation(datas) {
-    // localStorage.setItem('userOfTchat', JSON.stringify(datas));
-    // const link = ['conversation', datas.id];
-    // this.router.navigate(link);
-    console.log(datas);
+  public viewConversation(tchatId, id) {
+    localStorage.setItem(
+      'userOfTchat',
+      JSON.stringify(this.serviceDiscussion.searchUserById(id, this.allUsers))
+    );
+    this.router.navigate(['conversation', tchatId]);
+  }
+
+  public viewConversationGroup(groupTchatId) {
+    localStorage.setItem('groupOfTchat', JSON.stringify(groupTchatId));
+    this.router.navigate(['conversationgroupe', groupTchatId.id]);
   }
 
   openNewDisc() {
     this.router.navigate(['/newdisc']);
   }
+
+  verifyConcerneTchat = (tchats) => {
+    let onlyHerTchat = [];
+    tchats.forEach((element) => {
+      element.users.forEach((elt: string) => {
+        if (elt.localeCompare(this.user.id) == 0) onlyHerTchat.push(element);
+      });
+    });
+    return onlyHerTchat;
+  };
 }

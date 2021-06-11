@@ -68,6 +68,8 @@ export class FirebaseService {
     return file;
   }
 
+  createRefForImage = (path) => this.afStorage.ref(path);
+  
   async uploadImageAndCreateAccount(file: File, datas: User, user) {
     // Storage path
     const fileStoragePath = `userProfilImage/${file.name}_UID:${user.uid}`;

@@ -1,0 +1,19 @@
+<ion-list>
+  <ion-item
+    button
+    *ngFor="let lang of tableLang"
+    (click)="selectLangue(lang.value)"
+    detail="false"
+  >
+    <img [src]="lang.img" slot="start" />
+    <ion-label>
+      {{ lang.text }}
+    </ion-label>
+
+    <ion-icon
+      slot="end"
+      name="checkmark"
+      *ngIf="lang.value == selectedLang"
+    ></ion-icon>
+  </ion-item>
+</ion-list>

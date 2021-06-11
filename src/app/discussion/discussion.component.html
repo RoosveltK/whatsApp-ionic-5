@@ -1,4 +1,4 @@
-<ion-item >
+<ion-item>
   <ion-avatar slot="start">
     <img src="{{ image }}" />
   </ion-avatar>
@@ -7,12 +7,25 @@
       <h3>{{ nom }}</h3>
       <ion-note slot="end">{{ heure }}</ion-note>
     </div>
-    <p>
-      <ion-icon
-        class="text-icon"
-        color="primary"
-        name="checkmark-done-outline"
-      ></ion-icon>
+
+    <p *ngIf="messageUiSend === userId">
+      <span *ngIf="!messageStatut">
+        <ion-icon
+          class="text-icon"
+          color="primary"
+          name="checkmark-done-outline"
+        >
+        </ion-icon>
+        {{ message }}
+      </span>
+
+      <span *ngIf="messageStatut">
+        <ion-icon class="text-icon" name="checkmark-outline"></ion-icon>
+        {{ message }}
+      </span>
+    </p>
+
+    <p *ngIf="messageUiSend !== userId">
       {{ message }}
     </p>
   </ion-label>

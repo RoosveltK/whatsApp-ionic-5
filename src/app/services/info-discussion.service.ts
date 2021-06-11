@@ -1,14 +1,14 @@
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { map } from 'rxjs/operators';
 
 export interface Message {
   uidSend: string;
   messagetext: string;
   date: Date;
   heure: string;
-  assets: Array<string>;
+  assets: string;
+  read: boolean;
 }
 export interface tchat {
   id: string;
@@ -22,23 +22,17 @@ export interface tchat {
 })
 export class InfoDiscussionService implements OnInit {
   public myTchats: any = [];
+  public allUsers: any = [];
   constructor(
     public fireMessage: AngularFirestore,
     private afStorage: AngularFireStorage
   ) {}
 
   ngOnInit() {
-    this.getAllTchats()
-      .snapshotChanges()
-      .subscribe((res) => {
-        this.myTchats = [];
-        res.map((element) => {
-          this.myTchats.push(element.payload.doc.data());
-        });
-      });
+    this.getInfoOfTchat();
+    this.getAllUsers(this.allUsers);
   }
 
-  //
   findTChatById = (idTchat: string, idTchat2: string) => {
     let id = null;
     this.myTchats.map((element) => {
@@ -57,8 +51,27 @@ export class InfoDiscussionService implements OnInit {
   //Lien pour recuperer tout les tchats presents en BD
   getAllTchats = () => this.fireMessage.collection(`tchats/`);
 
+  getInfoOfTchat = () => {
+    this.getAllTchats()
+      .snapshotChanges()
+      .subscribe((res) => {
+        this.myTchats = [];
+        res.map((element) => {
+          this.myTchats.push(element.payload.doc.data());
+        });
+      });
+  };
+
   //Lien pour recuperer tout users presents en BD
   getUsers = () => this.fireMessage.collection(`users/`);
+
+  searchUserById = (id, tab) => {
+    let datas;
+    tab.forEach((element: any) => {
+      if (element.id.localeCompare(id) == 0) datas = element;
+    });
+    return datas;
+  };
 
   //Recuperer les utilisateurs avec les photos : chemin absolu
   getAllUsers = async (users) => {

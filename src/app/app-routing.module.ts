@@ -66,6 +66,10 @@ const routes: Routes = [
         (m) => m.CreategroupLastPhasePageModule
       ),
   },
+  {
+    path: 'infogroupe',
+    loadChildren: () => import('./infogroupe/infogroupe.module').then( m => m.InfogroupePageModule)
+  },
 ];
 @NgModule({
   imports: [

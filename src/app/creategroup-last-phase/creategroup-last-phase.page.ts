@@ -20,8 +20,6 @@ export class CreategroupLastPhasePage implements OnInit {
 
   public groupName = '';
   public member = [];
-  public memberName = [];
-  public memberId = [];
   public image = undefined;
   public infoUser;
   public dataImage = undefined;
@@ -43,71 +41,87 @@ export class CreategroupLastPhasePage implements OnInit {
   }
 
   createGroup = () => {
-    const id = Math.random().toString(36).substr(2, 9);
-    this.memberId = [];
-    this.memberId.push({
+    const idGroupe = Math.random().toString(36).substr(2, 9);
+
+    let memberId = [];
+    let memberGrade = [];
+    let tchatGroup;
+
+    //Ajout du user actuel dans les infos du groupe id et statut(grade)
+    memberId.push(this.infoUser.id);
+    memberGrade.push({
       id: this.infoUser.id,
       nom: this.infoUser.nom,
       role: 'admin',
     });
 
-    const pathOfDefaultImage = `groupImage/defaultImage.png`;
+    //Ajout du reste des users  dans les infos du groupe id et statut(grade)
+    this.member.forEach((element) => memberId.push(element.id));
 
     this.member.forEach((element) => {
-      this.memberId.push({
+      memberGrade.push({
         id: element.id,
         nom: element.nom,
         role: 'user',
       });
     });
 
-    let tchatGroup = {
-      id: id,
-      nom: [this.groupName],
-      photo: [pathOfDefaultImage],
-      users: this.memberId,
-      messages: [],
-      seeForAll: false,
-    };
+    const refOfDefaultImage = this.serviceAuth.createRefForImage(
+      `groupImage/defaultImage.png`
+    );
+    if (this.dataImage == undefined && this.groupName != '') {
+      this.serviceNotification.loadingController(3000);
 
-    if (this.groupName.localeCompare('') == 0)
-      console.log(
-        `  Veuillez donner un sujet au groupe et éventuellement, une icone de groupe`
-      );
-    else if (this.dataImage == undefined && this.groupName != '') {
-      this.serviceNotification.loadingController(5000);
-      this.serviceTchat
-        .saveTchatInDB(tchatGroup.id)
-        .set(tchatGroup)
-        .then(() => {
-          this.router.navigate(['conversationgroupe', tchatGroup.id]);
-          localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
-        })
-        .catch((err) => console.log(err));
+      refOfDefaultImage.getDownloadURL().subscribe((res) => {
+        tchatGroup = {
+          id: idGroupe,
+          nom: [this.groupName],
+          photo: [res],
+          users: memberId,
+          messages: [],
+          seeForAll: true,
+          grade: memberGrade,
+        };
+        this.serviceTchat
+          .saveTchatInDB(tchatGroup.id)
+          .set(tchatGroup)
+          .then(() => {
+            localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+            this.router.navigate(['conversationgroupe', tchatGroup.id]);
+          })
+          .catch((err) => console.log(err));
+        console.log(tchatGroup);
+      });
     } else if (
       this.dataImage !== undefined &&
       this.dataImage != 0 &&
       this.groupName != ''
     ) {
-      this.serviceNotification.loadingController(5000);
-      const pathFile = `groupImage/uid${id}_${this.dataImage.name}`;
-      tchatGroup = {
-        id: id,
-        nom: [this.groupName],
-        photo: [pathFile],
-        users: this.memberId,
-        messages: [],
-        seeForAll: false,
-      };
+      const pathFile = `groupImage/uid${idGroupe}_${this.dataImage.name}`;
+      const pathRefFile = this.serviceAuth.createRefForImage(pathFile);
+
+      this.serviceNotification.loadingController(3000);
       this.serviceAuth.uploadImage(this.dataImage, pathFile).then(() => {
-        this.serviceTchat
-          .saveTchatInDB(tchatGroup.id)
-          .set(tchatGroup)
-          .then(() => {
-            this.router.navigate(['conversationgroupe', tchatGroup.id]);
-            localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
-          })
-          .catch((err) => console.log(err));
+        pathRefFile.getDownloadURL().subscribe((res) => {
+          tchatGroup = {
+            id: idGroupe,
+            nom: [this.groupName],
+            photo: [res],
+            users: memberId,
+            messages: [],
+            seeForAll: true,
+            grade: memberGrade,
+          };
+
+          this.serviceTchat
+            .saveTchatInDB(tchatGroup.id)
+            .set(tchatGroup)
+            .then(() => {
+              this.router.navigate(['conversationgroupe', tchatGroup.id]);
+              localStorage.setItem('groupOfTchat', JSON.stringify(tchatGroup));
+            })
+            .catch((err) => console.log(err));
+        });
       });
     }
   };

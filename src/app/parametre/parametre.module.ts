@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ParametrePageRoutingModule } from './parametre-routing.module';
 
 import { ParametrePage } from './parametre.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ParametrePageRoutingModule
+    ParametrePageRoutingModule,
+    TranslateModule,
   ],
-  declarations: [ParametrePage]
+  declarations: [ParametrePage],
 })
 export class ParametrePageModule {}

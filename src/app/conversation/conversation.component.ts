@@ -75,7 +75,8 @@ export class ConversationComponent implements OnInit {
       messagetext: this.textMessage,
       date: new Date(),
       heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
-      assets: [],
+      assets: '',
+      read: false,
     };
     this.allMessages.push(infoMessage);
     this.infoService

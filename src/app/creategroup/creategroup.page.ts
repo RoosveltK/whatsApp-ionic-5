@@ -19,12 +19,7 @@ export class CreategroupPage implements OnInit {
 
   ngOnInit() {
     this.actifUser = this.service.getActifUser();
-    this.service
-      .getAllUsers(this.users)
-      .then(
-        () =>
-          (this.actifUserofDB = JSON.parse(localStorage.getItem('userofDB')))
-      );
+    this.service.getAllUsers(this.users);
   }
 
   backHome = () => {
