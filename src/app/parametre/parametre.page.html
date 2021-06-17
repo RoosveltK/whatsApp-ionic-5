@@ -9,13 +9,17 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item class="pseudo" routerLink="/creategroup">
+    <ion-item class="pseudo" routerLink="/qrcode">
       <ion-avatar slot="start">
-        <img src="../../assets/bg.png" />
+        <img [src]="user.photo" />
       </ion-avatar>
       <ion-label>
         <div class="flex_box">
-          <h3>Pseudo</h3>
+          <h3>
+            {{user.nom}}
+            <br />
+            {{user.email}}
+          </h3>
         </div>
       </ion-label>
       <ion-buttons slot="end">

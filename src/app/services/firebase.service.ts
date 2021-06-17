@@ -8,6 +8,7 @@ import {
 import { AlertController, ToastController } from '@ionic/angular';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
+import { InfoDiscussionService } from './info-discussion.service';
 
 export interface User {
   id: string;
@@ -20,17 +21,23 @@ export interface User {
 })
 export class FirebaseService {
   userData: any;
+
+  private annee = new Date().getFullYear();
+  private mois = new Date().getMonth();
+  private jour = new Date().getDay();
+  private heure = new Date().getHours();
+  private minute = new Date().getMinutes();
   constructor(
     public aFireAuth: AngularFireAuth,
     public aFireStore: AngularFirestore,
     private afStorage: AngularFireStorage,
     private router: Router,
-    private serviceNotification: NotificationService
+    private serviceNotification: NotificationService,
+    private serviceDiscussion: InfoDiscussionService
   ) {}
 
   //Sauvegarder les datas d'un user
   saveUserInDB = (id) => this.aFireStore.doc(`users/${id}`);
-  
 
   //Envoyer l'email de verification
   verificationEmail = (userConnected) => userConnected.sendEmailVerification();
@@ -46,9 +53,27 @@ export class FirebaseService {
   signup = (email, password) =>
     this.aFireAuth.createUserWithEmailAndPassword(email, password);
 
-  //verification authentification
-  verificationAuthUser = (callBack) =>
-    this.aFireAuth.onAuthStateChanged(callBack);
+  setUserOnline = (user) => {
+    //Date.UTC(this.annee, this.mois, this.jour, this.heure, this.minute)
+    this.aFireStore.collection(`users`).doc(user.id).update({
+      statut: true,
+      lastConnect: new Date(),
+    });
+  };
+
+  setUserOflline = (user) => {
+    //  Date.UTC(this.annee, this.mois, this.jour, this.heure, this.minute)
+    this.aFireStore.collection(`users`).doc(user.id).update({
+      statut: false,
+      lastConnect: new Date(),
+    });
+  };
+  verifyStateOfUser = () => {
+    this.aFireAuth.onAuthStateChanged((user) => {
+      if (user) this.setUserOnline(this.serviceDiscussion.getActifUser());
+      else this.setUserOflline(this.serviceDiscussion.getActifUser());
+    });
+  };
 
   //Deconnexion
   signOutUser = () => this.aFireAuth.signOut();
@@ -77,6 +102,7 @@ export class FirebaseService {
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);
+    //Date.UTC(this.annee, this.mois, this.jour, this.heure, this.minute)
     imageRef
       .put(file)
       .then((res) => {
@@ -86,13 +112,11 @@ export class FirebaseService {
           nom: datas.nom,
           photo: fileStoragePath,
           statut: false,
-          lastConnect: 0,
+          lastConnect: new Date(),
         });
 
         this.verificationEmail(user);
-        this.serviceNotification.successToast(
-          `Compte cree avec succes, consulter votre boite mail`
-        );
+        this.serviceNotification.successToast(`SIGNUP.messageSucces`);
       })
       .catch((err) => this.serviceNotification.dangerToast(err.message));
   }
@@ -101,17 +125,5 @@ export class FirebaseService {
     // Image reference
     const imageRef = this.afStorage.ref(path);
     return imageRef.put(file);
-  }
-
-
-  statutUser=(user)=>{
-    this.saveUserInDB(user.id).set({
-      id: user.id,
-      email: user.email,
-      nom: user.nom,
-      photo: user.photo,
-      statut: true,
-      lastConnect: 0,
-    });
   }
 }

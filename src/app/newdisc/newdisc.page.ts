@@ -60,6 +60,7 @@ export class NewdiscPage implements OnInit {
       newTchat.id,
       `${this.actifUserofDB.id}${userData.id}`
     );
+    console.log(idTchat);
     if (idTchat == null) {
       this.serviceNotification.loadingController(2000);
       this.service

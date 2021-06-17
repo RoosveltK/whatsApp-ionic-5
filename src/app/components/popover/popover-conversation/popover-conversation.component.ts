@@ -1,5 +1,5 @@
 import { PopoverController, ModalController } from '@ionic/angular';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalSendComponent } from '../../modal/modal-send/modal-send.component';
 
 @Component({
@@ -11,6 +11,10 @@ export class PopoverConversationComponent implements OnInit {
   @ViewChild('documentInput') documentInputViewChild: ElementRef;
   @ViewChild('galleryInput') galleryInputViewChild: ElementRef;
   @ViewChild('audioInput') audioInputViewChild: ElementRef;
+
+  @Input() idTchat: string;
+  @Input() messages;
+  @Input() userId;
 
   public documentInputElement: HTMLInputElement;
   public galleryInputElement: HTMLInputElement;
@@ -81,6 +85,9 @@ export class PopoverConversationComponent implements OnInit {
       component: ModalSendComponent,
       componentProps: {
         imageOrVideo: fic,
+        idTchat: this.idTchat,
+        allMessages: this.messages,
+        userId: this.userId,
       },
     });
     return await modal.present();

@@ -1,15 +1,16 @@
-import { AngularFireAuth } from '@angular/fire/auth';
+import { PopoverComponent } from './../components/popover/popover/popover.component';
+
 import {
   InfoDiscussionService,
   Message,
   tchat,
 } from './../services/info-discussion.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
+import { PopoverController } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 
 @Component({
@@ -18,15 +19,17 @@ import { PopoverConversationComponent } from '../components/popover/popover-conv
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
   public idTchat;
   public userStatus = false;
   public secondStatus;
   public userInfo;
   public dateConnect;
+  public userofDB = JSON.parse(localStorage.getItem('infoUserInDB'));
   public userOfTChat;
   public allMessages: any = [];
-  public textMessage: any = '';
-  public isMessageRead = false;
+  public textMessage: any;
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -34,30 +37,13 @@ export class ConversationComponent implements OnInit {
     public serviceFireBase: FirebaseService,
     public router: Router,
     public databasFire: AngularFirestore,
-    private modalCtrl: ModalController,
     public popoverController: PopoverController
-  ) {
-    // this.serviceFireBase.verificationAuthUser((user) => {
-    //   if (user) {
-    //     localStorage.setItem('userMetaData', JSON.stringify(user.metadata));
-    //     this.userStatus = true;
-    //   } else {
-    //     var getStorage = JSON.parse(localStorage.getItem('userMetaData'));
-    //     const date = new Date(getStorage.lastSignInTime);
-    //     if (date == new Date()) {
-    //       this.dateConnect = `${date.getHours()}:${date.getMinutes()}`;
-    //       this.secondStatus = true;
-    //     } else {
-    //       this.dateConnect = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
-    //       this.secondStatus = false;
-    //     }
-    //   }
-    // });
-    // this.isMessageRead = true;
-  }
+  ) {}
 
   ngOnInit() {
     this.userInfo = this.infoService.getActifUser();
+    this.serviceFireBase.verifyStateOfUser();
+    this.userOfTChat = this.infoService.getUserOfTChat();
 
     //Reception des infos du tchat
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
@@ -65,7 +51,13 @@ export class ConversationComponent implements OnInit {
       .getAllTchats()
       .doc(this.idTchat)
       .snapshotChanges()
-      .subscribe((res) => (this.allMessages = res.payload.get('messages')));
+      .subscribe((res) => {
+        this.allMessages = res.payload.get('messages');
+        this.allMessages.map((element) => {
+          if (element.uidSend.localeCompare(this.userInfo.id) != 0)
+            element.read = true;
+        });
+      });
   }
 
   backHome = () => {
@@ -75,7 +67,7 @@ export class ConversationComponent implements OnInit {
 
   sendMessage = () => {
     const infoMessage: Message = {
-      uidSend: this.userInfo.uid,
+      uidSend: this.userInfo.id,
       messagetext: this.textMessage,
       date: new Date(),
       heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
@@ -91,31 +83,34 @@ export class ConversationComponent implements OnInit {
     this.textMessage = '';
   };
 
-  async openEmojiPicker() {
-    const modal = await this.modalCtrl.create({
-      component: Ionic4EmojiPickerComponent,
-      showBackdrop: true,
-      componentProps: {
-        isInModal: true,
-      },
-    });
-
-    modal.present();
-    modal.onDidDismiss().then((event) => {
-      if (event != undefined && event.data != undefined) {
-        this.textMessage += event.data.data;
-      }
-    });
-  }
+  verifyDay() {}
 
   async presentPopover() {
     const popover = await this.popoverController.create({
       component: PopoverConversationComponent,
+      componentProps: {
+        idTchat: this.idTchat,
+        messages: this.allMessages,
+        userId: this.userInfo.id,
+      },
       cssClass: 'my-custom-class',
       translucent: true,
     });
     await popover.present();
 
     const { role } = await popover.onDidDismiss();
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      event.target.complete();
+      if (this.allMessages.length == 10) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 }

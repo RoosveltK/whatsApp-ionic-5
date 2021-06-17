@@ -5,7 +5,7 @@
     </ion-buttons>
 
     <ion-avatar slot="start">
-      <img src="{{ groupOfTchat.photo[0] }}" />
+      <img [src]="groupOfTchat.photo[0]" *ngIf="groupOfTchat.photo[0]" />
     </ion-avatar>
 
     <ion-title>
@@ -14,11 +14,6 @@
       <div id="status">
         <span>Voir les infos du groupe</span>
       </div>
-
-      <!-- <div id="status" *ngFor="let user of groupOfTchat.grade">
-        <span>{{ user.nom }},</span>
-        <span>Voir les infos du groupe</span>
-      </div> -->
     </ion-title>
 
     <ion-buttons slot="end">
@@ -60,7 +55,7 @@
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="groupOfTchat.seeForAll">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button shape="round" size="small">
@@ -79,4 +74,8 @@
       ></ion-button>
     </ion-buttons>
   </ion-toolbar>
+</ion-footer>
+
+<ion-footer *ngIf="!groupOfTchat.seeForAll">
+  <ion-toolbar> Seuls les admins peuvent envoyer des messages </ion-toolbar>
 </ion-footer>

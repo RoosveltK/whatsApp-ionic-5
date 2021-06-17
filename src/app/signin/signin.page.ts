@@ -61,9 +61,12 @@ export class SigninPage implements OnInit {
             `SIGNIN.no`
           );
         } else {
-          this.serviceDiscussion.setActifUser(res.user.uid);
-          // localStorage.setItem('users', JSON.stringify(res.user));
-          this.router.navigate(['/tabs/tchat']);
+          this.serviceDiscussion.setActifUser(res.user.uid).then(() => {
+            this.fireebaseAuth.setUserOnline(
+              this.serviceDiscussion.getActifUser()
+            );
+            this.router.navigate(['/tabs/tchat']);
+          });
         }
       })
       .catch((err) => this.serviceNotification.dangerToast(err.message));

@@ -81,4 +81,5 @@ export class NotificationService {
     });
     return await loading.present();
   }
+  closeLoader=()=>this.loading.dismiss();
 }

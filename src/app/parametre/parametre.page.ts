@@ -1,3 +1,4 @@
+import { InfoDiscussionService } from './../services/info-discussion.service';
 import { LanguageService } from './../services/language.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,18 +11,21 @@ import { PopoverLangComponent } from '../components/popover/popover-lang/popover
   styleUrls: ['./parametre.page.scss'],
 })
 export class ParametrePage implements OnInit {
+  public user;
   public isChangeTheme = false;
   public currentTheme;
   public theme = '';
   constructor(
     public router: Router,
     private popoverController: PopoverController,
-    public serviceLanguage: LanguageService
+    public serviceLanguage: LanguageService,
+    private serviceDiscussion: InfoDiscussionService
   ) {
     this.serviceLanguage.setInitialAppLanguage();
   }
 
   ngOnInit() {
+    this.user = this.serviceDiscussion.getActifUser();
     if (localStorage.getItem('ACTUEL_THEME') != null)
       this.theme = JSON.parse(localStorage.getItem('ACTUEL_THEME'));
     else this.theme = 'light';
@@ -47,5 +51,8 @@ export class ParametrePage implements OnInit {
     await popover.present();
 
     const { role } = await popover.onDidDismiss();
+  }
+  scanQRCode() {
+    this.router.navigate(['/qrcode']);
   }
 }

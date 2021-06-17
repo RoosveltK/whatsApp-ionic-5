@@ -23,7 +23,8 @@
     "nameInput": "your name",
     "passwordInput": "enter a password",
     "submit": "Submit",
-    "picInput": "Please select a profile picture before continuing"
+    "picInput": "Please select a profile picture before continuing",
+    "messageSucces": "Account successfully created, check your mailbox"
   },
   "PARAMETRES": {
     "parametres": "Settings",

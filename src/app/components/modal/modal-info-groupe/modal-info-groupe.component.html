@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <div class="contacts">Options de groupe<br /></div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card-content>
+    <div class="center">
+      <div class="flex_box">
+        <span *ngIf="!isInput">
+          {{ name }}
+          <ion-icon
+            (click)="edit()"
+            slot="icon-only"
+            color="success"
+            name="create"
+          ></ion-icon>
+        </span>
+        <span *ngIf="isInput" class="infoGroup">
+          <ion-input [(ngModel)]="name" type="text"> </ion-input>
+          <ion-buttons color="gray" slot="end">
+            <ion-button (click)="edit()"
+              ><ion-icon name="close-outline" color="danger"></ion-icon
+            ></ion-button>
+            <ion-button (click)="changeName()"
+              ><ion-icon name="checkmark-outline" color="success"></ion-icon
+            ></ion-button>
+          </ion-buttons>
+        </span>
+      </div>
+      <ion-avatar
+        size="big"
+        slot="start"
+        (click)="loadImageActionSheet1(event)"
+      >
+        <img class="image" [src]="image" />
+      </ion-avatar>
+      Appuyer sur la l'icone du groupe pour la changer
+    </div>
+    <input
+      #userInput
+      style="position: absolute; width: 0; height: 0; opacity: 0"
+      type="file"
+      (change)="loadImageFromDevice1($event)"
+      accept="image/png, image/jpeg"
+    />
+  </ion-card-content>
+  <ion-list>
+    {{ groupData.grade.length }} participants
+    <ion-item-sliding id="card" *ngFor="let user of groupData.grade">
+      <ion-item *ngIf="user.id == infoUser.id">
+        <ion-avatar slot="start">
+          <img [src]="user.photo" />
+        </ion-avatar>
+        <ion-label>
+          <div class="flex_box">
+            <h3>Vous</h3>
+            <ion-note *ngIf="user.role == 'admin'" slot="end"
+              >admin du groupe</ion-note
+            >
+          </div>
+        </ion-label>
+      </ion-item>
+      <span *ngIf="user.id != infoUser.id">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img [src]="user.photo" />
+          </ion-avatar>
+          <ion-label>
+            <div class="flex_box">
+              <h3>{{ user.nom }}</h3>
+              <ion-note *ngIf="user.role == 'admin'" slot="end"
+                >admin du groupe</ion-note
+              >
+            </div>
+          </ion-label>
+        </ion-item>
+        <ion-item-options id="slide" side="end">
+          <ion-item-option (click)="promoteMember(user)">
+            <ion-icon slot="icon-only" color="success" name="create"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </span>
+    </ion-item-sliding>
+
+    <ion-item>
+      <ion-label class="optionsRead">
+        <div class="flex_box ion-text-wrap">
+          <h3>
+            Modifier les paramètres du groupe afin que seul les admin puisse
+            envoyer des messages
+            <ion-checkbox
+              slot="end"
+              (ionChange)="changeParams()"
+              [(ngModel)]="valTcheck"
+            ></ion-checkbox>
+          </h3>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,9 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>qrcode</ion-title>
+    <div class="contacts">
+      <ion-icon
+        slot="icon-only"
+        name="arrow-back"
+        (click)="backSettings()"
+      ></ion-icon
+      ><span>Code QR</span>
+    </div>
+    <ion-segment
+      #segment
+      value="ion-sb-0"
+      mode="md"
+      (ionChange)="segmentChanged($event)"
+    >
+      <ion-segment-button>
+        <ion-label>MON CODE</ion-label>
+      </ion-segment-button>
+      <ion-segment-button>
+        <ion-label>SCANNER LE CODE</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true">
+  <ion-slides
+    #slider
+    pager="false"
+    (ionSlideWillChange)="slideChanged()"
+    [options]="slideOpts"
+  >
+    <ion-slide>
+      <app-scan-qrcode></app-scan-qrcode>
+    </ion-slide>
+    <ion-slide>
+      <app-read-qrcode></app-read-qrcode>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

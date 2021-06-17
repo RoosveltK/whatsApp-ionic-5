@@ -13,6 +13,7 @@ export class DiscussionComponent implements OnInit {
   @Input() userId: string;
   @Input() messageUiSend: string;
   @Input() messageStatut: boolean;
+  @Input() assets: string;
 
   public showPositionMessage = true;
 

@@ -1,3 +1,4 @@
+import { FirebaseService } from 'src/app/services/firebase.service';
 import { Injectable, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -17,8 +18,18 @@ export interface tchat {
   users: Array<string>;
   messages: Array<Message>;
 }
+export interface tchatGroup {
+  id: string;
+  nom: Array<string>;
+  photo: Array<string>;
+  users: Array<string>;
+  messages: Array<Message>;
+  grade: Array<Object>;
+  seeForAll: boolean;
+}
 ///Varaible localStorage
 const INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
+const USER_OF_TCHAT = 'USER_OF_TCHAT';
 
 @Injectable({
   providedIn: 'root',
@@ -28,19 +39,20 @@ export class InfoDiscussionService implements OnInit {
   public allUsers: any = [];
   public usersInfoOfDB;
 
+  public passData;
   constructor(
     public afirestore: AngularFirestore,
     private afStorage: AngularFireStorage
   ) {}
 
   ngOnInit() {
-    this.getInfoOfTchat();
     this.getAllUsers(this.allUsers);
   }
 
   findTChatById = (idTchat: string, idTchat2: string) => {
     let id = null;
     this.myTchats.map((element) => {
+      console.log(element);
       if (element.id.localeCompare(idTchat) == 0) id = idTchat;
       else if (element.id.localeCompare(idTchat2) == 0) id = idTchat2;
     });
@@ -48,25 +60,24 @@ export class InfoDiscussionService implements OnInit {
   };
 
   //Garder le user actif
-  setActifUser = (id) => {
+  setActifUser = async (id) => {
     this.afirestore
       .collection(`users`)
       .doc(id)
       .snapshotChanges()
       .subscribe((res) => {
-        console.log(res.payload.data());
         let myInfo = {
           id: res.payload.get('id'),
           nom: res.payload.get('nom'),
           email: res.payload.get('email'),
           photo: res.payload.get('photo'),
+          statut: res.payload.get('statut'),
+          lastConnect: res.payload.get('lastConnect'),
         };
         const ref = this.afStorage.ref(myInfo.photo);
         ref.getDownloadURL().subscribe((res) => {
           myInfo.photo = res;
-          console.log(`avec lien`);
-          console.log(myInfo);
-          // localStorage.setItem(INF0_USER_CAME_FROM_DB, JSON.stringify(myInfo));
+          localStorage.setItem(INF0_USER_CAME_FROM_DB, JSON.stringify(myInfo));
         });
       });
   };
@@ -79,6 +90,7 @@ export class InfoDiscussionService implements OnInit {
 
   //Lien pour recuperer tout les tchats presents en BD
   getAllTchats = () => this.afirestore.collection(`tchats/`);
+  getUserOfTChat = () => JSON.parse(localStorage.getItem(USER_OF_TCHAT));
 
   getInfoOfTchat = () => {
     this.getAllTchats()
@@ -123,11 +135,13 @@ export class InfoDiscussionService implements OnInit {
                 email: element.email,
                 id: element.id,
                 photo: res,
-                isThere: false,
+                statut: element.statut,
+                lastConnect: element.lastConnect,
               });
             }
           });
         });
       });
+    this.getInfoOfTchat();
   };
 }

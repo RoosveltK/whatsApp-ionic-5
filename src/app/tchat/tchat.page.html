@@ -17,6 +17,7 @@
               message="{{data.messages[data.messages.length-1].messagetext}}"
               messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
               messageStatut="{{data.messages[data.messages.length-1].read}}"
+              assets="{{data.messages[data.messages.length-1].assets}}"
               [userId]="user.id"
             ></app-discussion>
           </span>
@@ -46,7 +47,7 @@
     </ion-list>
   </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" color="primary" horizontal="end" slot="fixed">
     <ion-fab-button (click)="openNewDisc()">
       <ion-icon name="chatbox-ellipses"></ion-icon>
     </ion-fab-button>

@@ -9,6 +9,7 @@ import { FirebaseService } from '../services/firebase.service';
 import {
   InfoDiscussionService,
   Message,
+  tchatGroup,
 } from '../services/info-discussion.service';
 
 @Component({
@@ -19,10 +20,15 @@ import {
 export class ConversationgroupeComponent implements OnInit {
   public idTchat;
   public infoUserInDB;
-  public groupOfTchat;
+  public groupOfTchat: tchatGroup;
   public allMessages: any = [];
   public textMessage: any;
   public isMessageRead = false;
+
+  public showInput;
+  public photo;
+  public grade;
+  public nom;
   constructor(
     public activateRoute: ActivatedRoute,
     public infoService: InfoDiscussionService,
@@ -35,23 +41,25 @@ export class ConversationgroupeComponent implements OnInit {
 
   ngOnInit() {
     this.infoUserInDB = this.infoService.getActifUser();
-    this.getInfoOfTchat();
-
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
+    this.groupOfTchat = JSON.parse(localStorage.getItem('GROUP_OF_TCHAT'));
     this.infoService
       .getAllTchats()
       .doc(this.idTchat)
       .snapshotChanges()
-      .subscribe((res) => (this.allMessages = res.payload.get('messages')));
+      .subscribe((res) => {
+        this.groupOfTchat.nom = res.payload.get('nom');
+        this.groupOfTchat.photo = res.payload.get('photo');
+        this.groupOfTchat.grade = res.payload.get('grade');
+        this.groupOfTchat.seeForAll = res.payload.get('seeForAll');
+        this.allMessages = res.payload.get('messages');
+      });
   }
 
   backHome = () => {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
   };
-
-  getInfoOfTchat = () =>
-    (this.groupOfTchat = JSON.parse(localStorage.getItem('GROUP_OF_TCHAT')));
 
   sendMessage = () => {
     const infoMessage: Message = {
@@ -76,6 +84,9 @@ export class ConversationgroupeComponent implements OnInit {
   async presentPopover() {
     const popover = await this.popoverController.create({
       component: PopoverGroupeComponent,
+      componentProps: {
+        groupData: this.groupOfTchat,
+      },
       cssClass: 'my-custom-class',
       translucent: true,
     });

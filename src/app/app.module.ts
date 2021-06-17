@@ -22,8 +22,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { ConversationgroupeComponent } from './conversationgroupe/conversationgroupe.component';
 import { PopoverLangComponent } from './components/popover/popover-lang/popover-lang.component';
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 export function createTranslateHttpLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/lang/', '.json');
@@ -36,7 +36,6 @@ export function createTranslateHttpLoader(http: HttpClient) {
     FormatFileSizePipe,
     ConversationComponent,
     PopoverLangComponent,
-    ConversationgroupeComponent,
   ],
   entryComponents: [],
   imports: [
@@ -60,7 +59,10 @@ export function createTranslateHttpLoader(http: HttpClient) {
       },
     }),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    QRScanner,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

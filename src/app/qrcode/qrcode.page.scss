@@ -1,0 +1,26 @@
+ion-slide {
+  height: 100%;
+}
+
+app-scan-qrcode,
+app-read-qrcode,
+ion-slides {
+  width: 100%;
+  height: 100%;
+}
+.contacts {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px 0 0 5px;
+  span {
+    padding: 10px;
+  }
+}
+ion-toolbar {
+  color: #128c7e;
+  --background: white;
+}
+
+ion-content {
+  --background: #ebeaea;
+}

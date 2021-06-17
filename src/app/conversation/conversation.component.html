@@ -11,13 +11,14 @@
     <ion-title>
       <span>{{ userOfTChat.nom }}</span>
 
-      <!-- <div class="status">
-        <span *ngIf="userStatus">en ligne</span>
-        <span *ngIf="!userStatus">
+      <div class="status">
+        <span *ngIf="userOfTChat.statut">en ligne</span>
+        <span *ngIf="!userOfTChat.statut"></span>
+        <!-- <span *ngIf="!userOfTChat.statut">
           <span *ngIf="secondStatus">vu aujourd'hui à {{ dateConnect }}</span>
           <span *ngIf="!seconStatus">vu le {{ dateConnect }}</span>
-        </span>
-      </div> -->
+        </span> -->
+      </div>
     </ion-title>
 
     <ion-buttons slot="end">
@@ -30,47 +31,70 @@
 
 <ion-content>
   <div class="bg"></div>
+  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+      <ion-item lines="none" *ngFor="let message of allMessages">
+        <ion-badge
+          color="warning"
+          class="ion-text-wrap"
+          *ngIf="message.uidSend === userInfo.id && message.assets == ''"
+          slot="end"
+          >{{ message.messagetext }}
 
-  <div>
-    <ion-item lines="none" *ngFor="let message of allMessages">
-      <ion-badge
-        color="warning"
-        class="ion-text-wrap"
-        *ngIf="message.uidSend === userInfo.uid"
-        slot="end"
-        >{{ message.messagetext }}
+          <ion-note color="medium"
+            >{{ message.heure }}
+            <ion-icon
+              *ngIf="message.read"
+              name="checkmark-done-outline"
+              color="primary"
+            ></ion-icon>
+            <ion-icon *ngIf="!message.read" name="checkmark-outline"></ion-icon
+          ></ion-note>
+        </ion-badge>
 
-        <ion-note color="medium"
-          >{{ message.heure }}
-          <ion-icon
-            *ngIf="isMessageRead"
-            name="checkmark-done-outline"
-            color="primary"
-          ></ion-icon>
-          <ion-icon *ngIf="!isMessageRead" name="checkmark-outline"></ion-icon
-        ></ion-note>
-      </ion-badge>
+        <ion-badge
+          color="warning"
+          class="ion-text-wrap"
+          *ngIf="message.uidSend === userInfo.id && message.assets != ''"
+          slot="end"
+        >
+          <img [src]="message.assets" />
+          {{ message.messagetext }}
+          <ion-note color="medium"
+            >{{ message.heure }}
+            <ion-icon
+              *ngIf="message.read"
+              name="checkmark-done-outline"
+              color="primary"
+            ></ion-icon>
+            <ion-icon *ngIf="!message.read" name="checkmark-outline"></ion-icon
+          ></ion-note>
+        </ion-badge>
 
-      <ion-badge
-        color="light"
-        *ngIf="message.uidSend != userInfo.uid"
-        slot="start"
-        class="ion-text-wrap"
-        >{{ message.messagetext }}
-        <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
-      >
-    </ion-item>
+        <ion-badge
+          color="light"
+          *ngIf="message.uidSend != userInfo.id && message.assets == ''"
+          slot="start"
+          class="ion-text-wrap"
+          >{{ message.messagetext }}
+          <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
+        >
 
-    <!-- <ion-item lines="none">
-      <ion-badge
-        color="light"
-        *ngIf="message.userSendId != userInfo.uid"
-        slot="start"
-        >{{ message.messagetext }}
-        <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
-      >
-    </ion-item> -->
-  </div>
+        <ion-badge
+          color="light"
+          *ngIf="message.uidSend != userInfo.id && message.assets != ''"
+          slot="start"
+          class="ion-text-wrap"
+          ><img [src]="message.assets" />
+          {{ message.messagetext }}
+          <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
+        >
+      </ion-item>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <ion-footer>
@@ -86,7 +110,9 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button (click)="presentPopover()"><ion-icon name="attach" size="small"></ion-icon></ion-button>
+      <ion-button (click)="presentPopover()"
+        ><ion-icon name="attach" size="small"></ion-icon
+      ></ion-button>
       <ion-button (click)="sendMessage()">
         <ion-icon name="send" color="success"></ion-icon
       ></ion-button>

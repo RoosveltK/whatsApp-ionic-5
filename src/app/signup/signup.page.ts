@@ -47,13 +47,13 @@ export class SignupPage implements OnInit {
   loadImageFromDevice1(e) {
     const reader = new FileReader();
     this.dataImage = this.firebaseService.getAndVerifyFile(e.target.files);
-    this.isImageThere = true;
 
     if (e.target.files && e.target.files.length) {
       const [file] = e.target.files;
       reader.readAsDataURL(file);
       reader.onload = () => (this.image = reader.result as string);
     }
+    this.isImageThere = true;
   }
 
   addUser = (userInfo) => {
@@ -61,7 +61,7 @@ export class SignupPage implements OnInit {
       this.serviceNotification.dangerToast(`SIGNUP.picInput`);
       return;
     }
-    this.serviceNotification.loadingController(3000);
+    this.serviceNotification.loadingController(4000);
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
       .then((res) => {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "754314095945",
+    "project_id": "whatsapp-clone-68a4c",
+    "storage_bucket": "whatsapp-clone-68a4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754314095945:android:74bd18aac5e91dfc413e98",
+        "android_client_info": {
+          "package_name": "com.kenne.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754314095945-pqigqt3bcvqikkmq8o79u0uqmejhpg9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE_tPPdNHatPlP1-8I-N9VAgujMv_tk6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754314095945-pqigqt3bcvqikkmq8o79u0uqmejhpg9m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

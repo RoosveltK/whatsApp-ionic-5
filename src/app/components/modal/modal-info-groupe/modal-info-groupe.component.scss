@@ -1,0 +1,40 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  color: #b6b6b6;
+  font-size: 18px;
+}
+ion-list {
+  ion-avatar {
+    height: 45px;
+    width: 45px;
+  }
+}
+ion-note {
+  border: 1px solid #00cc3f;
+  color: #00cc3f;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+h3 {
+  margin: 0;
+}
+.optionsRead {
+  font-size: 8px;
+  color: #e6d6d6;
+}
+ion-checkbox {
+  margin: 0;
+}
+
+ion-input {
+  border-bottom: 2px #128c7e solid;
+}
+.infoGroup {
+  display: flex;
+  padding: 5px;
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ContactsService } from '../services/contacts.service';
 
 @Component({
   selector: 'app-status',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['status.page.scss'],
 })
 export class StatusPage {
-  constructor() {}
+  constructor(public contactsService: ContactsService) {}
 }

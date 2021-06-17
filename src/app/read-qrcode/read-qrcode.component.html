@@ -1,0 +1,5 @@
+<ion-content>
+  <ion-icon *ngIf="showCamera" class="frame" name="qr-scanner"></ion-icon>
+
+  <div *ngIf="!showCamera">Voila l'id de cet user : {{ this.textScanned }}</div>
+</ion-content>

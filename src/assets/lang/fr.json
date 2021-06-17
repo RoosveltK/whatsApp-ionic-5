@@ -23,7 +23,8 @@
     "nameInput": "votre nom",
     "passwordInput": "entrez un mot de passe",
     "submit": "Soumettre",
-    "picInput": "Veuillez selectionner une photo de profil avant de continuer"
+    "picInput": "Veuillez selectionner une photo de profil avant de continuer",
+    "messageSucces": "Compte crée avec succès, consulter votre boite mail"
   },
   "PARAMETRES": {
     "parametres": "Paramètres",

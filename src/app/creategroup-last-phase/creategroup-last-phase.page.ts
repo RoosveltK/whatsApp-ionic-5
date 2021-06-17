@@ -36,7 +36,7 @@ export class CreategroupLastPhasePage implements OnInit {
 
   ngOnInit() {
     this.member = JSON.parse(localStorage.getItem('userofGroup'));
-    this.infoUser = JSON.parse(localStorage.getItem('infoUserInDB'));
+    this.infoUser = JSON.parse(localStorage.getItem('INF0_USER_CAME_FROM_DB'));
     this.serviceLanguage.setInitialAppLanguage();
   }
   ngAfterViewInit() {
@@ -55,6 +55,7 @@ export class CreategroupLastPhasePage implements OnInit {
     memberGrade.push({
       id: this.infoUser.id,
       nom: this.infoUser.nom,
+      photo: this.infoUser.photo,
       role: 'admin',
     });
 
@@ -65,6 +66,7 @@ export class CreategroupLastPhasePage implements OnInit {
       memberGrade.push({
         id: element.id,
         nom: element.nom,
+        photo: element.photo,
         role: 'user',
       });
     });

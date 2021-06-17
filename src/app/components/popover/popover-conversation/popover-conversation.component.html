@@ -1,27 +1,27 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="auto">
+      <ion-col size="auto" (click)="pickDocuments()">
         <span>
-          <ion-avatar button (click)="pickDocuments()">
+          <ion-avatar>
             <img id="first" src="assets/documents.png" />
           </ion-avatar>
           <h4>Documents</h4>
         </span>
       </ion-col>
 
-      <ion-col size="auto">
+      <ion-col size="auto" (click)="pickGallery()">
         <span>
-          <ion-avatar button (click)="pickGallery()">
+          <ion-avatar>
             <img src="assets/gallery.png" />
           </ion-avatar>
           <h4>Galerie</h4>
         </span>
       </ion-col>
 
-      <ion-col size="auto">
+      <ion-col size="auto" (click)="pickAudio()">
         <span>
-          <ion-avatar button (click)="pickAudio()">
+          <ion-avatar>
             <img src="assets/headphone.png" />
           </ion-avatar>
           <h4>Audio</h4>

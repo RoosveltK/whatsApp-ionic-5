@@ -1,0 +1,9 @@
+<ion-content class="ion-align-items-center">
+  <div class="center">
+    <qrcode [qrdata]="qrData" [size]="256" [level]="'M'"></qrcode>
+  </div>
+  <p>
+    Scannez le QR code pour débuter un tchat avec
+    <strong>{{ myInfo.nom }}</strong>
+  </p>
+</ion-content>

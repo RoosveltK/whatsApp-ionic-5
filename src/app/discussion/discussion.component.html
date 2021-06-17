@@ -9,18 +9,20 @@
     </div>
 
     <p *ngIf="messageUiSend === userId">
-      <span *ngIf="!messageStatut">
+      <span *ngIf="messageStatut">
         <ion-icon
           class="text-icon"
           color="primary"
           name="checkmark-done-outline"
         >
         </ion-icon>
+        <img *ngIf="assets != ''" src="assets/picture.png" />
         {{ message }}
       </span>
 
-      <span *ngIf="messageStatut">
+      <span *ngIf="!messageStatut">
         <ion-icon class="text-icon" name="checkmark-outline"></ion-icon>
+        <img *ngIf="assets != ''" src="assets/picture.png" />
         {{ message }}
       </span>
     </p>

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { InfogroupePage } from './infogroupe.page';
+import { ReadQrcodeComponent } from './read-qrcode.component';
 
-describe('InfogroupePage', () => {
-  let component: InfogroupePage;
-  let fixture: ComponentFixture<InfogroupePage>;
+describe('ReadQrcodeComponent', () => {
+  let component: ReadQrcodeComponent;
+  let fixture: ComponentFixture<ReadQrcodeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfogroupePage ],
+      declarations: [ ReadQrcodeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InfogroupePage);
+    fixture = TestBed.createComponent(ReadQrcodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
