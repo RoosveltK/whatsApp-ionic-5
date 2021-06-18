@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="success" *ngIf="!show">
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
@@ -13,19 +13,29 @@
 
       <div class="status">
         <span *ngIf="userOfTChat.statut">en ligne</span>
-        <span *ngIf="!userOfTChat.statut"></span>
-        <!-- <span *ngIf="!userOfTChat.statut">
-          <span *ngIf="secondStatus">vu aujourd'hui à {{ dateConnect }}</span>
-          <span *ngIf="!seconStatus">vu le {{ dateConnect }}</span>
-        </span> -->
+        <span *ngIf="!userOfTChat.statut">
+          <span>
+            vu le {{ dateLastConnect | date: "dd/MM/yyyy" }} à {{ lastConnect }}
+          </span>
+        </span>
       </div>
     </ion-title>
-
     <ion-buttons slot="end">
-      <ion-button> <ion-icon name="videocam"></ion-icon> </ion-button>
-      <ion-button> <ion-icon name="call"></ion-icon> </ion-button>
-      <ion-button><ion-icon name="ellipsis-vertical"></ion-icon></ion-button>
+      <ion-button (click)="activeSearch()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="success" *ngIf="show">
+    <ion-buttons slot="start">
+      <ion-icon
+        slot="icon-only"
+        name="arrow-back"
+        (click)="activeSearch()"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
   </ion-toolbar>
 </ion-header>
 
@@ -36,7 +46,10 @@
       loadingSpinner="bubbles"
       loadingText="Loading more data..."
     >
-      <ion-item lines="none" *ngFor="let message of allMessages">
+      <ion-item
+        lines="none"
+        *ngFor="let message of allMessages | filter: searchText"
+      >
         <ion-badge
           color="warning"
           class="ion-text-wrap"

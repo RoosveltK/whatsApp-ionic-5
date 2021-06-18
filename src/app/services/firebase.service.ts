@@ -42,9 +42,6 @@ export class FirebaseService {
   //Envoyer l'email de verification
   verificationEmail = (userConnected) => userConnected.sendEmailVerification();
 
-  // DeleteUser
-  // deleteUser = (id) => id.dele;
-
   //Connexion de l'utilisateur
   loginUser = (email, password) =>
     this.aFireAuth.signInWithEmailAndPassword(email, password);
@@ -54,7 +51,6 @@ export class FirebaseService {
     this.aFireAuth.createUserWithEmailAndPassword(email, password);
 
   setUserOnline = (user) => {
-    //Date.UTC(this.annee, this.mois, this.jour, this.heure, this.minute)
     this.aFireStore.collection(`users`).doc(user.id).update({
       statut: true,
       lastConnect: new Date(),
@@ -62,16 +58,9 @@ export class FirebaseService {
   };
 
   setUserOflline = (user) => {
-    //  Date.UTC(this.annee, this.mois, this.jour, this.heure, this.minute)
     this.aFireStore.collection(`users`).doc(user.id).update({
       statut: false,
       lastConnect: new Date(),
-    });
-  };
-  verifyStateOfUser = () => {
-    this.aFireAuth.onAuthStateChanged((user) => {
-      if (user) this.setUserOnline(this.serviceDiscussion.getActifUser());
-      else this.setUserOflline(this.serviceDiscussion.getActifUser());
     });
   };
 

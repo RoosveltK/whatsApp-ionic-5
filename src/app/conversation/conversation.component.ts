@@ -9,9 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
+import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 
 @Component({
   selector: 'app-conversation',
@@ -22,14 +23,15 @@ export class ConversationComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   public idTchat;
-  public userStatus = false;
-  public secondStatus;
   public userInfo;
-  public dateConnect;
+  public dateLastConnect;
   public userofDB = JSON.parse(localStorage.getItem('infoUserInDB'));
   public userOfTChat;
   public allMessages: any = [];
-  public textMessage: any;
+  public textMessage = '';
+  public searchText = '';
+  lastConnect;
+  show = false;
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -37,13 +39,31 @@ export class ConversationComponent implements OnInit {
     public serviceFireBase: FirebaseService,
     public router: Router,
     public databasFire: AngularFirestore,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    public modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
     this.userInfo = this.infoService.getActifUser();
-    this.serviceFireBase.verifyStateOfUser();
     this.userOfTChat = this.infoService.getUserOfTChat();
+    this.infoService
+      .getUserofTchatSubscribe()
+      .doc(this.userOfTChat.id)
+      .snapshotChanges()
+      .subscribe((res) => {
+        this.userOfTChat.statut = res.payload.get('statut');
+        this.userOfTChat.lastConnect = res.payload.get('lastConnect');
+        this.dateLastConnect = new Date(
+          this.userOfTChat.lastConnect.seconds * 1000
+        );
+        this.lastConnect = new Date(
+          this.userOfTChat.lastConnect.seconds * 1000
+        ).toLocaleTimeString('fr-FR', {
+          hour12: false,
+          hour: 'numeric',
+          minute: 'numeric',
+        });
+      });
 
     //Reception des infos du tchat
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
@@ -117,5 +137,23 @@ export class ConversationComponent implements OnInit {
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+  activeSearch = () => (this.show = !this.show);
+
+  async openEmojiPicker() {
+    const modal = await this.modalCtrl.create({
+      component: Ionic4EmojiPickerComponent,
+      showBackdrop: true,
+      componentProps: {
+        isInModal: true,
+      },
+    });
+
+    modal.present();
+    modal.onDidDismiss().then((event) => {
+      if (event != undefined && event.data != undefined) {
+        this.textMessage += event.data.data;
+      }
+    });
   }
 }

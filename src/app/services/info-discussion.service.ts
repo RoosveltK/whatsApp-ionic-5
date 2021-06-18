@@ -75,6 +75,11 @@ export class InfoDiscussionService implements OnInit {
       });
   };
 
+
+  getUserofTchatSubscribe =  () => 
+    this.afirestore.collection(`users`);
+  
+
   //Recuperer l'utilisateur qui utilise l'application sur cet appareil
   getActifUser = () => JSON.parse(localStorage.getItem(INF0_USER_CAME_FROM_DB));
 
@@ -83,6 +88,7 @@ export class InfoDiscussionService implements OnInit {
 
   //Lien pour recuperer tout les tchats presents en BD
   getAllTchats = () => this.afirestore.collection(`tchats/`);
+
   getUserOfTChat = () => JSON.parse(localStorage.getItem(USER_OF_TCHAT));
 
   getInfoOfTchat = () => {

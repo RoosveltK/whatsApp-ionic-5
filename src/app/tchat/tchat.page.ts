@@ -61,6 +61,13 @@ export class TchatPage implements OnInit {
         if (elt.localeCompare(this.user.id) == 0) onlyHerTchat.push(element);
       });
     });
+    // let tableLength= onlyHerTchat.messages.length;
+    // const tabSorted = onlyHerTchat.sort(
+    //   (a, b) =>
+    //     a.messages[a.messages.length - 1].date.seconds -
+    //     b.messages[b.messages.length - 1].date.seconds
+    // );
+
     return onlyHerTchat;
   };
 }

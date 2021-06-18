@@ -9,24 +9,26 @@
     </div>
 
     <p *ngIf="messageUiSend == userId">
-      <span *ngIf="messageStatut">
+      <span>
         <ion-icon
+          *ngIf="messageStatut"
           class="text-icon"
           color="primary"
           name="checkmark-done-outline"
         >
         </ion-icon>
-        <img *ngIf="assets != ''" src="assets/picture.png" />
-        {{ message }}
-      </span>
-
-      <span *ngIf="!messageStatut">
-        <ion-icon class="text-icon" name="checkmark-outline"></ion-icon>
+        <ion-icon
+          *ngIf="!messageStatut"
+          class="text-icon"
+          name="checkmark-outline"
+        ></ion-icon>
         <img *ngIf="assets != ''" src="assets/picture.png" />
         {{ message }}
       </span>
     </p>
 
-    <p *ngIf="messageUiSend != userId">{{ messageName }} {{ message }}</p>
+    <p *ngIf="messageUiSend != userId && messageName != ''">
+      <span class="pseudo">{{ newMsg }}</span> {{ message }}
+    </p>
   </ion-label>
 </ion-item>
