@@ -9,6 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ModalListeAssetsComponent implements OnInit {
   @Input() groupData;
   public assets = [];
+  public tab = [];
   constructor(private modalControler: ModalController) {}
 
   ngOnInit() {
@@ -16,9 +17,9 @@ export class ModalListeAssetsComponent implements OnInit {
       if (element.assets !== '')
         this.assets.push({
           date: new Date(element.date.seconds * 1000),
+          day: element.date.seconds,
           photo: element.assets,
         });
-      console.log(this.assets);
     });
   }
   dismiss() {

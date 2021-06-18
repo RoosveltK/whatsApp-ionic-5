@@ -9,7 +9,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 import { NotificationService } from '../services/notification.service';
-const GROUP_OF_TCHAT = 'GROUP_OF_TCHAT;';
+const GROUP_OF_TCHAT = 'GROUP_OF_TCHAT';
 @Component({
   selector: 'app-creategroup-last-phase',
   templateUrl: './creategroup-last-phase.page.html',

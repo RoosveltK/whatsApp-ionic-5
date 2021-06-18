@@ -68,9 +68,14 @@ export class ConversationComponent implements OnInit {
   sendMessage = () => {
     const infoMessage: Message = {
       uidSend: this.userInfo.id,
+      nomSend: this.userInfo.nom,
       messagetext: this.textMessage,
       date: new Date(),
-      heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      heure: new Date().toLocaleTimeString('fr-FR', {
+        hour12: false,
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       assets: '',
       read: false,
     };
@@ -91,7 +96,7 @@ export class ConversationComponent implements OnInit {
       componentProps: {
         idTchat: this.idTchat,
         messages: this.allMessages,
-        userId: this.userInfo.id,
+        userId: this.userInfo,
       },
       cssClass: 'my-custom-class',
       translucent: true,

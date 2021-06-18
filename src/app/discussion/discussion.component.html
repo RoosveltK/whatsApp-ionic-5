@@ -8,7 +8,7 @@
       <ion-note slot="end">{{ heure }}</ion-note>
     </div>
 
-    <p *ngIf="messageUiSend === userId">
+    <p *ngIf="messageUiSend == userId">
       <span *ngIf="messageStatut">
         <ion-icon
           class="text-icon"
@@ -27,8 +27,6 @@
       </span>
     </p>
 
-    <p *ngIf="messageUiSend !== userId">
-      {{ message }}
-    </p>
+    <p *ngIf="messageUiSend != userId">{{ messageName }} {{ message }}</p>
   </ion-label>
 </ion-item>

@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 
 export interface Message {
   uidSend: string;
+  nomSend: string;
   messagetext: string;
   date: Date;
   heure: string;
@@ -18,15 +19,7 @@ export interface tchat {
   users: Array<string>;
   messages: Array<Message>;
 }
-export interface tchatGroup {
-  id: string;
-  nom: Array<string>;
-  photo: Array<string>;
-  users: Array<string>;
-  messages: Array<Message>;
-  grade: Array<Object>;
-  seeForAll: boolean;
-}
+
 ///Varaible localStorage
 const INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
 const USER_OF_TCHAT = 'USER_OF_TCHAT';

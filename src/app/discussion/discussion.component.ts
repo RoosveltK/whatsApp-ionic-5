@@ -14,10 +14,13 @@ export class DiscussionComponent implements OnInit {
   @Input() messageUiSend: string;
   @Input() messageStatut: boolean;
   @Input() assets: string;
+  @Input() messageNane: string;
 
   public showPositionMessage = true;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.messageNane = this.messageNane + ':';
+  }
 }

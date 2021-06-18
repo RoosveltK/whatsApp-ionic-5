@@ -106,21 +106,22 @@
       </span>
     </ion-item-sliding>
 
-    <ion-item>
+   
       <ion-label class="optionsRead">
         <div class="flex_box ion-text-wrap">
-          <h3>
+          <h3 id="params">
             Modifier les paramètres du groupe afin que seul les admin puisse
             envoyer des messages
-            <ion-checkbox
+            <span> <ion-checkbox
               slot="end"
               (ionChange)="changeParams()"
               [(ngModel)]="valTcheck"
-            ></ion-checkbox>
+            ></ion-checkbox></span>
           </h3>
+         
         </div>
       </ion-label>
-    </ion-item>
+    
   </ion-list>
 
   <ion-list *ngIf="!isAdmin">

@@ -35,11 +35,16 @@
             ></app-discussion>
           </span>
         </span>
+        
         <span *ngIf="data.nom.length == 1">
           <app-discussion
             (click)="viewConversationGroup(data)"
             image="{{data.photo[0]}}"
             nom="{{data.nom[0]}}"
+            heure="{{data.messages[data.messages.length-1].heure}}"
+            message="{{data.messages[data.messages.length-1].messagetext}}"
+            messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
+            messageNane="{{data.messages[data.messages.length-1].nomSend}}"
             [userId]="user.id"
           ></app-discussion>
         </span>
@@ -53,31 +58,3 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
-
-<!-- <ion-list *ngFor="let data of allTchat">
-  <div *ngIf="data.messages.length !=0">
-    <div *ngIf="data.nom.length == 1">
-       <app-discussion
-      (click)="viewConversation(data)"
-      image="{{data.photo[0]}}"
-      nom="{{data.nom[0]}}"
-      message="{{data.message[0]}}"
-    ></app-discussion> -->
-<!-- </div>
-    <div *ngIf="data.nom.length != 1">
-      <app-discussion
-        (click)="viewConversation(data)"
-        image="{{data.photo[0]}}"
-        nom="{{data.nom[0]}}"
-        heure="{{data.messages[data.messages.length-1].heure}}"
-        message="{{data.messages[data.messages.length-1].messagetext}}"
-      ></app-discussion>
-    </div> -->
-<!-- <app-discussion
-    (click)="viewConversation(data)"
-    image="{{data.photo[0]}}"
-    nom="{{data.nom[0]}}"
-    message="{{data.message[0]}}"
-  ></app-discussion> -->
-<!-- </div>
-</ion-list> -->

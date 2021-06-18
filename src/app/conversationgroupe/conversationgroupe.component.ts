@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
+import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
 
@@ -10,7 +11,6 @@ import { FirebaseService } from '../services/firebase.service';
 import {
   InfoDiscussionService,
   Message,
-  tchatGroup,
 } from '../services/info-discussion.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class ConversationgroupeComponent implements OnInit {
   public infoUserInDB;
   public groupOfTchat;
   public allMessages: any = [];
-  public textMessage: any;
+  public textMessage = '';
   public show = false;
 
   public searchText;
@@ -36,7 +36,8 @@ export class ConversationgroupeComponent implements OnInit {
     public router: Router,
     public databasFire: AngularFirestore,
     public afStorage: AngularFireStorage,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    public modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -73,13 +74,16 @@ export class ConversationgroupeComponent implements OnInit {
   };
 
   sendMessage = () => {
-    const infoMessage: Message = {
+    const infoMessage = {
       uidSend: this.infoUserInDB.id,
       messagetext: this.textMessage,
       date: new Date(),
-      heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      heure: new Date().toLocaleTimeString('fr-FR', { hour12: false, 
+        hour: "numeric", 
+        minute: "numeric"}),
       assets: '',
       read: false,
+      nomSend: this.infoUserInDB.nom,
     };
     this.allMessages.push(infoMessage);
     this.infoService
@@ -110,7 +114,7 @@ export class ConversationgroupeComponent implements OnInit {
       componentProps: {
         idTchat: this.idTchat,
         messages: this.allMessages,
-        userId: this.infoUserInDB.id,
+        userId: this.infoUserInDB,
       },
       cssClass: 'my-custom-class',
       translucent: true,
@@ -120,4 +124,21 @@ export class ConversationgroupeComponent implements OnInit {
     const { role } = await popover.onDidDismiss();
   }
   activeSearch = () => (this.show = !this.show);
+
+  async openEmojiPicker() {
+    const modal = await this.modalCtrl.create({
+      component: Ionic4EmojiPickerComponent,
+      showBackdrop: true,
+      componentProps: {
+        isInModal: true,
+      },
+    });
+
+    modal.present();
+    modal.onDidDismiss().then((event) => {
+      if (event != undefined && event.data != undefined) {
+        this.textMessage += event.data.data;
+      }
+    });
+  }
 }

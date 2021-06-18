@@ -48,10 +48,13 @@ export class ModalSendComponent implements OnInit {
         .getDownloadURL()
         .subscribe((urlDownload) => {
           const infoMessage: Message = {
-            uidSend: this.userId,
+            uidSend: this.userId.id,
+            nomSend: this.userId.nom,
             messagetext: this.text,
             date: new Date(),
-            heure: `${new Date().getHours()}:${new Date().getMinutes()}`,
+            heure:  new Date().toLocaleTimeString('fr-FR', { hour12: false, 
+              hour: "numeric", 
+              minute: "numeric"}),
             assets: urlDownload,
             read: false,
           };

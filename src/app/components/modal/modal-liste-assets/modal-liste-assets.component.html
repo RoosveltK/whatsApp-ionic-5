@@ -10,10 +10,13 @@
 </ion-header>
 
 <ion-content>
-  <div class="caderImg" *ngFor="let img of assets">
-    <div id="date">{{ img.date | date }}</div>
-    <ion-thumbnail>
-      <img [src]="img.photo" />
-    </ion-thumbnail>
+  <div class="caderImgs" *ngFor="let imgs of assets">
+    <div id="date">
+      {{ imgs.date | date }}<br />
+      <div class="trait"></div>
+      <ion-thumbnail>
+        <img [src]="imgs.photo" />
+      </ion-thumbnail>
+    </div>
   </div>
 </ion-content>

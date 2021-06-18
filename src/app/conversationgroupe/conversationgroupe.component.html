@@ -65,8 +65,9 @@
         *ngIf="message.uidSend != infoUserInDB.id"
         slot="start"
         class="ion-text-wrap"
-        ><img *ngIf="message.assets != ''" [src]="message.assets" />
-        {{ message.messagetext }}
+        ><span class="pseudo">{{ message.nomSend }} ~</span>
+        <img *ngIf="message.assets != ''" [src]="message.assets" />
+        <span>{{ message.messagetext }}</span>
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
       >
     </ion-item>
@@ -76,7 +77,7 @@
 <ion-footer *ngIf="groupOfTchat.seeForAll || isAdmin == true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button shape="round" size="small">
+      <ion-button (click)="openEmojiPicker()" shape="round" size="small">
         <ion-icon slot="icon-only" name="happy"></ion-icon>
       </ion-button>
     </ion-buttons>
