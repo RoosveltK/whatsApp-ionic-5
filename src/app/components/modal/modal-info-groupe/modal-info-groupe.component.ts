@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { InfoDiscussionService } from 'src/app/services/info-discussion.service';
+import { ModalListeAssetsComponent } from '../modal-liste-assets/modal-liste-assets.component';
 
 @Component({
   selector: 'app-modal-info-groupe',
@@ -33,6 +34,7 @@ export class ModalInfoGroupeComponent implements OnInit {
     this.image = this.groupData.photo[0];
     this.valTcheck = !this.groupData.seeForAll;
     this.infoUser = this.serviceTchat.getActifUser();
+    this.findStatutOfUserInGroup();
   }
 
   ngAfterViewInit() {
@@ -121,5 +123,15 @@ export class ModalInfoGroupeComponent implements OnInit {
       .doc(this.groupData.id)
       .update({ nom: [this.name] });
     this.isInput = false;
+  }
+
+  async openMediaDetail() {
+    const modal = await this.modalControler.create({
+      component: ModalListeAssetsComponent,
+      componentProps: {
+        groupData: this.groupData,
+      },
+    });
+    return await modal.present();
   }
 }

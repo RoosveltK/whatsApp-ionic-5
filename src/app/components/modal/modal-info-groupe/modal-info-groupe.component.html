@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-card-content>
-    <div class="center">
+    <div class="center" *ngIf="isAdmin">
       <div class="flex_box">
         <span *ngIf="!isInput">
           {{ name }}
@@ -43,6 +43,18 @@
       </ion-avatar>
       Appuyer sur la l'icone du groupe pour la changer
     </div>
+
+    <div class="center" *ngIf="!isAdmin">
+      <div class="flex_box">
+        <span>
+          {{ name }}
+        </span>
+      </div>
+      <ion-avatar size="big" slot="start">
+        <img class="image" [src]="image" />
+      </ion-avatar>
+    </div>
+
     <input
       #userInput
       style="position: absolute; width: 0; height: 0; opacity: 0"
@@ -51,7 +63,12 @@
       accept="image/png, image/jpeg"
     />
   </ion-card-content>
-  <ion-list>
+
+  <ion-item button class="listing" (click)="openMediaDetail()" detail>
+    <ion-label> Lister les medias du groupe</ion-label>
+  </ion-item>
+
+  <ion-list *ngIf="isAdmin">
     {{ groupData.grade.length }} participants
     <ion-item-sliding id="card" *ngFor="let user of groupData.grade">
       <ion-item *ngIf="user.id == infoUser.id">
@@ -104,5 +121,38 @@
         </div>
       </ion-label>
     </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!isAdmin">
+    {{ groupData.grade.length }} participants
+    <div id="card" *ngFor="let user of groupData.grade">
+      <ion-item *ngIf="user.id == infoUser.id">
+        <ion-avatar slot="start">
+          <img [src]="user.photo" />
+        </ion-avatar>
+        <ion-label>
+          <div class="flex_box">
+            <h3>Vous</h3>
+            <ion-note *ngIf="user.role == 'admin'" slot="end"
+              >admin du groupe</ion-note
+            >
+          </div>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="user.id != infoUser.id">
+        <ion-avatar slot="start">
+          <img [src]="user.photo" />
+        </ion-avatar>
+        <ion-label>
+          <div class="flex_box">
+            <h3>{{ user.nom }}</h3>
+            <ion-note *ngIf="user.role == 'admin'" slot="end"
+              >admin du groupe</ion-note
+            >
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
   </ion-list>
 </ion-content>

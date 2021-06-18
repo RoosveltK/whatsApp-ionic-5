@@ -18,7 +18,11 @@
 
   <ion-toolbar color="success" *ngIf="show">
     <ion-buttons slot="start">
-      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+      <ion-icon
+        slot="icon-only"
+        name="arrow-back"
+        (click)="showSearchBar()"
+      ></ion-icon>
     </ion-buttons>
     <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
   </ion-toolbar>
@@ -46,7 +50,7 @@
     </div>
 
     <div *ngIf="users.length != 0">
-      <div *ngFor="let user of users">
+      <div *ngFor="let user of users| filter:searchText">
         <ion-item (click)="startDiscu(user)">
           <ion-avatar slot="start">
             <img src="{{user.photo}}" />

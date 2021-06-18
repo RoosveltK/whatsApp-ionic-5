@@ -40,29 +40,12 @@
         <ion-badge
           color="warning"
           class="ion-text-wrap"
-          *ngIf="message.uidSend === userInfo.id && message.assets == ''"
-          slot="end"
-          >{{ message.messagetext }}
-
-          <ion-note color="medium"
-            >{{ message.heure }}
-            <ion-icon
-              *ngIf="message.read"
-              name="checkmark-done-outline"
-              color="primary"
-            ></ion-icon>
-            <ion-icon *ngIf="!message.read" name="checkmark-outline"></ion-icon
-          ></ion-note>
-        </ion-badge>
-
-        <ion-badge
-          color="warning"
-          class="ion-text-wrap"
-          *ngIf="message.uidSend === userInfo.id && message.assets != ''"
+          *ngIf="message.uidSend === userInfo.id"
           slot="end"
         >
-          <img [src]="message.assets" />
+          <img *ngIf="message.assets != ''" [src]="message.assets" />
           {{ message.messagetext }}
+
           <ion-note color="medium"
             >{{ message.heure }}
             <ion-icon
@@ -76,19 +59,10 @@
 
         <ion-badge
           color="light"
-          *ngIf="message.uidSend != userInfo.id && message.assets == ''"
+          *ngIf="message.uidSend != userInfo.id"
           slot="start"
           class="ion-text-wrap"
-          >{{ message.messagetext }}
-          <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
-        >
-
-        <ion-badge
-          color="light"
-          *ngIf="message.uidSend != userInfo.id && message.assets != ''"
-          slot="start"
-          class="ion-text-wrap"
-          ><img [src]="message.assets" />
+          ><img *ngIf="message.assets != ''" [src]="message.assets" />
           {{ message.messagetext }}
           <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
         >

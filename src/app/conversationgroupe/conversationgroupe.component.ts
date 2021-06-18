@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
 
 import { FirebaseService } from '../services/firebase.service';
@@ -20,15 +21,14 @@ import {
 export class ConversationgroupeComponent implements OnInit {
   public idTchat;
   public infoUserInDB;
-  public groupOfTchat: tchatGroup;
+  public groupOfTchat;
   public allMessages: any = [];
   public textMessage: any;
-  public isMessageRead = false;
+  public show = false;
 
-  public showInput;
-  public photo;
-  public grade;
-  public nom;
+  public searchText;
+  public isAdmin = false;
+
   constructor(
     public activateRoute: ActivatedRoute,
     public infoService: InfoDiscussionService,
@@ -43,6 +43,7 @@ export class ConversationgroupeComponent implements OnInit {
     this.infoUserInDB = this.infoService.getActifUser();
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
     this.groupOfTchat = JSON.parse(localStorage.getItem('GROUP_OF_TCHAT'));
+    this.findStatutOfUserInGroup();
     this.infoService
       .getAllTchats()
       .doc(this.idTchat)
@@ -61,6 +62,16 @@ export class ConversationgroupeComponent implements OnInit {
     this.router.navigate(link);
   };
 
+  findStatutOfUserInGroup = () => {
+    this.groupOfTchat.grade.forEach((element) => {
+      if (
+        this.infoUserInDB.id.localeCompare(element.id) == 0 &&
+        element.role == 'admin'
+      )
+        this.isAdmin = true;
+    });
+  };
+
   sendMessage = () => {
     const infoMessage: Message = {
       uidSend: this.infoUserInDB.id,
@@ -71,8 +82,6 @@ export class ConversationgroupeComponent implements OnInit {
       read: false,
     };
     this.allMessages.push(infoMessage);
-    console.log(this.allMessages);
-
     this.infoService
       .getAllTchats()
       .doc(this.idTchat)
@@ -94,4 +103,21 @@ export class ConversationgroupeComponent implements OnInit {
 
     const { role } = await popover.onDidDismiss();
   }
+
+  async presentPopoverMsg() {
+    const popover = await this.popoverController.create({
+      component: PopoverConversationComponent,
+      componentProps: {
+        idTchat: this.idTchat,
+        messages: this.allMessages,
+        userId: this.infoUserInDB.id,
+      },
+      cssClass: 'my-custom-class',
+      translucent: true,
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+  }
+  activeSearch = () => (this.show = !this.show);
 }

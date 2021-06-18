@@ -44,7 +44,7 @@ export class NewdiscPage implements OnInit {
   };
 
   showSearchBar() {
-    this.show = true;
+    this.show = !this.show;
   }
 
   startDiscu = (userData: any) => {

@@ -24,23 +24,26 @@ ion-content {
   background-size: cover;
 }
 
-ion-footer ion-toolbar {
-  --background: #f4f4f4;
-  text-align: center;
+ion-footer {
+  ion-input {
+    background: white !important;
+    height: 31px;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    border-radius: 4px;
+    border: 1px #dfdfdf solid;
+    --padding-start: 8px;
+  }
+  ion-button {
+    font-weight: 600;
+  }
+  ion-toolbar {
+    --background: #f4f4f4;
+    text-align: center;
+  }
 }
-ion-footer ion-button {
-  font-weight: 600;
-}
-ion-input {
-  background: white !important;
-  height: 31px;
-  width: 95%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-  border-radius: 4px;
-  border: 1px #dfdfdf solid;
-  --padding-start: 8px;
-}
+
 ion-buttons ion-back-button {
   margin-right: 0px;
 }

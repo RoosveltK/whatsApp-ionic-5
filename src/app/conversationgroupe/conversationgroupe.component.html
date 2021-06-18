@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar color="success" *ngIf="!show">
     <ion-buttons slot="start">
       <ion-back-button text="" (click)="backHome()"></ion-back-button>
     </ion-buttons>
@@ -17,12 +17,24 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button> <ion-icon name="videocam"></ion-icon> </ion-button>
-      <ion-button> <ion-icon name="call"></ion-icon> </ion-button>
+      <ion-button (click)="activeSearch()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
       <ion-button (click)="presentPopover()"
         ><ion-icon name="ellipsis-vertical"></ion-icon
       ></ion-button>
     </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="success" *ngIf="show">
+    <ion-buttons slot="start">
+      <ion-icon
+        slot="icon-only"
+        name="arrow-back"
+        (click)="activeSearch()"
+      ></ion-icon>
+    </ion-buttons>
+    <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
   </ion-toolbar>
 </ion-header>
 
@@ -30,17 +42,21 @@
   <div class="bg"></div>
 
   <div>
-    <ion-item lines="none" *ngFor="let message of allMessages">
+    <ion-item
+      lines="none"
+      *ngFor="let message of allMessages | filter: searchText"
+    >
       <ion-badge
         color="warning"
+        class="ion-text-wrap"
         *ngIf="message.uidSend === infoUserInDB.id"
         slot="end"
-        >{{ message.messagetext }}
+      >
+        <img *ngIf="message.assets != ''" [src]="message.assets" />
+        {{ message.messagetext }}
 
         <ion-note color="medium"
-          >{{ message.heure }}
-
-          <ion-icon name="checkmark-outline"></ion-icon
+          >{{ message.heure }} <ion-icon name="checkmark-outline"></ion-icon
         ></ion-note>
       </ion-badge>
 
@@ -48,14 +64,16 @@
         color="light"
         *ngIf="message.uidSend != infoUserInDB.id"
         slot="start"
-        >{{ message.messagetext }}
+        class="ion-text-wrap"
+        ><img *ngIf="message.assets != ''" [src]="message.assets" />
+        {{ message.messagetext }}
         <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
       >
     </ion-item>
   </div>
 </ion-content>
 
-<ion-footer *ngIf="groupOfTchat.seeForAll">
+<ion-footer *ngIf="groupOfTchat.seeForAll || isAdmin == true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button shape="round" size="small">
@@ -68,7 +86,9 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button><ion-icon name="attach" size="small"></ion-icon></ion-button>
+      <ion-button (click)="presentPopoverMsg()"
+        ><ion-icon name="attach" size="small"></ion-icon
+      ></ion-button>
       <ion-button (click)="sendMessage()">
         <ion-icon name="send" color="success"></ion-icon
       ></ion-button>
@@ -76,6 +96,6 @@
   </ion-toolbar>
 </ion-footer>
 
-<ion-footer *ngIf="!groupOfTchat.seeForAll">
+<ion-footer *ngIf="!groupOfTchat.seeForAll && isAdmin == false">
   <ion-toolbar> Seuls les admins peuvent envoyer des messages </ion-toolbar>
 </ion-footer>

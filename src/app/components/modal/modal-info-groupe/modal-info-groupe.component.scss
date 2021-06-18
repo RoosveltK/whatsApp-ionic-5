@@ -9,6 +9,7 @@
   font-size: 18px;
 }
 ion-list {
+  padding: 5px;
   ion-avatar {
     height: 45px;
     width: 45px;
@@ -36,5 +37,8 @@ ion-input {
 }
 .infoGroup {
   display: flex;
+  padding: 5px;
+}
+.listing {
   padding: 5px;
 }

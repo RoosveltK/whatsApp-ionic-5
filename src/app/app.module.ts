@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PopoverLangComponent } from './components/popover/popover-lang/popover-lang.component';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
@@ -51,6 +51,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
     AngularFireMessagingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    Ng2SearchPipeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

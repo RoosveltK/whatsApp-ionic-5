@@ -8,6 +8,7 @@ import { NewdiscPageRoutingModule } from './newdisc-routing.module';
 
 import { NewdiscPage } from './newdisc.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     NewdiscPageRoutingModule,
     TranslateModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [NewdiscPage],
 })

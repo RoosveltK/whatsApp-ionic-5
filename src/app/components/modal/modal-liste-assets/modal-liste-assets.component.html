@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <div class="contacts">Médias de {{ groupData.nom[0] }}<br /></div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="caderImg" *ngFor="let img of assets">
+    <div id="date">{{ img.date | date }}</div>
+    <ion-thumbnail>
+      <img [src]="img.photo" />
+    </ion-thumbnail>
+  </div>
+</ion-content>
