@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/language.service';
 import { NotificationService } from './../services/notification.service';
 import {
   InfoDiscussionService,
@@ -6,7 +5,6 @@ import {
 } from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 const USER_OF_TCHAT = 'USER_OF_TCHAT';
 @Component({
@@ -23,11 +21,8 @@ export class NewdiscPage implements OnInit {
   constructor(
     public router: Router,
     public service: InfoDiscussionService,
-    private serviceNotification: NotificationService,
-    private serviceLanguage: LanguageService
-  ) {
-    this.serviceLanguage.setInitialAppLanguage();
-  }
+    private serviceNotification: NotificationService
+  ) {}
 
   ngOnInit() {
     this.actifUserofDB = this.service.getActifUser();

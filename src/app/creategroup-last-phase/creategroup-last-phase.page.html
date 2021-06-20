@@ -50,7 +50,7 @@
     ></ion-input>
 
     <ion-buttons color="gray" slot="end">
-      <ion-button (click)="openEmojiPicker()"
+      <ion-button (click)="showEmojiPicker = !showEmojiPicker"
         ><ion-icon name="happy" size="small"></ion-icon
       ></ion-button>
     </ion-buttons>
@@ -79,5 +79,13 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+
+  <div
+    class="emojiContainer"
+    [style.height]="showEmojiPicker ? '500px' : '0px'"
+  >
+    <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
+    <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
   </div>
 </ion-content>

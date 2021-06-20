@@ -7,9 +7,16 @@ import { StatusPage } from './status.page';
 
 import { StatusPageRoutingModule } from './status-routing.module';
 import { ModalStatutComponent } from '../components/modal/modal-statut/modal-statut.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  imports: [IonicModule, CommonModule, FormsModule, StatusPageRoutingModule],
+  imports: [
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    StatusPageRoutingModule,
+    TranslateModule,
+  ],
   declarations: [StatusPage, ModalStatutComponent],
 })
 export class StatusPageModule {}

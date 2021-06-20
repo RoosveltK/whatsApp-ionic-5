@@ -24,6 +24,7 @@ export class ModalSendComponent implements OnInit {
   public image;
   public text = '';
   public idTchat;
+  public showEmojiPicker = false;
 
   ngOnInit() {
     this.readFile(this.imageOrVideo);
@@ -52,9 +53,11 @@ export class ModalSendComponent implements OnInit {
             nomSend: this.userId.nom,
             messagetext: this.text,
             date: new Date(),
-            heure:  new Date().toLocaleTimeString('fr-FR', { hour12: false, 
-              hour: "numeric", 
-              minute: "numeric"}),
+            heure: new Date().toLocaleTimeString('fr-FR', {
+              hour12: false,
+              hour: 'numeric',
+              minute: 'numeric',
+            }),
             assets: urlDownload,
             read: false,
           };
@@ -70,5 +73,9 @@ export class ModalSendComponent implements OnInit {
             });
         });
     });
+  }
+
+  addEmoji(event) {
+    this.text += event.data;
   }
 }

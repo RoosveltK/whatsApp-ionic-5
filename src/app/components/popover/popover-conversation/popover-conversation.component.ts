@@ -8,17 +8,17 @@ import { ModalSendComponent } from '../../modal/modal-send/modal-send.component'
   styleUrls: ['./popover-conversation.component.scss'],
 })
 export class PopoverConversationComponent implements OnInit {
-  @ViewChild('documentInput') documentInputViewChild: ElementRef;
+  // @ViewChild('documentInput') documentInputViewChild: ElementRef;
   @ViewChild('galleryInput') galleryInputViewChild: ElementRef;
-  @ViewChild('audioInput') audioInputViewChild: ElementRef;
+  // @ViewChild('audioInput') audioInputViewChild: ElementRef;
 
   @Input() idTchat: string;
   @Input() messages;
   @Input() userId;
 
-  public documentInputElement: HTMLInputElement;
+  // public documentInputElement: HTMLInputElement;
   public galleryInputElement: HTMLInputElement;
-  public audioInputElement: HTMLInputElement;
+  // public audioInputElement: HTMLInputElement;
 
   public imageOrVideo;
   public audio;
@@ -33,22 +33,22 @@ export class PopoverConversationComponent implements OnInit {
   dismissPopover = () => this.popoverController.dismiss();
 
   ngAfterViewInit() {
-    this.documentInputElement = this.documentInputViewChild.nativeElement;
+    // this.documentInputElement = this.documentInputViewChild.nativeElement;
     this.galleryInputElement = this.galleryInputViewChild.nativeElement;
-    this.audioInputElement = this.audioInputViewChild.nativeElement;
+    // this.audioInputElement = this.audioInputViewChild.nativeElement;
   }
 
-  async pickDocuments(event) {
-    this.documentInputElement.click();
-  }
+  // async pickDocuments(event) {
+  //   this.documentInputElement.click();
+  // }
 
   async pickGallery(event) {
     this.galleryInputElement.click();
   }
 
-  async pickAudio(event) {
-    this.audioInputElement.click();
-  }
+  // async pickAudio(event) {
+  //   this.audioInputElement.click();
+  // }
 
   loadGallery(e) {
     const reader = new FileReader();
@@ -59,25 +59,25 @@ export class PopoverConversationComponent implements OnInit {
     }
   }
 
-  loadAudio(e) {
-    const reader = new FileReader();
+  // loadAudio(e) {
+  //   const reader = new FileReader();
 
-    if (e.target.files && e.target.files.length) {
-      const [file] = e.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => (this.imageOrVideo = reader.result as string);
-    }
-  }
+  //   if (e.target.files && e.target.files.length) {
+  //     const [file] = e.target.files;
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => (this.imageOrVideo = reader.result as string);
+  //   }
+  // }
 
-  loadDocument(e) {
-    const reader = new FileReader();
+  // loadDocument(e) {
+  //   const reader = new FileReader();
 
-    if (e.target.files && e.target.files.length) {
-      const [file] = e.target.files;
-      reader.readAsDataURL(file);
-      reader.onload = () => (this.imageOrVideo = reader.result as string);
-    }
-  }
+  //   if (e.target.files && e.target.files.length) {
+  //     const [file] = e.target.files;
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => (this.imageOrVideo = reader.result as string);
+  //   }
+  // }
 
   async presentModal(fic) {
     this.dismissPopover();

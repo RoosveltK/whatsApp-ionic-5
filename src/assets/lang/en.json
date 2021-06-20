@@ -39,6 +39,10 @@
     "Home": {
       "logOut": "Logout",
       "close": "Close"
+    },
+    "PopoverGroup": {
+      "info": "Group Info",
+      "quit": "Leave the group"
     }
   },
   "TABS": {
@@ -47,7 +51,9 @@
   "CREATEGROUP": {
     "addMember": "Add member",
     "statutGroupe": "New group",
-    "search": "Search..."
+    "search": "Search...",
+    "sur": "of",
+    "selection": "selected"
   },
   "CREATEGROUPLASTPHASE": {
     "addSubject": "Add topic ",
@@ -58,5 +64,26 @@
     "Notification": {
       "wait": "Please wait..."
     }
+  },
+  "MODAL": {
+    "ModalInfoGroup": {
+      "option": "Group options",
+      "changeImgeGroup": "Press the group icon to change it",
+      "listing": "List the group's media",
+      "vous": "You",
+      "admin": "group admin",
+      "modify": "Change group settings so that only admin can send messages"
+    }
+  },
+  "QRCODE": {
+    "code": "QR Code",
+    "monCode": "MY CODE",
+    "scanCode": "SCAN CODE",
+    "scanWithTchat": "Scan the QR code to start a chat with"
+  },
+  "STATUS": {
+    "status": "My statut",
+    "upload": "Tap here to add  statut",
+    "update": "Last uptade"
   }
 }

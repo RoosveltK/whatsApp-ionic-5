@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/language.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { InfoDiscussionService } from '../services/info-discussion.service';
@@ -16,13 +15,7 @@ export class CreategroupPage implements OnInit {
   public users = [];
   public actifUser;
   public actifUserofDB;
-  constructor(
-    private router: Router,
-    public service: InfoDiscussionService,
-    public serviceLanguage: LanguageService
-  ) {
-    this.serviceLanguage.setInitialAppLanguage();
-  }
+  constructor(private router: Router, public service: InfoDiscussionService) {}
 
   ngOnInit() {
     this.actifUser = this.service.getActifUser();
@@ -62,7 +55,7 @@ export class CreategroupPage implements OnInit {
     // if (this.usersOfGroup.length == 0)
     //   console.log(`Au moins 1 contact doit etre selectionee`);
     // else {
-    localStorage.setItem('userofGroup', JSON.stringify(this.usersOfGroup));
+    localStorage.setItem('USER_OF_GROUP', JSON.stringify(this.usersOfGroup));
     this.router.navigate(['/creategroup-last-phase']);
     //}
   }

@@ -77,7 +77,7 @@
 <ion-footer *ngIf="groupOfTchat.seeForAll || isAdmin == true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="openEmojiPicker()" shape="round" size="small">
+      <ion-button    (click)="showEmojiPicker = !showEmojiPicker" shape="round" size="small">
         <ion-icon slot="icon-only" name="happy"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -95,6 +95,13 @@
       ></ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <div
+    class="emojiContainer"
+    [style.height]="showEmojiPicker ? '300px' : '0px'"
+  >
+    <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
+    <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
+  </div>
 </ion-footer>
 
 <ion-footer *ngIf="!groupOfTchat.seeForAll && isAdmin == false">

@@ -5,7 +5,9 @@
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon
       ></ion-button>
     </ion-buttons>
-    <div class="contacts">Options de groupe<br /></div>
+    <div class="contacts">
+      {{ "MODAL.ModalInfoGroup.option" | translate }}<br />
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -41,7 +43,7 @@
       >
         <img class="image" [src]="image" />
       </ion-avatar>
-      Appuyer sur la l'icone du groupe pour la changer
+      {{ "MODAL.ModalInfoGroup.changeImgeGroup" | translate }}
     </div>
 
     <div class="center" *ngIf="!isAdmin">
@@ -65,7 +67,7 @@
   </ion-card-content>
 
   <ion-item button class="listing" (click)="openMediaDetail()" detail>
-    <ion-label> Lister les medias du groupe</ion-label>
+    <ion-label> {{ "MODAL.ModalInfoGroup.listing" | translate }}</ion-label>
   </ion-item>
 
   <ion-list *ngIf="isAdmin">
@@ -77,10 +79,10 @@
         </ion-avatar>
         <ion-label>
           <div class="flex_box">
-            <h3>Vous</h3>
-            <ion-note *ngIf="user.role == 'admin'" slot="end"
-              >admin du groupe</ion-note
-            >
+            <h3>{{ "MODAL.ModalInfoGroup.vous" | translate }}</h3>
+            <ion-note *ngIf="user.role == 'admin'" slot="end">{{
+              "MODAL.ModalInfoGroup.admin" | translate
+            }}</ion-note>
           </div>
         </ion-label>
       </ion-item>
@@ -92,9 +94,9 @@
           <ion-label>
             <div class="flex_box">
               <h3>{{ user.nom }}</h3>
-              <ion-note *ngIf="user.role == 'admin'" slot="end"
-                >admin du groupe</ion-note
-              >
+              <ion-note *ngIf="user.role == 'admin'" slot="end">{{
+                "MODAL.ModalInfoGroup.admin" | translate
+              }}</ion-note>
             </div>
           </ion-label>
         </ion-item>
@@ -106,22 +108,18 @@
       </span>
     </ion-item-sliding>
 
-   
-      <ion-label class="optionsRead">
-        <div class="flex_box ion-text-wrap">
-          <h3 id="params">
-            Modifier les paramètres du groupe afin que seul les admin puisse
-            envoyer des messages
-            <span> <ion-checkbox
-              slot="end"
-              (ionChange)="changeParams()"
-              [(ngModel)]="valTcheck"
-            ></ion-checkbox></span>
-          </h3>
-         
-        </div>
-      </ion-label>
-    
+    <ion-label class="optionsRead">
+      <div class="flex_box ion-text-wrap">
+        <h3 id="params">
+          {{ "MODAL.ModalInfoGroup.modify" | translate }}
+          <ion-checkbox
+            slot="end"
+            (ionChange)="changeParams()"
+            [(ngModel)]="valTcheck"
+          ></ion-checkbox>
+        </h3>
+      </div>
+    </ion-label>
   </ion-list>
 
   <ion-list *ngIf="!isAdmin">
@@ -133,10 +131,10 @@
         </ion-avatar>
         <ion-label>
           <div class="flex_box">
-            <h3>Vous</h3>
-            <ion-note *ngIf="user.role == 'admin'" slot="end"
-              >admin du groupe</ion-note
-            >
+            <h3>{{ "MODAL.ModalInfoGroup.vous" | translate }}</h3>
+            <ion-note *ngIf="user.role == 'admin'" slot="end">{{
+              "MODAL.ModalInfoGroup.admin" | translate
+            }}</ion-note>
           </div>
         </ion-label>
       </ion-item>
@@ -148,9 +146,9 @@
         <ion-label>
           <div class="flex_box">
             <h3>{{ user.nom }}</h3>
-            <ion-note *ngIf="user.role == 'admin'" slot="end"
-              >admin du groupe</ion-note
-            >
+            <ion-note *ngIf="user.role == 'admin'" slot="end">{{
+              "MODAL.ModalInfoGroup.admin" | translate
+            }}</ion-note>
           </div>
         </ion-label>
       </ion-item>

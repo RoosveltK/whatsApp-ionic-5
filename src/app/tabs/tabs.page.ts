@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/language.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
@@ -12,11 +11,8 @@ import { PopoverComponent } from '../components/popover/popover/popover.componen
 export class TabsPage {
   constructor(
     public router: Router,
-    public popoverController: PopoverController,
-    public serviceLanguage: LanguageService
-  ) {
-    this.serviceLanguage.setInitialAppLanguage();
-  }
+    public popoverController: PopoverController
+  ) {}
 
   async presentPopover() {
     const popover = await this.popoverController.create({

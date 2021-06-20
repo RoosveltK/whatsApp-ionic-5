@@ -12,16 +12,29 @@ export class DiscussionComponent implements OnInit {
   @Input() image: string;
   @Input() userId: string;
   @Input() messageUiSend: string;
-  @Input() messageStatut: boolean;
+  @Input() messageStatut;
   @Input() assets: string;
   @Input() messageNane: string = '';
+  @Input() tabMessage = [];
+  public nbreMessages = 0;
   public newMsg = '';
+  statut;
 
   public showPositionMessage = true;
-
   constructor() {}
 
   ngOnInit() {
     if (this.messageNane != '') this.newMsg = this.messageNane + ':';
+    if (this.messageStatut != undefined) this.statut = this.messageStatut;
+    console.log(this.message);
+    console.log(this.messageStatut);
+
+    this.tabMessage.forEach((element) => {
+      if (
+        element.read == false &&
+        element.uidSend.localeCompare(this.userId) != 0
+      )
+        this.nbreMessages++;
+    });
   }
 }

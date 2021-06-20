@@ -1,6 +1,8 @@
 <ion-list>
-  <ion-item button (click)="presentModal()">Infos groupe</ion-item>
+  <ion-item button (click)="presentModal()">{{
+    "POPOVERS.PopoverGroup.info" | translate
+  }}</ion-item>
   <ion-item button (click)="quitGroupe()">
-    <p color="danger">Quitter le groupe</p>
+    <p color="danger">{{ "POPOVERS.PopoverGroup.quit" | translate }}</p>
   </ion-item>
 </ion-list>

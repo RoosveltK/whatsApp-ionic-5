@@ -23,7 +23,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PopoverLangComponent } from './components/popover/popover-lang/popover-lang.component';
-
+import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
 
 export function createTranslateHttpLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/lang/', '.json');
@@ -52,6 +52,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
+    Ionic4EmojiPickerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -60,10 +61,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
       },
     }),
   ],
-  providers: [
- 
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-  ],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

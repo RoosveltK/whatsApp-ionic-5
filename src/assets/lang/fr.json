@@ -41,7 +41,9 @@
   "CREATEGROUP": {
     "addMember": "Ajouter des participants",
     "statutGroupe": "Nouv. groupe",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "sur": "sur",
+    "selection": "sélectionné"
   },
   "CREATEGROUPLASTPHASE": {
     "addSubject": "Ajouter un sujet ",
@@ -51,12 +53,37 @@
   "POPOVERS": {
     "Home": {
       "logOut": "Déconnexion",
-      "close": "Close"
+      "close": "Fermer"
+    },
+    "PopoverGroup": {
+      "info": "Infos groupe",
+      "quit": "Quitter le groupe"
     }
   },
   "SERVICE": {
     "Notification": {
       "wait": "Veuillez patienter..."
     }
+  },
+  "MODAL": {
+    "ModalInfoGroup": {
+      "option": "Options de groupe",
+      "changeImgeGroup": " Appuyer sur la l'icone du groupe pour la changer",
+      "listing": "Lister les medias du groupe",
+      "vous": "Vous",
+      "admin": "admin du groupe",
+      "modify": "Modifier les paramètres du groupe afin que seul les admin puisse envoyer des messages"
+    }
+  },
+  "QRCODE": {
+    "code": "Code QR",
+    "monCode": "MON CODE",
+    "scanCode": "SCANNER LE CODE",
+    "scanWithTchat": "Scannez le QR code pour débuter un tchat avec"
+  },
+  "STATUS": {
+    "status": "Mon statut",
+    "upload": "Appuyer pour ajouter un statut",
+    "update": "Dernières mises à jour"
   }
 }

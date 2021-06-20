@@ -6,19 +6,22 @@
     <div class="flex_box">
       <h3>{{ nom }}</h3>
       <ion-note slot="end">{{ heure }}</ion-note>
+      <ion-badge *ngIf="nbreMessages != 0" color="success">{{
+        nbreMessages
+      }}</ion-badge>
     </div>
 
     <p *ngIf="messageUiSend == userId">
       <span>
         <ion-icon
-          *ngIf="!messageStatut"
+          *ngIf="statut == true"
           class="text-icon"
           color="primary"
           name="checkmark-done-outline"
         >
         </ion-icon>
         <ion-icon
-          *ngIf="messageStatut"
+          *ngIf="statut != true"
           class="text-icon"
           name="checkmark-outline"
         ></ion-icon>

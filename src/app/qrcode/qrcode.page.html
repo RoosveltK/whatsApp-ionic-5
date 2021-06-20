@@ -6,7 +6,7 @@
         name="arrow-back"
         (click)="backSettings()"
       ></ion-icon
-      ><span>Code QR</span>
+      ><span>{{'QRCODE.code'| translate}}</span>
     </div>
     <ion-segment
       #segment
@@ -15,10 +15,10 @@
       (ionChange)="segmentChanged($event)"
     >
       <ion-segment-button>
-        <ion-label>MON CODE</ion-label>
+        <ion-label>{{'QRCODE.monCode'| translate}}</ion-label>
       </ion-segment-button>
       <ion-segment-button>
-        <ion-label>SCANNER LE CODE</ion-label>
+        <ion-label>{{'QRCODE.scanCode'| translate}}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

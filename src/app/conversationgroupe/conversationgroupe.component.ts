@@ -3,7 +3,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController, ModalController } from '@ionic/angular';
-import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
 
@@ -28,7 +27,7 @@ export class ConversationgroupeComponent implements OnInit {
 
   public searchText;
   public isAdmin = false;
-
+  public showEmojiPicker = false;
   constructor(
     public activateRoute: ActivatedRoute,
     public infoService: InfoDiscussionService,
@@ -78,9 +77,11 @@ export class ConversationgroupeComponent implements OnInit {
       uidSend: this.infoUserInDB.id,
       messagetext: this.textMessage,
       date: new Date(),
-      heure: new Date().toLocaleTimeString('fr-FR', { hour12: false, 
-        hour: "numeric", 
-        minute: "numeric"}),
+      heure: new Date().toLocaleTimeString('fr-FR', {
+        hour12: false,
+        hour: 'numeric',
+        minute: 'numeric',
+      }),
       assets: '',
       read: false,
       nomSend: this.infoUserInDB.nom,
@@ -125,20 +126,7 @@ export class ConversationgroupeComponent implements OnInit {
   }
   activeSearch = () => (this.show = !this.show);
 
-  async openEmojiPicker() {
-    const modal = await this.modalCtrl.create({
-      component: Ionic4EmojiPickerComponent,
-      showBackdrop: true,
-      componentProps: {
-        isInModal: true,
-      },
-    });
-
-    modal.present();
-    modal.onDidDismiss().then((event) => {
-      if (event != undefined && event.data != undefined) {
-        this.textMessage += event.data.data;
-      }
-    });
+  addEmoji(event) {
+    this.textMessage += event.data;
   }
 }

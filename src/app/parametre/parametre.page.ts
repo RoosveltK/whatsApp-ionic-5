@@ -1,5 +1,4 @@
 import { InfoDiscussionService } from './../services/info-discussion.service';
-import { LanguageService } from './../services/language.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
@@ -18,11 +17,8 @@ export class ParametrePage implements OnInit {
   constructor(
     public router: Router,
     private popoverController: PopoverController,
-    public serviceLanguage: LanguageService,
     private serviceDiscussion: InfoDiscussionService
-  ) {
-    this.serviceLanguage.setInitialAppLanguage();
-  }
+  ) {}
 
   ngOnInit() {
     this.user = this.serviceDiscussion.getActifUser();
@@ -30,6 +26,7 @@ export class ParametrePage implements OnInit {
       this.theme = JSON.parse(localStorage.getItem('ACTUEL_THEME'));
     else this.theme = 'light';
   }
+
   backHome = () => {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
@@ -39,13 +36,12 @@ export class ParametrePage implements OnInit {
     if ('dark'.localeCompare(this.theme) == 0) {
       document.body.setAttribute('color-theme', 'dark');
     } else document.body.setAttribute('color-theme', 'light');
-    localStorage.setItem('actuelTheme', JSON.stringify(this.theme));
+    localStorage.setItem('ACTUEL_THEME', JSON.stringify(this.theme));
   };
 
   async presentPopover() {
     const popover = await this.popoverController.create({
       component: PopoverLangComponent,
-      cssClass: 'my-custom-class',
       translucent: true,
     });
     await popover.present();

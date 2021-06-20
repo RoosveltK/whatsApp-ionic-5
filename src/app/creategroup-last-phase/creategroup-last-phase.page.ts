@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/language.service';
 import { FirebaseService } from './../services/firebase.service';
 import { Router } from '@angular/router';
 import {
@@ -7,7 +6,6 @@ import {
 } from './../services/info-discussion.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 import { NotificationService } from '../services/notification.service';
 const GROUP_OF_TCHAT = 'GROUP_OF_TCHAT';
 @Component({
@@ -25,19 +23,18 @@ export class CreategroupLastPhasePage implements OnInit {
   public infoUser;
   public dataImage = undefined;
   isImageThere: boolean = false;
+  showEmojiPicker = false;
   constructor(
     private serviceTchat: InfoDiscussionService,
     public serviceAuth: FirebaseService,
     private router: Router,
     private modalCtrl: ModalController,
-    private serviceNotification: NotificationService,
-    private serviceLanguage: LanguageService
+    private serviceNotification: NotificationService
   ) {}
 
   ngOnInit() {
-    this.member = JSON.parse(localStorage.getItem('userofGroup'));
+    this.member = JSON.parse(localStorage.getItem('USER_OF_GROUP'));
     this.infoUser = JSON.parse(localStorage.getItem('INF0_USER_CAME_FROM_DB'));
-    this.serviceLanguage.setInitialAppLanguage();
   }
   ngAfterViewInit() {
     this.userInputElement = this.userInputViewChild.nativeElement;
@@ -109,32 +106,41 @@ export class CreategroupLastPhasePage implements OnInit {
       const pathRefFile = this.serviceAuth.createRefForImage(pathFile);
 
       this.serviceNotification.loadingController(90000);
-      this.serviceAuth.uploadImage(this.dataImage, pathFile).then(() => {
-        pathRefFile.getDownloadURL().subscribe((res) => {
-          tchatGroup = {
-            id: idGroupe,
-            nom: [this.groupName],
-            photo: [res],
-            users: memberId,
-            messages: [],
-            seeForAll: true,
-            grade: memberGrade,
-          };
+      this.serviceAuth
+        .uploadImage(this.dataImage, pathFile)
+        .then(() => {
+          pathRefFile.getDownloadURL().subscribe((res) => {
+            tchatGroup = {
+              id: idGroupe,
+              nom: [this.groupName],
+              photo: [res],
+              users: memberId,
+              messages: [],
+              seeForAll: true,
+              grade: memberGrade,
+            };
 
-          this.serviceTchat
-            .saveTchatInDB(tchatGroup.id)
-            .set(tchatGroup)
-            .then(() => {
-              this.serviceNotification.closeLoader();
-              this.router.navigate(['conversationgroupe', tchatGroup.id]);
-              localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
-            })
-            .catch((err) => {
-              this.serviceNotification.closeLoader();
-              console.log(err);
-            });
+            this.serviceTchat
+              .saveTchatInDB(tchatGroup.id)
+              .set(tchatGroup)
+              .then(() => {
+                this.serviceNotification.closeLoader();
+                this.router.navigate(['conversationgroupe', tchatGroup.id]);
+                localStorage.setItem(
+                  GROUP_OF_TCHAT,
+                  JSON.stringify(tchatGroup)
+                );
+              })
+              .catch((err) => {
+                this.serviceNotification.closeLoader();
+                console.log(err);
+              });
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.serviceNotification.closeLoader();
         });
-      });
     }
   };
 
@@ -155,20 +161,7 @@ export class CreategroupLastPhasePage implements OnInit {
     }
   }
 
-  async openEmojiPicker() {
-    const modal = await this.modalCtrl.create({
-      component: Ionic4EmojiPickerComponent,
-      showBackdrop: true,
-      componentProps: {
-        isInModal: true,
-      },
-    });
-
-    modal.present();
-    modal.onDidDismiss().then((event) => {
-      if (event != undefined && event.data != undefined) {
-        this.groupName += event.data.data;
-      }
-    });
+  addEmoji(event) {
+    this.groupName += event.data;
   }
 }

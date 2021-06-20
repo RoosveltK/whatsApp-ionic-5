@@ -1,21 +1,21 @@
 <ion-list class="margin-bottom ion-no-padding">
-  <ion-item lines="none" class="ion-activatable">
+  <ion-item lines="none" class="ion-activatable" (click)="statutModal()">
     <ion-avatar slot="start">
       <img [src]="user.photo" />
       <ion-ripple-effect></ion-ripple-effect>
     </ion-avatar>
     <ion-label class="ion-text-wrap">
       <h2 class="text-height">
-        <strong>Mon statut</strong>
+        <strong>{{'STATUS.status'| translate}}</strong>
       </h2>
-      <p class="text-height">Appuyer pour ajouter un statut</p>
+      <p class="text-height">{{'STATUS.upload'| translate}}</p>
     </ion-label>
     <ion-ripple-effect></ion-ripple-effect>
   </ion-item>
 
   <!-- <ion-item-group> -->
   <ion-item-divider class="divider">
-    <ion-label color="dark">Dernières mises à jour</ion-label>
+    <ion-label color="light">{{'STATUS.update'| translate}}</ion-label>
   </ion-item-divider>
   <!-- <ion-item
       *ngFor="let contact of contactsService.contacts"
@@ -44,7 +44,7 @@
   slot="fixed"
   class="pen-fab"
 >
-  <ion-fab-button color="light" size="small">
+  <ion-fab-button color="light">
     <ion-icon name="pencil-sharp"></ion-icon>
   </ion-fab-button>
 </ion-fab>

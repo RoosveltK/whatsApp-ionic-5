@@ -10,7 +10,8 @@
           >{{'CREATEGROUP.addMember' | translate}}</span
         >
         <span *ngIf="usersOfGroup.length !=0">
-          {{usersOfGroup.length}} sur {{users.length}} sélectionné
+          {{usersOfGroup.length}} {{'CREATEGROUP.sur'| translate}}
+          {{users.length}} {{'CREATEGROUP.selection' | translate}}
         </span>
       </p>
     </div>
@@ -27,7 +28,7 @@
     </ion-buttons>
     <ion-input
       [(ngModel)]="searchText"
-      placeholder="{{'CREATEGROUP.search'| translate}"
+      placeholder="{{'CREATEGROUP.search'| translate}}"
     ></ion-input>
   </ion-toolbar>
 </ion-header>

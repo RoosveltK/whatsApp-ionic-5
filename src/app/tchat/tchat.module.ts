@@ -11,6 +11,10 @@ import { ConversationgroupeComponent } from '../conversationgroupe/conversationg
 import { ModalListeAssetsComponent } from '../components/modal/modal-liste-assets/modal-liste-assets.component';
 
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
+import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
 
 @NgModule({
   imports: [
@@ -19,6 +23,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     TchatPageRoutingModule,
     Ng2SearchPipeModule,
+    TranslateModule,
+    Ionic4EmojiPickerModule,
   ],
   declarations: [
     TchatPage,
@@ -27,6 +33,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     ModalInfoGroupeComponent,
     ConversationgroupeComponent,
     ModalListeAssetsComponent,
+    PopoverGroupeComponent,
+    PopoverConversationComponent,
   ],
 })
 export class TchatPageModule {}

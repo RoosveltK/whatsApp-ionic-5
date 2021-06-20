@@ -1,9 +1,12 @@
-<!-- <ion-header>
-  <ion-toolbar color="success">
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="dismiss()" color="light">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
-</ion-header> -->
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <img [src]="image" />
 </ion-content>
@@ -11,14 +14,11 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="openEmojiPicker()" shape="round" size="small">
+      <ion-button (click)="showEmojiPicker = !showEmojiPicker" shape="round" size="small">
         <ion-icon slot="icon-only" name="happy"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-input
-      [(ngModel)]="text"
-      placeholder="Ajouter une legende"
-    ></ion-input>
+    <ion-input [(ngModel)]="text" placeholder="Ajouter une legende"></ion-input>
 
     <ion-buttons slot="end">
       <ion-button (click)="sendAssets()">
@@ -26,4 +26,12 @@
       ></ion-button>
     </ion-buttons>
   </ion-toolbar>
+
+  <div
+    class="emojiContainer"
+    [style.height]="showEmojiPicker ? '300px' : '0px'"
+  >
+    <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
+    <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
+  </div>
 </ion-footer>

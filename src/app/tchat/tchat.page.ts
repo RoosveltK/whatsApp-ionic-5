@@ -1,4 +1,3 @@
-import { LanguageService } from './../services/language.service';
 import { InfoDiscussionService } from './../services/info-discussion.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,11 +16,8 @@ export class TchatPage implements OnInit {
   public allUsers = [];
   constructor(
     public router: Router,
-    private serviceDiscussion: InfoDiscussionService,
-    private serviceLanguage: LanguageService
-  ) {
-    this.serviceLanguage.setInitialAppLanguage();
-  }
+    private serviceDiscussion: InfoDiscussionService
+  ) {}
 
   ngOnInit() {
     this.user = this.serviceDiscussion.getActifUser();

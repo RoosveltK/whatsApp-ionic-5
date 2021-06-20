@@ -12,7 +12,6 @@ import { FirebaseService } from '../services/firebase.service';
 import { PopoverController, ModalController } from '@ionic/angular';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
-import { Ionic4EmojiPickerComponent } from 'ionic4-emoji-picker';
 
 @Component({
   selector: 'app-conversation',
@@ -31,6 +30,7 @@ export class ConversationComponent implements OnInit {
   public textMessage = '';
   public searchText = '';
   lastConnect;
+  public showEmojiPicker = false;
   show = false;
 
   constructor(
@@ -74,19 +74,8 @@ export class ConversationComponent implements OnInit {
       .subscribe((res) => {
         this.allMessages = res.payload.get('messages');
         this.allMessages.map((element) => {
-          let isUpdate = false;
-          if (element.uidSend.localeCompare(this.userInfo.id) != 0) {
+          if (element.uidSend.localeCompare(this.userInfo.id) != 0)
             element.read = true;
-            isUpdate = true;
-          }
-          if (isUpdate == true) {
-            setTimeout(() => {
-              this.infoService
-                .getAllTchats()
-                .doc(this.idTchat)
-                .update({ messages: this.allMessages });
-            }, 2000);
-          }
         });
       });
   }
@@ -150,20 +139,7 @@ export class ConversationComponent implements OnInit {
 
   activeSearch = () => (this.show = !this.show);
 
-  async openEmojiPicker() {
-    const modal = await this.modalCtrl.create({
-      component: Ionic4EmojiPickerComponent,
-      showBackdrop: true,
-      componentProps: {
-        isInModal: true,
-      },
-    });
-
-    modal.present();
-    modal.onDidDismiss().then((event) => {
-      if (event != undefined && event.data != undefined) {
-        this.textMessage += event.data.data;
-      }
-    });
+  addEmoji(event) {
+    this.textMessage += event.data;
   }
 }
