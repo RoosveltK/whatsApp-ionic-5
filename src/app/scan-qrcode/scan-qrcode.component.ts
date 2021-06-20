@@ -15,6 +15,11 @@ export class ScanQRcodeComponent implements OnInit {
 
   ngOnInit() {
     this.myInfo = this.serviceInfoDiscussion.getActifUser();
-    this.qrData = JSON.stringify(this.myInfo);
+    const dataToQrCode = {
+      id: this.myInfo.id,
+      nom: this.myInfo.nom,
+      photo: this.myInfo.photo,
+    };
+    this.qrData = JSON.stringify(dataToQrCode);
   }
 }

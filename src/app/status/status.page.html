@@ -1,23 +1,23 @@
 <ion-list class="margin-bottom ion-no-padding">
   <ion-item lines="none" class="ion-activatable">
     <ion-avatar slot="start">
-      <img [src]="contactsService.user?.avatar" />
+      <img [src]="user.photo" />
       <ion-ripple-effect></ion-ripple-effect>
     </ion-avatar>
     <ion-label class="ion-text-wrap">
       <h2 class="text-height">
-        <strong>My status</strong>
+        <strong>Mon statut</strong>
       </h2>
-      <p class="text-height">Tap to add status</p>
+      <p class="text-height">Appuyer pour ajouter un statut</p>
     </ion-label>
     <ion-ripple-effect></ion-ripple-effect>
   </ion-item>
 
-  <ion-item-group>
-    <ion-item-divider class="divider">
-      <ion-label color="dark">Recent updates</ion-label>
-    </ion-item-divider>
-    <ion-item
+  <!-- <ion-item-group> -->
+  <ion-item-divider class="divider">
+    <ion-label color="dark">Dernières mises à jour</ion-label>
+  </ion-item-divider>
+  <!-- <ion-item
       *ngFor="let contact of contactsService.contacts"
       class="ion-activatable"
     >
@@ -34,16 +34,17 @@
       <ion-ripple-effect></ion-ripple-effect>
     </ion-item>
   </ion-item-group>
+</ion-list> -->
 </ion-list>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="pen-fab">
+<ion-fab
+  (click)="statutModal()"
+  vertical="bottom"
+  horizontal="end"
+  slot="fixed"
+  class="pen-fab"
+>
   <ion-fab-button color="light" size="small">
     <ion-icon name="pencil-sharp"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button>
-    <ion-icon color="light" name="camera"></ion-icon>
   </ion-fab-button>
 </ion-fab>

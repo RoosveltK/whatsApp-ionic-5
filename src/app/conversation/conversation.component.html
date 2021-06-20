@@ -41,47 +41,46 @@
 
 <ion-content>
   <div class="bg"></div>
-  <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data..."
+  <ion-list>
+    <ion-item
+      lines="none"
+      *ngFor="let message of allMessages | filter: searchText"
     >
-      <ion-item
-        lines="none"
-        *ngFor="let message of allMessages | filter: searchText"
+      <ion-badge
+        color="warning"
+        class="ion-text-wrap"
+        *ngIf="message.uidSend === userInfo.id"
+        slot="end"
       >
-        <ion-badge
-          color="warning"
-          class="ion-text-wrap"
-          *ngIf="message.uidSend === userInfo.id"
-          slot="end"
-        >
-          <img *ngIf="message.assets != ''" [src]="message.assets" />
-          {{ message.messagetext }}
+        <img *ngIf="message.assets != ''" [src]="message.assets" />
+        {{ message.messagetext }}
 
-          <ion-note color="medium"
-            >{{ message.heure }}
-            <ion-icon
-              *ngIf="message.read"
-              name="checkmark-done-outline"
-              color="primary"
-            ></ion-icon>
-            <ion-icon *ngIf="!message.read" name="checkmark-outline"></ion-icon
-          ></ion-note>
-        </ion-badge>
+        <ion-note color="medium"
+          >{{ message.heure }}
+          <ion-icon
+            *ngIf="message.read"
+            name="checkmark-done-outline"
+            color="primary"
+          ></ion-icon>
+          <ion-icon *ngIf="!message.read" name="checkmark-outline"></ion-icon
+        ></ion-note>
+      </ion-badge>
 
-        <ion-badge
-          color="light"
-          *ngIf="message.uidSend != userInfo.id"
-          slot="start"
-          class="ion-text-wrap"
-          ><img *ngIf="message.assets != ''" [src]="message.assets" />
-          {{ message.messagetext }}
-          <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
-        >
-      </ion-item>
+      <ion-badge
+        color="light"
+        *ngIf="message.uidSend != userInfo.id"
+        slot="start"
+        class="ion-text-wrap"
+        ><img *ngIf="message.assets != ''" [src]="message.assets" />
+        {{ message.messagetext }}
+        <ion-note color="medium">{{ message.heure }}</ion-note></ion-badge
+      >
+    </ion-item>
+  </ion-list>
+  <!-- <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 </ion-content>
 
 <ion-footer>

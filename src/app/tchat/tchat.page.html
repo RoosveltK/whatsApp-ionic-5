@@ -35,16 +35,26 @@
             ></app-discussion>
           </span>
         </span>
-        
+
         <span *ngIf="data.nom.length == 1">
           <app-discussion
             (click)="viewConversationGroup(data)"
+            *ngIf="data.messages.length !=0"
             image="{{data.photo[0]}}"
             nom="{{data.nom[0]}}"
             heure="{{data.messages[data.messages.length-1].heure}}"
             message="{{data.messages[data.messages.length-1].messagetext}}"
             messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
             messageNane="{{data.messages[data.messages.length-1].nomSend}}"
+            [userId]="user.id"
+          ></app-discussion>
+
+          <app-discussion
+            (click)="viewConversationGroup(data)"
+            *ngIf="data.messages.length==0"
+            image="{{data.photo[0]}}"
+            nom="{{data.nom[0]}}"
+            message="Nouvellement crée"
             [userId]="user.id"
           ></app-discussion>
         </span>

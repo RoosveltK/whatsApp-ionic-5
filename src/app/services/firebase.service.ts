@@ -50,8 +50,8 @@ export class FirebaseService {
   signup = (email, password) =>
     this.aFireAuth.createUserWithEmailAndPassword(email, password);
 
-  setUserOnline = (user) => {
-    this.aFireStore.collection(`users`).doc(user.id).update({
+  setUserOnline = (id) => {
+    this.aFireStore.collection(`users`).doc(id).update({
       statut: true,
       lastConnect: new Date(),
     });

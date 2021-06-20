@@ -48,11 +48,12 @@ export class SigninPage implements OnInit {
   }
 
   loginUser(datas) {
-    this.serviceNotification.loadingController(2000);
+    this.serviceNotification.loadingController(4000000);
     this.fireebaseAuth
       .loginUser(datas.email, datas.password)
       .then((res) => {
         if (res.user.emailVerified == false) {
+          this.serviceNotification.closeLoader();
           this.serviceNotification.confirmationAlert(
             `SIGNIN.emailNonVerifie`,
             this.fireebaseAuth.verificationEmail(res.user),
@@ -62,14 +63,19 @@ export class SigninPage implements OnInit {
           );
         } else {
           this.serviceDiscussion.setActifUser(res.user.uid).then(() => {
-            this.fireebaseAuth.setUserOnline(
-              this.serviceDiscussion.getActifUser()
-            );
-            this.router.navigate(['/tabs/tchat']);
+            setTimeout(() => {
+              this.serviceNotification.closeLoader();
+              this.fireebaseAuth.setUserOnline(res.user.uid);
+              this.userForms.reset();
+              this.router.navigate(['/tabs/tchat']);
+            }, 3000);
           });
         }
       })
-      .catch((err) => this.serviceNotification.dangerToast(err.message));
+      .catch((err) => {
+        this.serviceNotification.closeLoader();
+        this.serviceNotification.dangerToast(err.message);
+      });
   }
 
   ngOnInit() {

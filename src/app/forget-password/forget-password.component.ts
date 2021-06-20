@@ -31,12 +31,19 @@ export class ForgetPasswordComponent implements OnInit {
 
   sendVerification() {
     const link = ['/signin'];
-    this.firebaseAuth.resetPasswordUser(this.email.value).then((res) => {
-      setTimeout(() => {
+    this.serviceNotification.loadingController(8000);
+    this.firebaseAuth
+      .resetPasswordUser(this.email.value)
+      .then((res) => {
+        this.serviceNotification.closeLoader();
         this.serviceNotification.warningToast(`Vérifier votre boite mail`);
+        this.email.reset();
         this.router.navigate(link);
-      }, 2000);
-    });
+      })
+      .catch((err) => {
+        this.serviceNotification.closeLoader();
+        this.serviceNotification.warningToast(err.message);
+      });
   }
 
   backLogin() {

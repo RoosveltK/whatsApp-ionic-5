@@ -1,0 +1,32 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()" color="light">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+  <ion-textarea
+    class="ion-text-center ion-text-wrap"
+    placeholder="Ecrivez un statut"
+    [(ngModel)]="statutText"
+    autocapitalize="on"
+    rows="50"
+    cols="20"
+  ></ion-textarea>
+
+  <ion-fab
+    *ngIf="statutText != ''"
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    class="pen-fab"
+  >
+    <ion-fab-button color="success" (click)="postStatus()">
+      <ion-icon name="send"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

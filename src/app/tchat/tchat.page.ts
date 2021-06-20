@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class TchatPage implements OnInit {
   public user;
+  stopLoader = false;
   public userData;
   public allTchat = [];
   public herTchat = [];
@@ -38,6 +39,7 @@ export class TchatPage implements OnInit {
   }
 
   public viewConversation(tchatId, id) {
+    let arrayMsg;
     localStorage.setItem(
       'USER_OF_TCHAT',
       JSON.stringify(this.serviceDiscussion.searchUserById(id, this.allUsers))
@@ -61,13 +63,6 @@ export class TchatPage implements OnInit {
         if (elt.localeCompare(this.user.id) == 0) onlyHerTchat.push(element);
       });
     });
-    // let tableLength= onlyHerTchat.messages.length;
-    // const tabSorted = onlyHerTchat.sort(
-    //   (a, b) =>
-    //     a.messages[a.messages.length - 1].date.seconds -
-    //     b.messages[b.messages.length - 1].date.seconds
-    // );
-
     return onlyHerTchat;
   };
 }

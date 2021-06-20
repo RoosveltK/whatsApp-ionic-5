@@ -11,14 +11,14 @@
     <p *ngIf="messageUiSend == userId">
       <span>
         <ion-icon
-          *ngIf="messageStatut"
+          *ngIf="!messageStatut"
           class="text-icon"
           color="primary"
           name="checkmark-done-outline"
         >
         </ion-icon>
         <ion-icon
-          *ngIf="!messageStatut"
+          *ngIf="messageStatut"
           class="text-icon"
           name="checkmark-outline"
         ></ion-icon>

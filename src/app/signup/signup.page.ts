@@ -61,15 +61,20 @@ export class SignupPage implements OnInit {
       this.serviceNotification.dangerToast(`SIGNUP.picInput`);
       return;
     }
-    this.serviceNotification.loadingController(4000);
+    this.serviceNotification.loadingController(400000);
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
       .then((res) => {
         this.firebaseService
           .uploadImageAndCreateAccount(this.dataImage, userInfo, res.user)
-          .then(() => this.router.navigate(['/signin']));
+          .then(() => {
+            this.user.reset();
+            this.router.navigate(['/signin']);
+            this.serviceNotification.closeLoader();
+          });
       })
       .catch((err) => {
+        this.serviceNotification.closeLoader();
         this.serviceNotification.dangerToast(err.message);
       });
   };

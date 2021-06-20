@@ -42,7 +42,7 @@
         <div
           *ngIf="userForms.get('password').hasError(validation.type) && ( userForms.get('password').dirty )"
         >
-          {{'validation.message' | translate}}
+          {{validation.message | translate}}
         </div>
       </ng-container>
     </div>

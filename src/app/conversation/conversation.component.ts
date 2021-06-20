@@ -65,7 +65,7 @@ export class ConversationComponent implements OnInit {
         });
       });
 
-    //Reception des infos du tchat
+    //Reception des infos du tchat et mise a jour
     this.activateRoute.params.subscribe((params) => (this.idTchat = params.id));
     this.infoService
       .getAllTchats()
@@ -74,8 +74,19 @@ export class ConversationComponent implements OnInit {
       .subscribe((res) => {
         this.allMessages = res.payload.get('messages');
         this.allMessages.map((element) => {
-          if (element.uidSend.localeCompare(this.userInfo.id) != 0)
+          let isUpdate = false;
+          if (element.uidSend.localeCompare(this.userInfo.id) != 0) {
             element.read = true;
+            isUpdate = true;
+          }
+          if (isUpdate == true) {
+            setTimeout(() => {
+              this.infoService
+                .getAllTchats()
+                .doc(this.idTchat)
+                .update({ messages: this.allMessages });
+            }, 2000);
+          }
         });
       });
   }
@@ -84,6 +95,11 @@ export class ConversationComponent implements OnInit {
     const link = ['tabs/tchat'];
     this.router.navigate(link);
   };
+
+  verifStateUser() {
+    if (this.allMessages.length != 0) {
+    }
+  }
 
   sendMessage = () => {
     const infoMessage: Message = {
@@ -108,8 +124,6 @@ export class ConversationComponent implements OnInit {
     this.textMessage = '';
   };
 
-  verifyDay() {}
-
   async presentPopover() {
     const popover = await this.popoverController.create({
       component: PopoverConversationComponent,
@@ -118,7 +132,6 @@ export class ConversationComponent implements OnInit {
         messages: this.allMessages,
         userId: this.userInfo,
       },
-      cssClass: 'my-custom-class',
       translucent: true,
     });
     await popover.present();
@@ -126,18 +139,15 @@ export class ConversationComponent implements OnInit {
     const { role } = await popover.onDidDismiss();
   }
 
-  loadData(event) {
-    setTimeout(() => {
-      event.target.complete();
-      if (this.allMessages.length == 10) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
+  // loadData(event) {
+  //   setTimeout(() => {
+  //     // event.target.complete();
+  //     // if (this.allMessages.length == 100) {
+  //     //   event.target.disabled = true;
+  //     //
+  //   }, 1000);
+  // }
 
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
   activeSearch = () => (this.show = !this.show);
 
   async openEmojiPicker() {

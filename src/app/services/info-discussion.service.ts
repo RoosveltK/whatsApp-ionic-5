@@ -75,10 +75,7 @@ export class InfoDiscussionService implements OnInit {
       });
   };
 
-
-  getUserofTchatSubscribe =  () => 
-    this.afirestore.collection(`users`);
-  
+  getUserofTchatSubscribe = () => this.afirestore.collection(`users`);
 
   //Recuperer l'utilisateur qui utilise l'application sur cet appareil
   getActifUser = () => JSON.parse(localStorage.getItem(INF0_USER_CAME_FROM_DB));

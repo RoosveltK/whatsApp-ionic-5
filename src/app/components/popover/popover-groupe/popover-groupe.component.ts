@@ -56,8 +56,9 @@ export class PopoverGroupeComponent implements OnInit {
       .doc(this.groupData.id)
       .update({ grade: tabGrade, users: tabUsers })
       .then(() => {
-        this.router.navigate(['/tabs/tchat']);
         this.serviceNotication.closeLoader();
+        this.dismissPopover();
+        this.router.navigate(['/tabs/tchat']);
       });
   };
 }

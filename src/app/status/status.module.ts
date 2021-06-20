@@ -6,9 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { StatusPage } from './status.page';
 
 import { StatusPageRoutingModule } from './status-routing.module';
+import { ModalStatutComponent } from '../components/modal/modal-statut/modal-statut.component';
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, StatusPageRoutingModule],
-  declarations: [StatusPage],
+  declarations: [StatusPage, ModalStatutComponent],
 })
 export class StatusPageModule {}

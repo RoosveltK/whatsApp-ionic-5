@@ -75,7 +75,7 @@ export class CreategroupLastPhasePage implements OnInit {
       `groupImage/defaultImage.png`
     );
     if (this.dataImage == undefined && this.groupName != '') {
-      this.serviceNotification.loadingController(3000);
+      this.serviceNotification.loadingController(90000);
 
       refOfDefaultImage.getDownloadURL().subscribe((res) => {
         tchatGroup = {
@@ -92,10 +92,13 @@ export class CreategroupLastPhasePage implements OnInit {
           .set(tchatGroup)
           .then(() => {
             localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
+            this.serviceNotification.closeLoader();
             this.router.navigate(['conversationgroupe', tchatGroup.id]);
           })
-          .catch((err) => console.log(err));
-        console.log(tchatGroup);
+          .catch((err) => {
+            this.serviceNotification.closeLoader();
+            console.log(err);
+          });
       });
     } else if (
       this.dataImage !== undefined &&
@@ -105,7 +108,7 @@ export class CreategroupLastPhasePage implements OnInit {
       const pathFile = `groupImage/uid${idGroupe}_${this.dataImage.name}`;
       const pathRefFile = this.serviceAuth.createRefForImage(pathFile);
 
-      this.serviceNotification.loadingController(3000);
+      this.serviceNotification.loadingController(90000);
       this.serviceAuth.uploadImage(this.dataImage, pathFile).then(() => {
         pathRefFile.getDownloadURL().subscribe((res) => {
           tchatGroup = {
@@ -122,10 +125,14 @@ export class CreategroupLastPhasePage implements OnInit {
             .saveTchatInDB(tchatGroup.id)
             .set(tchatGroup)
             .then(() => {
+              this.serviceNotification.closeLoader();
               this.router.navigate(['conversationgroupe', tchatGroup.id]);
               localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              this.serviceNotification.closeLoader();
+              console.log(err);
+            });
         });
       });
     }
