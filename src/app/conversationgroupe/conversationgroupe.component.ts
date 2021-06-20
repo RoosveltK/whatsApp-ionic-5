@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController, ModalController } from '@ionic/angular';
+import { ModalSendComponent } from '../components/modal/modal-send/modal-send.component';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { PopoverGroupeComponent } from '../components/popover/popover-groupe/popover-groupe.component';
 
@@ -18,6 +19,7 @@ import {
   styleUrls: ['./conversationgroupe.component.scss'],
 })
 export class ConversationgroupeComponent implements OnInit {
+  @ViewChild('galleryInput') galleryInputViewChild: ElementRef;
   public idTchat;
   public infoUserInDB;
   public groupOfTchat;
@@ -25,6 +27,7 @@ export class ConversationgroupeComponent implements OnInit {
   public textMessage = '';
   public show = false;
 
+  public galleryInputElement: HTMLInputElement;
   public searchText;
   public isAdmin = false;
   public showEmojiPicker = false;
@@ -128,5 +131,36 @@ export class ConversationgroupeComponent implements OnInit {
 
   addEmoji(event) {
     this.textMessage += event.data;
+  }
+
+  ngAfterViewInit() {
+    this.galleryInputElement = this.galleryInputViewChild.nativeElement;
+  }
+
+  async pickGallery(event) {
+    this.galleryInputElement.click();
+  }
+
+  loadGallery(e) {
+    const reader = new FileReader();
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+
+      this.presentModal(file);
+    }
+  }
+
+  async presentModal(fic) {
+    const modal = await this.modalCtrl.create({
+      component: ModalSendComponent,
+      componentProps: {
+        imageOrVideo: fic,
+        idTchat: this.idTchat,
+        allMessages: this.allMessages,
+        userId: this.infoUserInDB,
+      },
+    });
+    return await modal.present();
   }
 }

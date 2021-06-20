@@ -27,7 +27,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   sendVerification() {
     const link = ['/signin'];
-    this.serviceNotification.loadingController(8000);
+    this.serviceNotification.loadingController(5000);
     this.firebaseAuth
       .resetPasswordUser(this.email.value)
       .then((res) => {

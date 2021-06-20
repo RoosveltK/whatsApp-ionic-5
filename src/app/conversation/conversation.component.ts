@@ -1,17 +1,17 @@
 import { PopoverComponent } from './../components/popover/popover/popover.component';
-
 import {
   InfoDiscussionService,
   Message,
   tchat,
 } from './../services/info-discussion.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
 import { PopoverController, ModalController } from '@ionic/angular';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
+import { ModalSendComponent } from '../components/modal/modal-send/modal-send.component';
 
 @Component({
   selector: 'app-conversation',
@@ -20,6 +20,7 @@ import { PopoverConversationComponent } from '../components/popover/popover-conv
 })
 export class ConversationComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('galleryInput') galleryInputViewChild: ElementRef;
 
   public idTchat;
   public userInfo;
@@ -32,6 +33,7 @@ export class ConversationComponent implements OnInit {
   lastConnect;
   public showEmojiPicker = false;
   show = false;
+  public galleryInputElement: HTMLInputElement;
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -128,18 +130,40 @@ export class ConversationComponent implements OnInit {
     const { role } = await popover.onDidDismiss();
   }
 
-  // loadData(event) {
-  //   setTimeout(() => {
-  //     // event.target.complete();
-  //     // if (this.allMessages.length == 100) {
-  //     //   event.target.disabled = true;
-  //     //
-  //   }, 1000);
-  // }
-
   activeSearch = () => (this.show = !this.show);
 
   addEmoji(event) {
     this.textMessage += event.data;
+  }
+
+  ngAfterViewInit() {
+    this.galleryInputElement = this.galleryInputViewChild.nativeElement;
+  }
+
+  async pickGallery(event) {
+    this.galleryInputElement.click();
+  }
+
+  loadGallery(e) {
+    const reader = new FileReader();
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+
+      this.presentModal(file);
+    }
+  }
+
+  async presentModal(fic) {
+    const modal = await this.modalCtrl.create({
+      component: ModalSendComponent,
+      componentProps: {
+        imageOrVideo: fic,
+        idTchat: this.idTchat,
+        allMessages: this.allMessages,
+        userId: this.userInfo,
+      },
+    });
+    return await modal.present();
   }
 }

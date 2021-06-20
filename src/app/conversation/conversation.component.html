@@ -100,8 +100,8 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button (click)="presentPopover()"
-        ><ion-icon name="attach" size="small"></ion-icon
+      <ion-button (click)="pickGallery()">
+        <ion-icon name="images-outline"></ion-icon
       ></ion-button>
       <ion-button (click)="sendMessage()">
         <ion-icon name="send" color="success"></ion-icon
@@ -116,4 +116,12 @@
     <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
     <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
   </div>
+
+  <input
+    #galleryInput
+    style="position: absolute; width: 0; height: 0; opacity: 0"
+    type="file"
+    (change)="loadGallery($event)"
+    accept=".png, .jpeg , .jpg  "
+  />
 </ion-footer>

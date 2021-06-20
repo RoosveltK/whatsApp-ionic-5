@@ -61,6 +61,7 @@ export class ModalSendComponent implements OnInit {
             assets: urlDownload,
             read: false,
           };
+
           this.allMessages.push(infoMessage);
           this.serviceInfoDiscussion
             .getAllTchats()

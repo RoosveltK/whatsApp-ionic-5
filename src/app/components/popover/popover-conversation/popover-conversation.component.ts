@@ -44,6 +44,7 @@ export class PopoverConversationComponent implements OnInit {
 
   async pickGallery(event) {
     this.galleryInputElement.click();
+
   }
 
   // async pickAudio(event) {
@@ -55,6 +56,7 @@ export class PopoverConversationComponent implements OnInit {
 
     if (e.target.files && e.target.files.length) {
       const [file] = e.target.files;
+
       this.presentModal(file);
     }
   }
@@ -80,7 +82,6 @@ export class PopoverConversationComponent implements OnInit {
   // }
 
   async presentModal(fic) {
-    this.dismissPopover();
     const modal = await this.modalController.create({
       component: ModalSendComponent,
       componentProps: {

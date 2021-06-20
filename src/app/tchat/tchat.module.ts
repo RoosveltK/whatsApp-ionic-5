@@ -15,6 +15,7 @@ import { PopoverGroupeComponent } from '../components/popover/popover-groupe/pop
 import { TranslateModule } from '@ngx-translate/core';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
+import { ConversationComponent } from '../conversation/conversation.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
     ModalListeAssetsComponent,
     PopoverGroupeComponent,
     PopoverConversationComponent,
+    ConversationComponent,
   ],
 })
 export class TchatPageModule {}

@@ -11,8 +11,8 @@
       </ion-col>
 
       <ion-col size="auto">
-        <span (click)="pickGallery()">
-          <ion-avatar>
+        <span>
+          <ion-avatar (click)="pickGallery()">
             <img src="assets/gallery.png" />
           </ion-avatar>
           <h4>Galerie</h4>
@@ -44,7 +44,7 @@
     style="position: absolute; width: 0; height: 0; opacity: 0"
     type="file"
     (change)="loadGallery($event)"
-    accept=".png, .jpeg , .jpg , .mp4, .3gp "
+    accept=".png, .jpeg , .jpg  "
   />
   <!-- <input
     #audioInput
@@ -54,3 +54,23 @@
     accept=".mp3, .m4a"
   /> -->
 </ion-content>
+
+<!-- <ion-list>
+  <ion-item
+    button
+    *ngFor="let lang of tableLang"
+    (click)="selectLangue(lang.value)"
+    detail="false"
+  >
+    <img [src]="lang.img" slot="start" />
+    <ion-label>
+      {{ lang.text }}
+    </ion-label>
+
+    <ion-icon
+      slot="end"
+      name="checkmark"
+      *ngIf="lang.value == selectedLang"
+    ></ion-icon>
+  </ion-item>
+</ion-list> -->

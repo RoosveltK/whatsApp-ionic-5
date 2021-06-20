@@ -61,7 +61,7 @@ export class SignupPage implements OnInit {
       this.serviceNotification.dangerToast(`SIGNUP.picInput`);
       return;
     }
-    this.serviceNotification.loadingController(400000);
+    this.serviceNotification.loadingController(50000);
     this.firebaseService
       .signup(userInfo.email, userInfo.password)
       .then((res) => {

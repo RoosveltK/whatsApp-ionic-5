@@ -26,9 +26,6 @@ export class DiscussionComponent implements OnInit {
   ngOnInit() {
     if (this.messageNane != '') this.newMsg = this.messageNane + ':';
     if (this.messageStatut != undefined) this.statut = this.messageStatut;
-    console.log(this.message);
-    console.log(this.messageStatut);
-
     this.tabMessage.forEach((element) => {
       if (
         element.read == false &&

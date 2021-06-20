@@ -34,7 +34,6 @@ export function createTranslateHttpLoader(http: HttpClient) {
     AppComponent,
     ForgetPasswordComponent,
     FormatFileSizePipe,
-    ConversationComponent,
     PopoverLangComponent,
   ],
   entryComponents: [],

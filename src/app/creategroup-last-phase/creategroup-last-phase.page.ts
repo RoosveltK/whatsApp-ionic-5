@@ -72,7 +72,7 @@ export class CreategroupLastPhasePage implements OnInit {
       `groupImage/defaultImage.png`
     );
     if (this.dataImage == undefined && this.groupName != '') {
-      this.serviceNotification.loadingController(90000);
+      this.serviceNotification.loadingController(5000);
 
       refOfDefaultImage.getDownloadURL().subscribe((res) => {
         tchatGroup = {
