@@ -20,7 +20,11 @@ export class TchatPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user = this.serviceDiscussion.getActifUser();
+    if (
+      localStorage.getItem(this.serviceDiscussion.INF0_USER_CAME_FROM_DB) !=
+      null
+    )
+      this.user = this.serviceDiscussion.getActifUser();
     this.serviceDiscussion
       .getAllTchats()
       .snapshotChanges()
@@ -34,31 +38,39 @@ export class TchatPage implements OnInit {
     this.serviceDiscussion.getAllUsers(this.allUsers);
   }
 
-  public viewConversation(tchatId, id) {
-    let arrayMsg;
+  //Go to a single discussion
+  viewConversation = (tchatId, id) => {
     localStorage.setItem(
-      'USER_OF_TCHAT',
+      this.serviceDiscussion.USER_OF_TCHAT,
       JSON.stringify(this.serviceDiscussion.searchUserById(id, this.allUsers))
     );
     this.router.navigate(['conversation', tchatId]);
-  }
+  };
 
-  public viewConversationGroup(groupTchatId) {
-    localStorage.setItem('GROUP_OF_TCHAT', JSON.stringify(groupTchatId));
+  //Go to group discussion
+  viewConversationGroup = (groupTchatId) => {
+    localStorage.setItem(
+      this.serviceDiscussion.GROUP_OF_TCHAT,
+      JSON.stringify(groupTchatId)
+    );
     this.router.navigate(['conversationgroupe', groupTchatId.id]);
-  }
+  };
 
-  openNewDisc() {
-    this.router.navigate(['/newdisc']);
-  }
+  //start Discussion or  create a group
+  openNewDisc = () => this.router.navigate(['/newdisc']);
 
+  //Get only tchat which user is concerned
   verifyConcerneTchat = (tchats) => {
     let onlyHerTchat = [];
-    tchats.forEach((element) => {
-      element.users.forEach((elt: string) => {
-        if (elt.localeCompare(this.user.id) == 0) onlyHerTchat.push(element);
+    if (
+      localStorage.getItem(this.serviceDiscussion.INF0_USER_CAME_FROM_DB) !=
+      null
+    )
+      tchats.forEach((element) => {
+        element.users.forEach((elt: string) => {
+          if (elt.localeCompare(this.user.id) == 0) onlyHerTchat.push(element);
+        });
       });
-    });
     return onlyHerTchat;
   };
 }

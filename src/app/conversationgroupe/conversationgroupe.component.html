@@ -91,7 +91,7 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button (click)="pickGallery()">
+      <ion-button (click)="pickGallery(event)">
         <ion-icon name="images-outline"></ion-icon
       ></ion-button>
       <ion-button (click)="sendMessage()">
@@ -106,16 +106,15 @@
     <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
     <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
   </div>
-
-  <input
-    #galleryInput
-    style="position: absolute; width: 0; height: 0; opacity: 0"
-    type="file"
-    (change)="loadGallery($event)"
-    accept=".png, .jpeg , .jpg  "
-  />
 </ion-footer>
 
 <ion-footer *ngIf="!groupOfTchat.seeForAll && isAdmin == false">
   <ion-toolbar> Seuls les admins peuvent envoyer des messages </ion-toolbar>
 </ion-footer>
+<input
+  #galleryInput
+  style="position: absolute; width: 0; height: 0; opacity: 0"
+  type="file"
+  (change)="loadGallery($event)"
+  accept=".png, .jpeg , .jpg  "
+/>

@@ -51,7 +51,6 @@ export function createTranslateHttpLoader(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     Ng2SearchPipeModule,
-    Ionic4EmojiPickerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -64,4 +63,3 @@ export function createTranslateHttpLoader(http: HttpClient) {
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-// { provide: FirestoreSettingsToken, useValue: {} },

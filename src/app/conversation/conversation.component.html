@@ -77,10 +77,6 @@
       >
     </ion-item>
   </ion-list>
-  <!-- <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="crescent">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
 </ion-content>
 
 <ion-footer>
@@ -100,28 +96,26 @@
     ></ion-input>
 
     <ion-buttons slot="end">
-      <ion-button (click)="pickGallery()">
+      <ion-button (click)="pickGallery(event)">
         <ion-icon name="images-outline"></ion-icon
       ></ion-button>
       <ion-button (click)="sendMessage()">
         <ion-icon name="send" color="success"></ion-icon
       ></ion-button>
     </ion-buttons>
+    <input
+      #galleryInput
+      style="position: absolute; width: 0; height: 0; opacity: 0"
+      type="file"
+      (change)="loadGallery($event)"
+      accept=".png, .jpeg , .jpg  "
+    />
   </ion-toolbar>
 
   <div
     class="emojiContainer"
     [style.height]="showEmojiPicker ? '300px' : '0px'"
   >
-    <!--Show/Hide emoji picker. Don't use *ngIf because the component will be created again and again and cause performance issue-->
     <emoji-picker (onEmojiSelect)="addEmoji($event)"></emoji-picker>
   </div>
-
-  <input
-    #galleryInput
-    style="position: absolute; width: 0; height: 0; opacity: 0"
-    type="file"
-    (change)="loadGallery($event)"
-    accept=".png, .jpeg , .jpg  "
-  />
 </ion-footer>

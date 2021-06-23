@@ -58,14 +58,19 @@ export class SigninPage implements OnInit {
             `SIGNIN.no`
           );
         } else {
-          this.serviceDiscussion.setActifUser(res.user.uid).then(() => {
+          this.serviceDiscussion.setActifUser(res.user.uid)
+          .then(() => {
             setTimeout(() => {
               this.serviceNotification.closeLoader();
               this.fireebaseAuth.setUserOnline(res.user.uid);
               this.userForms.reset();
               this.router.navigate(['/tabs/tchat']);
-            }, 3000);
-          });
+            }, 5000);
+          })
+          .catch((err)=>{
+            this.serviceNotification.closeLoader();
+            this.serviceNotification.dangerToast(err.message);
+          })
         }
       })
       .catch((err) => {

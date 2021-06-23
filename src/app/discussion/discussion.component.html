@@ -5,8 +5,8 @@
   <ion-label>
     <div class="flex_box">
       <h3>{{ nom }}</h3>
-      <ion-note slot="end">{{ heure }}</ion-note>
-      <ion-badge *ngIf="nbreMessages != 0" color="success">{{
+      <ion-note slot="end" class="unique">{{ heure }}<br /></ion-note
+      ><ion-badge *ngIf="nbreMessages != 0" color="success">{{
         nbreMessages
       }}</ion-badge>
     </div>

@@ -9,7 +9,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
 import { PopoverController, ModalController } from '@ionic/angular';
-import { IonInfiniteScroll } from '@ionic/angular';
 import { PopoverConversationComponent } from '../components/popover/popover-conversation/popover-conversation.component';
 import { ModalSendComponent } from '../components/modal/modal-send/modal-send.component';
 
@@ -19,8 +18,8 @@ import { ModalSendComponent } from '../components/modal/modal-send/modal-send.co
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('galleryInput') galleryInputViewChild: ElementRef;
+  public galleryInputElement: HTMLInputElement;
 
   public idTchat;
   public userInfo;
@@ -33,7 +32,6 @@ export class ConversationComponent implements OnInit {
   lastConnect;
   public showEmojiPicker = false;
   show = false;
-  public galleryInputElement: HTMLInputElement;
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -146,10 +144,8 @@ export class ConversationComponent implements OnInit {
 
   loadGallery(e) {
     const reader = new FileReader();
-
     if (e.target.files && e.target.files.length) {
       const [file] = e.target.files;
-
       this.presentModal(file);
     }
   }

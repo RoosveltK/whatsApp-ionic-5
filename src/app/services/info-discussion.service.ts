@@ -20,14 +20,15 @@ export interface tchat {
   messages: Array<Message>;
 }
 
-///Varaible localStorage
-const INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
-const USER_OF_TCHAT = 'USER_OF_TCHAT';
-
 @Injectable({
   providedIn: 'root',
 })
 export class InfoDiscussionService implements OnInit {
+  //Variable localStorage
+  public INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
+  public USER_OF_TCHAT = 'USER_OF_TCHAT';
+  public GROUP_OF_TCHAT = 'GROUP_OF_TCHAT';
+
   public myTchats: any = [];
   public allUsers: any = [];
   public usersInfoOfDB;
@@ -70,7 +71,10 @@ export class InfoDiscussionService implements OnInit {
         const ref = this.afStorage.ref(myInfo.photo);
         ref.getDownloadURL().subscribe((res) => {
           myInfo.photo = res;
-          localStorage.setItem(INF0_USER_CAME_FROM_DB, JSON.stringify(myInfo));
+          localStorage.setItem(
+            this.INF0_USER_CAME_FROM_DB,
+            JSON.stringify(myInfo)
+          );
         });
       });
   };
@@ -78,7 +82,8 @@ export class InfoDiscussionService implements OnInit {
   getUserofTchatSubscribe = () => this.afirestore.collection(`users`);
 
   //Recuperer l'utilisateur qui utilise l'application sur cet appareil
-  getActifUser = () => JSON.parse(localStorage.getItem(INF0_USER_CAME_FROM_DB));
+  getActifUser = () =>
+    JSON.parse(localStorage.getItem(this.INF0_USER_CAME_FROM_DB));
 
   //Sauvegarder les tchats en BD grace a l'id
   saveTchatInDB = (id) => this.afirestore.doc(`tchats/${id}`);
@@ -86,7 +91,7 @@ export class InfoDiscussionService implements OnInit {
   //Lien pour recuperer tout les tchats presents en BD
   getAllTchats = () => this.afirestore.collection(`tchats/`);
 
-  getUserOfTChat = () => JSON.parse(localStorage.getItem(USER_OF_TCHAT));
+  getUserOfTChat = () => JSON.parse(localStorage.getItem(this.USER_OF_TCHAT));
 
   getInfoOfTchat = () => {
     this.getAllTchats()
@@ -119,6 +124,7 @@ export class InfoDiscussionService implements OnInit {
         ss.docs.forEach((doc) => {
           tableau.push(doc.data());
         });
+        ss;
 
         tableau.map((element) => {
           const refImage = this.afStorage.ref(element.photo);
