@@ -24,10 +24,11 @@ export interface tchat {
   providedIn: 'root',
 })
 export class InfoDiscussionService implements OnInit {
-  //Variable localStorage
+  //Variables localStorage
   public INF0_USER_CAME_FROM_DB = 'INF0_USER_CAME_FROM_DB';
   public USER_OF_TCHAT = 'USER_OF_TCHAT';
   public GROUP_OF_TCHAT = 'GROUP_OF_TCHAT';
+  public USER_OF_GROUP = 'USER_OF_GROUP';
 
   public myTchats: any = [];
   public allUsers: any = [];
@@ -46,7 +47,6 @@ export class InfoDiscussionService implements OnInit {
   findTChatById = (idTchat: string, idTchat2: string) => {
     let id = null;
     this.myTchats.map((element) => {
-      console.log(element);
       if (element.id.localeCompare(idTchat) == 0) id = idTchat;
       else if (element.id.localeCompare(idTchat2) == 0) id = idTchat2;
     });
@@ -121,17 +121,14 @@ export class InfoDiscussionService implements OnInit {
     this.getUsers()
       .get()
       .subscribe((ss) => {
-        ss.docs.forEach((doc) => {
-          tableau.push(doc.data());
+        ss.docs.forEach((doc) => tableau.push(doc.data()));
+        const newArray = tableau.sort(function (a, b) {
+          return a.nom.localeCompare(b.nom);
         });
-        ss;
-
-        tableau.map((element) => {
+        newArray.map((element) => {
           const refImage = this.afStorage.ref(element.photo);
           refImage.getDownloadURL().subscribe((res) => {
-            if (element.id.localeCompare(this.getActifUser().id) == 0)
-              console.log(`!!!! On passe !!!!`);
-            else {
+            if (element.id.localeCompare(this.getActifUser().id) != 0)
               users.push({
                 nom: element.nom,
                 email: element.email,
@@ -140,7 +137,6 @@ export class InfoDiscussionService implements OnInit {
                 statut: element.statut,
                 lastConnect: element.lastConnect,
               });
-            }
           });
         });
       });

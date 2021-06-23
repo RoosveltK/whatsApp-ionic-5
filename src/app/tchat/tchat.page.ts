@@ -35,6 +35,9 @@ export class TchatPage implements OnInit {
         });
         this.herTchat = this.verifyConcerneTchat(this.allTchat);
       });
+    setTimeout(() => {
+      if (this.herTchat.length == 0) this.stopLoader = true;
+    }, 5000);
     this.serviceDiscussion.getAllUsers(this.allUsers);
   }
 

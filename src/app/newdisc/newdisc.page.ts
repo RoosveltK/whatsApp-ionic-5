@@ -6,7 +6,6 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-const USER_OF_TCHAT = 'USER_OF_TCHAT';
 @Component({
   selector: 'app-newdisc',
   templateUrl: './newdisc.page.html',
@@ -20,26 +19,13 @@ export class NewdiscPage implements OnInit {
   public actifUserofDB;
   constructor(
     public router: Router,
-    public service: InfoDiscussionService,
+    public serviceDiscussion: InfoDiscussionService,
     private serviceNotification: NotificationService
   ) {}
 
   ngOnInit() {
-    this.actifUserofDB = this.service.getActifUser();
-    this.service.getAllUsers(this.users);
-  }
-
-  backHome = () => {
-    const link = ['tabs/tchat'];
-    this.router.navigate(link);
-  };
-
-  createGroup = () => {
-    this.router.navigate(['/creategroup']);
-  };
-
-  showSearchBar() {
-    this.show = !this.show;
+    this.actifUserofDB = this.serviceDiscussion.getActifUser();
+    this.serviceDiscussion.getAllUsers(this.users);
   }
 
   startDiscu = (userData: any) => {
@@ -50,15 +36,17 @@ export class NewdiscPage implements OnInit {
       users: [userData.id, this.actifUserofDB.id],
       messages: [],
     };
-    localStorage.setItem(USER_OF_TCHAT, JSON.stringify(userData));
-    const idTchat = this.service.findTChatById(
+    localStorage.setItem(
+      this.serviceDiscussion.USER_OF_TCHAT,
+      JSON.stringify(userData)
+    );
+    const idTchat = this.serviceDiscussion.findTChatById(
       newTchat.id,
       `${this.actifUserofDB.id}${userData.id}`
     );
-    console.log(idTchat);
     if (idTchat == null) {
       this.serviceNotification.loadingController(2000);
-      this.service
+      this.serviceDiscussion
         .saveTchatInDB(newTchat.id)
         .set(newTchat)
         .then(() => this.router.navigate(['conversation', newTchat.id]))

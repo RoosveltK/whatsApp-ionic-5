@@ -1,8 +1,10 @@
 <ion-content [fullscreen]="true">
-  <div *ngIf="herTchat.length ==0" class="center">
+  <div *ngIf="herTchat.length == 0 && !stopLoader" class="center">
     <ion-spinner color="success"></ion-spinner>
   </div>
-
+  <div *ngIf="stopLoader && herTchat.length == 0" class="center">
+    Pas de discussions
+  </div>
   <div *ngIf="herTchat.length !=0">
     <ion-list>
       <span *ngFor="let data of herTchat">
@@ -11,14 +13,14 @@
             <app-discussion
               *ngIf="data.messages.length !=0"
               (click)="viewConversation(data.id, data.users[0])"
-              image="{{data.photo[0]}}"
-              nom="{{data.nom[0]}}"
-              heure="{{data.messages[data.messages.length-1].heure}}"
-              message="{{data.messages[data.messages.length-1].messagetext}}"
+              [image]="data.photo[0]"
+              [nom]="data.nom[0]"
+              [heure]="data.messages[data.messages.length-1].heure"
+              [message]="data.messages[data.messages.length-1].messagetext"
               [tabMessage]="data.messages"
-              messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
+              [messageUiSend]="data.messages[data.messages.length-1].uidSend"
               [messageStatut]="data.messages[data.messages.length-1].read"
-              assets="{{data.messages[data.messages.length-1].assets}}"
+              [assets]="data.messages[data.messages.length-1].assets"
               [userId]="user.id"
             ></app-discussion>
           </span>
@@ -26,13 +28,14 @@
             <app-discussion
               *ngIf="data.messages.length !=0"
               (click)="viewConversation(data.id, data.users[1])"
-              image="{{data.photo[1]}}"
-              nom="{{data.nom[1]}}"
-              heure="{{data.messages[data.messages.length-1].heure}}"
+              [image]="data.photo[1]"
+              [nom]="data.nom[1]"
+              [heure]="data.messages[data.messages.length-1].heure"
               [tabMessage]="data.messages"
-              message="{{data.messages[data.messages.length-1].messagetext}}"
-              messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
+              [message]="data.messages[data.messages.length-1].messagetext"
+              [messageUiSend]="data.messages[data.messages.length-1].uidSend"
               [messageStatut]="data.messages[data.messages.length-1].read"
+              [assets]="data.messages[data.messages.length-1].assets"
               [userId]="user.id"
             ></app-discussion>
           </span>
@@ -42,21 +45,22 @@
           <app-discussion
             (click)="viewConversationGroup(data)"
             *ngIf="data.messages.length !=0"
-            image="{{data.photo[0]}}"
-            nom="{{data.nom[0]}}"
+            [image]="data.photo[0]"
+            [nom]="data.nom[0]"
             [tabMessage]="data.messages"
-            heure="{{data.messages[data.messages.length-1].heure}}"
-            message="{{data.messages[data.messages.length-1].messagetext}}"
-            messageUiSend="{{data.messages[data.messages.length-1].uidSend}}"
-            messageNane="{{data.messages[data.messages.length-1].nomSend}}"
+            [heure]="data.messages[data.messages.length-1].heure"
+            [message]="data.messages[data.messages.length-1].messagetext"
+            [messageUiSend]="data.messages[data.messages.length-1].uidSend"
+            [messageNane]="data.messages[data.messages.length-1].nomSend"
+            [assets]="data.messages[data.messages.length-1].assets"
             [userId]="user.id"
           ></app-discussion>
 
           <app-discussion
             (click)="viewConversationGroup(data)"
             *ngIf="data.messages.length==0"
-            image="{{data.photo[0]}}"
-            nom="{{data.nom[0]}}"
+            [image]="data.photo[0]"
+            [nom]="data.nom[0]"
             message="Nouvellement crée"
             [userId]="user.id"
           ></app-discussion>

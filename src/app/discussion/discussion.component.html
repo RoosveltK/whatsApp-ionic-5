@@ -1,37 +1,45 @@
-<ion-item>
+<ion-item button>
   <ion-avatar slot="start">
-    <img src="{{ image }}" />
+    <img [src]="image" />
   </ion-avatar>
   <ion-label>
     <div class="flex_box">
       <h3>{{ nom }}</h3>
-      <ion-note slot="end" class="unique">{{ heure }}<br /></ion-note
-      ><ion-badge *ngIf="nbreMessages != 0" color="success">{{
-        nbreMessages
-      }}</ion-badge>
+      <ion-note slot="end" class="unique">{{ heure }}<br /></ion-note>
     </div>
 
-    <p *ngIf="messageUiSend == userId">
-      <span>
-        <ion-icon
-          *ngIf="statut == true"
-          class="text-icon"
-          color="primary"
-          name="checkmark-done-outline"
-        >
-        </ion-icon>
-        <ion-icon
-          *ngIf="statut != true"
-          class="text-icon"
-          name="checkmark-outline"
-        ></ion-icon>
-        <img *ngIf="assets != ''" src="assets/picture.png" />
-        {{ message }}
-      </span>
-    </p>
+    <div *ngIf="messageUiSend == userId" class="flex_box">
+      <p>
+        <span>
+          <ion-icon
+            *ngIf="statut == true"
+            class="text-icon"
+            color="primary"
+            name="checkmark-done-outline"
+          >
+          </ion-icon>
+          <ion-icon
+            *ngIf="statut != true"
+            class="text-icon"
+            name="checkmark-outline"
+          ></ion-icon>
+          <img *ngIf="assets" src="assets/picture.png" />
+          {{ message }}
+        </span>
+      </p>
+      <ion-badge *ngIf="nbreMessages != 0">{{ nbreMessages }}</ion-badge>
+    </div>
 
-    <p *ngIf="messageUiSend != userId && messageName != ''">
-      <span class="pseudo">{{ newMsg }}</span> {{ message }}
-    </p>
+    <div *ngIf="messageUiSend != userId && messageName != ''" class="flex_box">
+      <p>
+        <span>
+          <span class="pseudo"
+            >{{ newMsg }} <img *ngIf="assets" src="assets/picture.png" />
+          </span>
+          {{ message }}
+        </span>
+      </p>
+      <ion-badge *ngIf="nbreMessages != 0">{{ nbreMessages }}</ion-badge>
+    </div>
   </ion-label>
 </ion-item>

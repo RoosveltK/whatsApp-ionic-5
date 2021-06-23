@@ -15,19 +15,14 @@ export class CreategroupPage implements OnInit {
   public users = [];
   public actifUser;
   public actifUserofDB;
-  constructor(private router: Router, public service: InfoDiscussionService) {}
+  constructor(
+    private router: Router,
+    public serviceDiscussion: InfoDiscussionService
+  ) {}
 
   ngOnInit() {
-    this.actifUser = this.service.getActifUser();
-    this.service.getAllUsers(this.users);
-  }
-
-  backHome = () => {
-    const link = ['tabs/tchat'];
-    this.router.navigate(link);
-  };
-  showSearchBar() {
-    this.show = true;
+    this.actifUser = this.serviceDiscussion.getActifUser();
+    this.serviceDiscussion.getAllUsers(this.users);
   }
 
   addToMemberGroup(user) {
@@ -52,11 +47,10 @@ export class CreategroupPage implements OnInit {
   }
 
   createGroupLast() {
-    // if (this.usersOfGroup.length == 0)
-    //   console.log(`Au moins 1 contact doit etre selectionee`);
-    // else {
-    localStorage.setItem('USER_OF_GROUP', JSON.stringify(this.usersOfGroup));
+    localStorage.setItem(
+      this.serviceDiscussion.GROUP_OF_TCHAT,
+      JSON.stringify(this.usersOfGroup)
+    );
     this.router.navigate(['/creategroup-last-phase']);
-    //}
   }
 }

@@ -1,17 +1,15 @@
 <ion-header>
   <ion-toolbar color="success" *ngIf="!show">
     <ion-buttons slot="start">
-      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+      <ion-back-button text="" defaultHref="tabs/tchat"></ion-back-button>
     </ion-buttons>
     <div class="contacts">
       Contacts<br />
       <span>{{users.length}} contacts</span>
     </div>
     <ion-buttons slot="end">
-      <ion-button (click)="showSearchBar()">
-        <ion-icon name="search"></ion-icon> </ion-button
-      ><ion-button>
-        <ion-icon name="ellipsis-vertical"></ion-icon>
+      <ion-button (click)="show = !show">
+        <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -21,7 +19,7 @@
       <ion-icon
         slot="icon-only"
         name="arrow-back"
-        (click)="showSearchBar()"
+        (click)="show = !show"
       ></ion-icon>
     </ion-buttons>
     <ion-input [(ngModel)]="searchText" placeholder="Rechercher..."></ion-input>
@@ -30,7 +28,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item routerLink="/creategroup">
+    <ion-item button routerLink="/creategroup">
       <ion-avatar slot="start" class="color_sucess">
         <img src="../../assets/discussion.png" />
       </ion-avatar>
@@ -51,7 +49,7 @@
 
     <div *ngIf="users.length != 0">
       <div *ngFor="let user of users| filter:searchText">
-        <ion-item (click)="startDiscu(user)">
+        <ion-item button (click)="startDiscu(user)">
           <ion-avatar slot="start">
             <img src="{{user.photo}}" />
           </ion-avatar>

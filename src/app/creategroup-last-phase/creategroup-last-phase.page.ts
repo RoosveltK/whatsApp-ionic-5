@@ -7,7 +7,7 @@ import {
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { NotificationService } from '../services/notification.service';
-const GROUP_OF_TCHAT = 'GROUP_OF_TCHAT';
+
 @Component({
   selector: 'app-creategroup-last-phase',
   templateUrl: './creategroup-last-phase.page.html',
@@ -25,16 +25,17 @@ export class CreategroupLastPhasePage implements OnInit {
   isImageThere: boolean = false;
   showEmojiPicker = false;
   constructor(
-    private serviceTchat: InfoDiscussionService,
+    private serviceDiscussion: InfoDiscussionService,
     public serviceAuth: FirebaseService,
     private router: Router,
-    private modalCtrl: ModalController,
     private serviceNotification: NotificationService
   ) {}
 
   ngOnInit() {
-    this.member = JSON.parse(localStorage.getItem('USER_OF_GROUP'));
-    this.infoUser = JSON.parse(localStorage.getItem('INF0_USER_CAME_FROM_DB'));
+    this.member = JSON.parse(
+      localStorage.getItem(this.serviceDiscussion.USER_OF_GROUP)
+    );
+    this.infoUser = this.serviceDiscussion.getActifUser();
   }
   ngAfterViewInit() {
     this.userInputElement = this.userInputViewChild.nativeElement;
@@ -58,7 +59,6 @@ export class CreategroupLastPhasePage implements OnInit {
 
     //Ajout du reste des users  dans les infos du groupe id et statut(grade)
     this.member.forEach((element) => memberId.push(element.id));
-
     this.member.forEach((element) => {
       memberGrade.push({
         id: element.id,
@@ -73,7 +73,6 @@ export class CreategroupLastPhasePage implements OnInit {
     );
     if (this.dataImage == undefined && this.groupName != '') {
       this.serviceNotification.loadingController(5000);
-
       refOfDefaultImage.getDownloadURL().subscribe((res) => {
         tchatGroup = {
           id: idGroupe,
@@ -84,11 +83,14 @@ export class CreategroupLastPhasePage implements OnInit {
           seeForAll: true,
           grade: memberGrade,
         };
-        this.serviceTchat
+        this.serviceDiscussion
           .saveTchatInDB(tchatGroup.id)
           .set(tchatGroup)
           .then(() => {
-            localStorage.setItem(GROUP_OF_TCHAT, JSON.stringify(tchatGroup));
+            localStorage.setItem(
+              this.serviceDiscussion.GROUP_OF_TCHAT,
+              JSON.stringify(tchatGroup)
+            );
             this.serviceNotification.closeLoader();
             this.router.navigate(['conversationgroupe', tchatGroup.id]);
           })
@@ -98,14 +100,14 @@ export class CreategroupLastPhasePage implements OnInit {
           });
       });
     } else if (
-      this.dataImage !== undefined &&
+      this.dataImage != undefined &&
       this.dataImage != 0 &&
       this.groupName != ''
     ) {
       const pathFile = `groupImage/uid${idGroupe}_${this.dataImage.name}`;
       const pathRefFile = this.serviceAuth.createRefForImage(pathFile);
 
-      this.serviceNotification.loadingController(90000);
+      this.serviceNotification.loadingController(5000);
       this.serviceAuth
         .uploadImage(this.dataImage, pathFile)
         .then(() => {
@@ -120,14 +122,14 @@ export class CreategroupLastPhasePage implements OnInit {
               grade: memberGrade,
             };
 
-            this.serviceTchat
+            this.serviceDiscussion
               .saveTchatInDB(tchatGroup.id)
               .set(tchatGroup)
               .then(() => {
                 this.serviceNotification.closeLoader();
                 this.router.navigate(['conversationgroupe', tchatGroup.id]);
                 localStorage.setItem(
-                  GROUP_OF_TCHAT,
+                  this.serviceDiscussion.GROUP_OF_TCHAT,
                   JSON.stringify(tchatGroup)
                 );
               })
@@ -138,8 +140,8 @@ export class CreategroupLastPhasePage implements OnInit {
           });
         })
         .catch((err) => {
-          console.log(err);
           this.serviceNotification.closeLoader();
+          console.log(err);
         });
     }
   };

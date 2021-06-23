@@ -8,6 +8,7 @@ import { CreategroupPageRoutingModule } from './creategroup-routing.module';
 
 import { CreategroupPage } from './creategroup.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     CreategroupPageRoutingModule,
     TranslateModule,
+    Ng2SearchPipeModule,
   ],
   declarations: [CreategroupPage],
 })

@@ -10,6 +10,7 @@ h3 {
 .flex_box {
   display: flex;
   justify-content: space-between;
+  order: 2;
 }
 ion-note {
   font-size: 13px;
@@ -33,11 +34,19 @@ span {
   font-weight: 600;
 }
 ion-badge {
-  margin: 0;
+  --background: #00cc3f;
   border-radius: 50%;
-  padding: 5px;
-  size: 2px;
+  padding: 6px;
+  font-size: 11px;
+  text-align: center;
 }
 .unique {
+  color: #00cc3f;
   margin-left: 150px;
+}
+
+.flex_box {
+  p {
+    width: 70%;
+  }
 }

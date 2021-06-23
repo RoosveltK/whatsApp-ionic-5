@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="success" *ngIf="!show">
     <ion-buttons slot="start">
-      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <div class="contacts">
       <p>
@@ -16,7 +16,7 @@
       </p>
     </div>
     <ion-buttons slot="end">
-      <ion-button (click)="showSearchBar()">
+      <ion-button (click)="show = !show">
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -24,7 +24,7 @@
 
   <ion-toolbar color="success" *ngIf="show">
     <ion-buttons slot="start">
-      <ion-back-button text="" (click)="backHome()"></ion-back-button>
+      <ion-back-button text="" (click)="show = !show"></ion-back-button>
     </ion-buttons>
     <ion-input
       [(ngModel)]="searchText"
@@ -44,9 +44,9 @@
     </div>
 
     <div *ngIf="users.length != 0">
-      <div *ngFor="let user of users">
+      <div *ngFor="let user of users | filter:searchText">
         <ion-item
-          *ngIf=" actifUser.uid != user.id"
+          *ngIf="actifUser.uid != user.id"
           (click)="addToMemberGroup(user)"
         >
           <ion-avatar slot="start">
@@ -69,7 +69,12 @@
     </div>
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed"
+    *ngIf="usersOfGroup.length !=0"
+  >
     <ion-fab-button (click)="createGroupLast()">
       <ion-icon name="arrow-forward-outline"></ion-icon>
     </ion-fab-button>

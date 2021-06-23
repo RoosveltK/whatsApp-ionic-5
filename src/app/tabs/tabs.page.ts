@@ -17,7 +17,6 @@ export class TabsPage {
   async presentPopover() {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
-      cssClass: 'my-custom-class',
       translucent: true,
     });
     await popover.present();

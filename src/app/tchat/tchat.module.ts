@@ -17,6 +17,7 @@ import { PopoverConversationComponent } from '../components/popover/popover-conv
 import { Ionic4EmojiPickerModule } from 'ionic4-emoji-picker';
 import { ConversationComponent } from '../conversation/conversation.component';
 
+
 @NgModule({
   imports: [
     IonicModule,
